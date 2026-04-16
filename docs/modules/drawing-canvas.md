@@ -12,7 +12,7 @@ title: Drawing Canvas
   <p class="subtitle">CoreGraphics(Quartz 2D)의 저수준 드로잉 API와 PencilKit의 고수준 필기/드로잉 프레임워크를 함께 학습합니다. 벡터 경로부터 Apple Pencil 필압 인식까지 다룹니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 

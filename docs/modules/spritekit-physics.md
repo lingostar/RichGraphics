@@ -12,7 +12,7 @@ title: SpriteKit Physics
   <p class="subtitle">SpriteKit의 2D 물리 엔진을 활용하여 중력, 충돌, 관절, 자기장 시뮬레이션을 구현합니다. CoreMotion과 연동한 디바이스 기울기 기반 물리도 다룹니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 

@@ -12,7 +12,7 @@ title: UIKit Dynamics
   <p class="subtitle">UIKit의 물리 엔진으로 UI 요소에 중력, 충돌, 탄성, 스냅 등 물리 기반 동작을 부여합니다. 자연스러운 인터랙션과 유기적인 UI 모션을 만들어 봅니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 

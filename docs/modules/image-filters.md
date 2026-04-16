@@ -12,7 +12,7 @@ title: Core Image Filters
   <p class="subtitle">Core Image의 GPU 가속 이미지 처리 파이프라인을 학습합니다. 200개 이상의 내장 필터, 필터 체이닝, 실시간 카메라 필터 적용까지 다룹니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 

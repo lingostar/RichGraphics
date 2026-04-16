@@ -12,7 +12,7 @@ title: Particle Effects
   <p class="subtitle">CAEmitterLayer 파티클 시스템으로 불꽃놀이, 눈, 비, 화염, 트레일 등 다양한 시각 이펙트를 구현합니다. Core Animation 기반이라 UIKit/SwiftUI 모두에서 사용 가능합니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 

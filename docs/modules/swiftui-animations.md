@@ -12,7 +12,7 @@ title: SwiftUI Animations
   <p class="subtitle">SwiftUI의 선언형 애니메이션 시스템을 탐험합니다. Spring, Keyframe, Phase 기반 애니메이션부터 geometry 전환까지, 모던 iOS 앱의 모션 디자인 핵심을 다룹니다.</p>
 </div>
 
-<article>
+<article markdown="1">
 
 ## 개요
 
