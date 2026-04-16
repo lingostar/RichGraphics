@@ -7,5 +7,6 @@ struct DemoDetailView: View {
         module.destinationView
             .navigationTitle(module.name)
             .navigationBarTitleDisplayMode(.inline)
+            .disableSwipeBack()
     }
 }

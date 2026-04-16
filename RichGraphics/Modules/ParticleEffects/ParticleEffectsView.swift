@@ -48,6 +48,7 @@ struct ParticleEffectsView: View {
             NavigationLink {
                 demo.destination
                     .navigationTitle(demo.title)
+                    .disableSwipeBack()
             } label: {
                 HStack(spacing: 14) {
                     Image(systemName: demo.icon)
