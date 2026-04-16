@@ -8,60 +8,99 @@ import UIKit
 extension View {
     /// Disables the navigation swipe-back gesture on this view.
     func disableSwipeBack() -> some View {
-        self.background(SwipeBackDisablerRepresentable())
+        self.background(SwipeBackDisablerView())
     }
 }
 
-private struct SwipeBackDisablerRepresentable: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> DisablerViewController {
-        DisablerViewController()
+/// Uses a UIView (not UIViewController) to find and disable the pop gesture recognizer
+/// by walking up the responder chain and also scanning gesture recognizers on the
+/// hosting UINavigationController's view.
+private struct SwipeBackDisablerView: UIViewRepresentable {
+    func makeUIView(context: Context) -> DisablerUIView {
+        let view = DisablerUIView()
+        view.isHidden = true
+        view.isUserInteractionEnabled = false
+        return view
     }
 
-    func updateUIViewController(_ uiViewController: DisablerViewController, context: Context) {}
+    func updateUIView(_ uiView: DisablerUIView, context: Context) {}
 
-    final class DisablerViewController: UIViewController {
-        private var gestureDelegate: GestureBlocker?
+    final class DisablerUIView: UIView {
+        private var gestureBlocker: GestureBlocker?
 
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-            disablePopGesture()
-        }
-
-        override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            // Belt-and-suspenders: also try here in case viewDidAppear was too early
-            disablePopGesture()
-        }
-
-        private func disablePopGesture() {
-            guard let recognizer = navigationController?.interactivePopGestureRecognizer else { return }
-            recognizer.isEnabled = false
-            // Also override the delegate to block the gesture entirely
-            if gestureDelegate == nil {
-                gestureDelegate = GestureBlocker()
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            if window != nil {
+                DispatchQueue.main.async { [weak self] in
+                    self?.disableSwipeBack()
+                }
             }
-            recognizer.delegate = gestureDelegate
         }
 
-        override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            guard let recognizer = navigationController?.interactivePopGestureRecognizer else { return }
-            recognizer.isEnabled = true
-            recognizer.delegate = nil
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            disableSwipeBack()
+        }
+
+        private func disableSwipeBack() {
+            // Strategy 1: Find UINavigationController via responder chain
+            if let navController = findNavigationController() {
+                if let recognizer = navController.interactivePopGestureRecognizer {
+                    recognizer.isEnabled = false
+                    if gestureBlocker == nil {
+                        gestureBlocker = GestureBlocker()
+                    }
+                    recognizer.delegate = gestureBlocker
+                    return
+                }
+            }
+
+            // Strategy 2: Walk up the view hierarchy and disable any
+            // UIScreenEdgePanGestureRecognizer (which powers the swipe-back)
+            var current: UIView? = self.superview
+            while let view = current {
+                for recognizer in view.gestureRecognizers ?? [] {
+                    if recognizer is UIScreenEdgePanGestureRecognizer {
+                        recognizer.isEnabled = false
+                        if gestureBlocker == nil {
+                            gestureBlocker = GestureBlocker()
+                        }
+                        recognizer.delegate = gestureBlocker
+                    }
+                }
+                current = view.superview
+            }
+        }
+
+        private func findNavigationController() -> UINavigationController? {
+            var responder: UIResponder? = self
+            while let current = responder {
+                if let navController = current as? UINavigationController {
+                    return navController
+                }
+                responder = current.next
+            }
+            return nil
+        }
+
+        override func willMove(toWindow newWindow: UIWindow?) {
+            super.willMove(toWindow: newWindow)
+            if newWindow == nil {
+                restoreSwipeBack()
+            }
+        }
+
+        private func restoreSwipeBack() {
+            if let navController = findNavigationController() {
+                navController.interactivePopGestureRecognizer?.isEnabled = true
+                navController.interactivePopGestureRecognizer?.delegate = nil
+            }
         }
     }
 
-    // Gesture delegate that always returns false → gesture never begins
     final class GestureBlocker: NSObject, UIGestureRecognizerDelegate {
         func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-            return false
-        }
-
-        func gestureRecognizer(
-            _ gestureRecognizer: UIGestureRecognizer,
-            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
-        ) -> Bool {
-            return false
+            false
         }
     }
 }
