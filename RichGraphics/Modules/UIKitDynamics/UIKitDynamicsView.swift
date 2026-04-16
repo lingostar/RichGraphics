@@ -1,132 +1,72 @@
 import SwiftUI
-import UIKit
 
-struct UIKitDynamicsView: View {
-    @State private var gravityEnabled = true
+struct DynamicsDemo: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let icon: String
+    let color: Color
+    let destination: AnyView
 
-    var body: some View {
-        VStack(spacing: 0) {
-            DynamicsContainerView(gravityEnabled: gravityEnabled)
-                .ignoresSafeArea(edges: .bottom)
-
-            HStack {
-                Toggle("Gravity", isOn: $gravityEnabled)
-                    .font(.subheadline)
-                    .frame(width: 150)
-
-                Spacer()
-
-                Text("Tap to add squares")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(.systemGroupedBackground))
-        }
+    @MainActor
+    init<V: View>(title: String, description: String, icon: String, color: Color, @ViewBuilder destination: () -> V) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.color = color
+        self.destination = AnyView(destination())
     }
 }
 
-struct DynamicsContainerView: UIViewRepresentable {
-    let gravityEnabled: Bool
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        view.backgroundColor = .systemBackground
-        view.clipsToBounds = true
-
-        let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap(_:)))
-        view.addGestureRecognizer(tapGesture)
-
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {
-        let coordinator = context.coordinator
-
-        if coordinator.animator == nil {
-            coordinator.setupDynamics(in: uiView)
-        }
-
-        if gravityEnabled {
-            coordinator.gravity?.gravityDirection = CGVector(dx: 0, dy: 1.0)
-        } else {
-            coordinator.gravity?.gravityDirection = CGVector(dx: 0, dy: 0)
-        }
-    }
-
+struct UIKitDynamicsView: View {
     @MainActor
-    class Coordinator: NSObject {
-        var animator: UIDynamicAnimator?
-        var gravity: UIGravityBehavior?
-        var collision: UICollisionBehavior?
-        var itemBehavior: UIDynamicItemBehavior?
-        weak var containerView: UIView?
-
-        let squareColors: [UIColor] = [
-            .systemRed, .systemBlue, .systemGreen, .systemOrange,
-            .systemPurple, .systemTeal, .systemPink, .systemYellow
+    private var demos: [DynamicsDemo] {
+        [
+            DynamicsDemo(title: "Gravity Cards", description: "Cards that respond to device tilt with CoreMotion gravity", icon: "rectangle.on.rectangle.angled", color: .orange) {
+                GravityCardsView()
+            },
+            DynamicsDemo(title: "Snap Grid", description: "Drag items and watch them snap to the nearest grid point", icon: "squareshape.split.3x3", color: .purple) {
+                SnapGridView()
+            },
+            DynamicsDemo(title: "Collision Bubbles", description: "Floating tag bubbles that collide and bounce around", icon: "circle.hexagongrid", color: .blue) {
+                CollisionBubblesView()
+            },
+            DynamicsDemo(title: "Pendulum", description: "Newton's cradle with realistic physics simulation", icon: "lines.measurement.horizontal", color: .red) {
+                PendulumView()
+            },
+            DynamicsDemo(title: "Elastic Menu", description: "Spring-connected menu items with elastic follow behavior", icon: "list.bullet.rectangle", color: .green) {
+                ElasticMenuView()
+            },
         ]
+    }
 
-        func setupDynamics(in view: UIView) {
-            containerView = view
-            animator = UIDynamicAnimator(referenceView: view)
+    var body: some View {
+        List(demos) { demo in
+            NavigationLink {
+                demo.destination
+                    .navigationTitle(demo.title)
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: demo.icon)
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(demo.color.gradient)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
 
-            let gravityBehavior = UIGravityBehavior()
-            gravityBehavior.gravityDirection = CGVector(dx: 0, dy: 1.0)
-            animator?.addBehavior(gravityBehavior)
-            gravity = gravityBehavior
-
-            let collisionBehavior = UICollisionBehavior()
-            collisionBehavior.translatesReferenceBoundsIntoBoundary = true
-            animator?.addBehavior(collisionBehavior)
-            collision = collisionBehavior
-
-            let dynamicItemBehavior = UIDynamicItemBehavior()
-            dynamicItemBehavior.elasticity = 0.6
-            dynamicItemBehavior.friction = 0.2
-            dynamicItemBehavior.resistance = 0.1
-            animator?.addBehavior(dynamicItemBehavior)
-            itemBehavior = dynamicItemBehavior
-
-            // Add some initial squares
-            for _ in 0..<5 {
-                let x = CGFloat.random(in: 40...(view.bounds.width > 80 ? view.bounds.width - 40 : 80))
-                let y = CGFloat.random(in: 40...200)
-                addSquare(at: CGPoint(x: x, y: y))
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(demo.title)
+                            .font(.headline)
+                        Text(demo.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
+                }
+                .padding(.vertical, 4)
             }
         }
-
-        @objc func handleTap(_ gesture: UITapGestureRecognizer) {
-            let location = gesture.location(in: containerView)
-            addSquare(at: location)
-        }
-
-        func addSquare(at point: CGPoint) {
-            guard let view = containerView else { return }
-            let size = CGFloat.random(in: 30...60)
-            let square = UIView(frame: CGRect(x: point.x - size / 2, y: point.y - size / 2, width: size, height: size))
-            square.backgroundColor = squareColors.randomElement()
-            square.layer.cornerRadius = size * 0.15
-            view.addSubview(square)
-
-            gravity?.addItem(square)
-            collision?.addItem(square)
-            itemBehavior?.addItem(square)
-
-            // Limit total squares to 30
-            if let container = containerView, container.subviews.count > 30 {
-                let oldest = container.subviews[0]
-                gravity?.removeItem(oldest)
-                collision?.removeItem(oldest)
-                itemBehavior?.removeItem(oldest)
-                oldest.removeFromSuperview()
-            }
-        }
+        .listStyle(.insetGrouped)
     }
 }
 
