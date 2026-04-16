@@ -1,75 +1,105 @@
 import SwiftUI
-import SpriteKit
 
-struct SpriteKitPhysicsView: View {
-    @State private var scene: BallDropScene = {
-        let scene = BallDropScene()
-        scene.scaleMode = .resizeFill
-        scene.backgroundColor = .white
-        return scene
-    }()
+struct PhysicsDemo: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let icon: String
+    let color: Color
+    let destination: AnyView
 
-    var body: some View {
-        VStack(spacing: 0) {
-            SpriteView(scene: scene)
-                .ignoresSafeArea(edges: .bottom)
-
-            HStack {
-                Text("Tap anywhere to drop a ball")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-
-                Spacer()
-
-                Button("Clear") {
-                    scene.clearBalls()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.blue)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(.systemGroupedBackground))
-        }
+    @MainActor
+    init<V: View>(title: String, description: String, icon: String, color: Color, @ViewBuilder destination: () -> V) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.color = color
+        self.destination = AnyView(destination())
     }
 }
 
-@MainActor
-class BallDropScene: SKScene {
-    private let ballColors: [UIColor] = [.systemRed, .systemBlue, .systemGreen, .systemOrange, .systemPurple, .systemPink, .systemTeal]
-
-    override func didMove(to view: SKView) {
-        physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
-        physicsBody?.friction = 0.5
-        physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
+struct SpriteKitPhysicsView: View {
+    @MainActor
+    private var demos: [PhysicsDemo] {
+        [
+            PhysicsDemo(
+                title: "Gravity Balls",
+                description: "Tap to spawn colorful balls with real gravity and device tilt",
+                icon: "circle.circle.fill",
+                color: .blue
+            ) {
+                GravityBallsView()
+            },
+            PhysicsDemo(
+                title: "Ragdoll Playground",
+                description: "Drag and fling a jointed ragdoll with realistic physics",
+                icon: "figure.fall",
+                color: .orange
+            ) {
+                RagdollPlaygroundView()
+            },
+            PhysicsDemo(
+                title: "Fluid Simulation",
+                description: "Touch to spawn fluid particles with surface tension effects",
+                icon: "drop.fill",
+                color: .cyan
+            ) {
+                FluidSimulationView()
+            },
+            PhysicsDemo(
+                title: "Breakout Mini-Game",
+                description: "Classic brick-breaker with paddle, ball, and score tracking",
+                icon: "rectangle.split.3x3.fill",
+                color: .red
+            ) {
+                BreakoutGameView()
+            },
+            PhysicsDemo(
+                title: "Magnetic Field",
+                description: "Place attractors and repellers to control floating particles",
+                icon: "magnet",
+                color: .purple
+            ) {
+                MagneticFieldView()
+            },
+            PhysicsDemo(
+                title: "Destruction Physics",
+                description: "Tap shapes to shatter them into flying fragments",
+                icon: "bolt.trianglebadge.exclamationmark.fill",
+                color: .pink
+            ) {
+                DestructionPhysicsView()
+            },
+        ]
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        let location = touch.location(in: self)
-        addBall(at: location)
-    }
+    var body: some View {
+        List(demos) { demo in
+            NavigationLink {
+                demo.destination
+                    .navigationTitle(demo.title)
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: demo.icon)
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(demo.color.gradient)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
 
-    private func addBall(at position: CGPoint) {
-        let radius = CGFloat.random(in: 15...35)
-        let ball = SKShapeNode(circleOfRadius: radius)
-        ball.position = position
-        ball.fillColor = ballColors.randomElement() ?? .systemBlue
-        ball.strokeColor = ball.fillColor.withAlphaComponent(0.7)
-        ball.lineWidth = 2
-
-        let body = SKPhysicsBody(circleOfRadius: radius)
-        body.restitution = CGFloat.random(in: 0.4...0.8)
-        body.friction = 0.3
-        body.density = 1.0
-        ball.physicsBody = body
-        ball.name = "ball"
-
-        addChild(ball)
-    }
-
-    func clearBalls() {
-        children.filter { $0.name == "ball" }.forEach { $0.removeFromParent() }
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(demo.title)
+                            .font(.headline)
+                        Text(demo.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+        }
+        .listStyle(.insetGrouped)
     }
 }
 

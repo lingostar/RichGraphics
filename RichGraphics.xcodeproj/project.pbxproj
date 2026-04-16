@@ -9,33 +9,48 @@
 /* Begin PBXBuildFile section */
 		05203B3B2710756C572C03EC /* SpriteKitPhysicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B454C5532365909BB19F8213 /* SpriteKitPhysicsView.swift */; };
 		0A5BFBE55725B4126841324C /* DemoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = A05772D1F6F3B6099A9434E0 /* DemoModule.swift */; };
+		1817101F39700628E6FC34E9 /* MagneticFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E016F67E557F3D7BDE29D28C /* MagneticFieldView.swift */; };
+		2361A7EE73CC83C58B519943 /* PencilKitCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CAF7028C36D957D22E4DBE /* PencilKitCanvasView.swift */; };
+		357D81A75F3043F093A0D161 /* SignaturePadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */; };
 		39F145A26E6F7B1288B00604 /* SpringPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C0C0CF14A8D8A2E99F8C /* SpringPlaygroundView.swift */; };
 		4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */; };
+		4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */; };
 		56413923DE33CD545C1AD33E /* ScrollEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BBADA316CCFA760DBCCC5 /* ScrollEffectsView.swift */; };
+		6EFDEB1F0825789B3F39A31C /* GravityBallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */; };
 		70FFC5D23882D7383AD52CF4 /* DrawingCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11BCBA8994CFE7B4D0AECCB /* DrawingCanvasView.swift */; };
 		721E01A92ED971DD4B99EDD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F48227653248D8C56637DE8 /* ContentView.swift */; };
+		82C097C829CF73CA68CD8389 /* FluidSimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */; };
+		82E7384175608A0643DF1B8C /* DestructionPhysicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4028CE89A97AB2F9883782D1 /* DestructionPhysicsView.swift */; };
 		86385BD4984481572F63B2CA /* KeyframeAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745644BBFD99EF4A84E9844C /* KeyframeAnimationsView.swift */; };
+		95D3B0FCA3D47F0ED8020606 /* FreehandDrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B304A26B7D0F854D81EDB5F /* FreehandDrawingView.swift */; };
 		A997C56364DAE82DACAC9B4E /* MorphingShapesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA70063F22F901D6DEE244C /* MorphingShapesView.swift */; };
 		AFC87944DBC8A841AD9AA3A0 /* SceneKit3DView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE73F7DC79B3C162BBF748 /* SceneKit3DView.swift */; };
 		B0CF186FCC46335A9F61A79E /* ImageFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1018556897D9FB175CEB951F /* ImageFiltersView.swift */; };
 		B0FCFFB7FE63323458ECCAF2 /* DemoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */; };
 		BA3C9369D80B5BF7024818EC /* RichGraphicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */; };
 		C78A97806E7AD616F6E9326E /* SwiftUIAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */; };
+		D1B34FC118B7793F9558AC85 /* ShapeBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */; };
+		DFAC2437EE9BC0D52D69568D /* BreakoutGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6DEACB4BCC1C88E50D6E668 /* BreakoutGameView.swift */; };
 		E84C47DD5A6B36BC6E10FEE0 /* MatchedGeometryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDCCD85030DBAC8D2EFBCF44 /* MatchedGeometryView.swift */; };
 		F12833BEB5E9E7B1C5659C34 /* ParticleEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830B09DF790E26C887C33CA2 /* ParticleEffectsView.swift */; };
 		F28F5A581998B01DD320F65F /* UIKitDynamicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35205C2E63653648FAA8724 /* UIKitDynamicsView.swift */; };
 		F6693B9ECBDE0168C296112C /* DemoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56DE8902CCFE6BA1E5865B07 /* DemoDetailView.swift */; };
 		F8A6DEDAE022AFE1EEA08F7C /* PhaseAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D755DD27E2AB08CA700CF88B /* PhaseAnimationsView.swift */; };
+		FA46B57FE1AA4AEC6A2D20C8 /* GenerativeArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF0C7D8D979EFC1E8AA1A5 /* GenerativeArtView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1018556897D9FB175CEB951F /* ImageFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFiltersView.swift; sourceTree = "<group>"; };
 		12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransitionsView.swift; sourceTree = "<group>"; };
 		19CE73F7DC79B3C162BBF748 /* SceneKit3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKit3DView.swift; sourceTree = "<group>"; };
+		4028CE89A97AB2F9883782D1 /* DestructionPhysicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestructionPhysicsView.swift; sourceTree = "<group>"; };
 		4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichGraphicsApp.swift; sourceTree = "<group>"; };
+		4B304A26B7D0F854D81EDB5F /* FreehandDrawingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FreehandDrawingView.swift; sourceTree = "<group>"; };
 		56DE8902CCFE6BA1E5865B07 /* DemoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoDetailView.swift; sourceTree = "<group>"; };
 		5AA5C0C0CF14A8D8A2E99F8C /* SpringPlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringPlaygroundView.swift; sourceTree = "<group>"; };
 		5DA70063F22F901D6DEE244C /* MorphingShapesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MorphingShapesView.swift; sourceTree = "<group>"; };
+		65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeBuilderView.swift; sourceTree = "<group>"; };
+		66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignaturePadView.swift; sourceTree = "<group>"; };
 		745644BBFD99EF4A84E9844C /* KeyframeAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyframeAnimationsView.swift; sourceTree = "<group>"; };
 		830B09DF790E26C887C33CA2 /* ParticleEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleEffectsView.swift; sourceTree = "<group>"; };
 		8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoCard.swift; sourceTree = "<group>"; };
@@ -45,9 +60,16 @@
 		B35205C2E63653648FAA8724 /* UIKitDynamicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitDynamicsView.swift; sourceTree = "<group>"; };
 		B454C5532365909BB19F8213 /* SpriteKitPhysicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitPhysicsView.swift; sourceTree = "<group>"; };
 		C52BBADA316CCFA760DBCCC5 /* ScrollEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEffectsView.swift; sourceTree = "<group>"; };
+		C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityBallsView.swift; sourceTree = "<group>"; };
+		C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidSimulationView.swift; sourceTree = "<group>"; };
+		D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RagdollPlaygroundView.swift; sourceTree = "<group>"; };
 		D11BCBA8994CFE7B4D0AECCB /* DrawingCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingCanvasView.swift; sourceTree = "<group>"; };
+		D1CAF7028C36D957D22E4DBE /* PencilKitCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PencilKitCanvasView.swift; sourceTree = "<group>"; };
+		D1EF0C7D8D979EFC1E8AA1A5 /* GenerativeArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerativeArtView.swift; sourceTree = "<group>"; };
 		D755DD27E2AB08CA700CF88B /* PhaseAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseAnimationsView.swift; sourceTree = "<group>"; };
 		DDCCD85030DBAC8D2EFBCF44 /* MatchedGeometryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchedGeometryView.swift; sourceTree = "<group>"; };
+		E016F67E557F3D7BDE29D28C /* MagneticFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagneticFieldView.swift; sourceTree = "<group>"; };
+		E6DEACB4BCC1C88E50D6E668 /* BreakoutGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutGameView.swift; sourceTree = "<group>"; };
 		F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAnimationsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +157,12 @@
 		82A97CDE8D31D0F72C50BBF2 /* SpriteKitPhysics */ = {
 			isa = PBXGroup;
 			children = (
+				E6DEACB4BCC1C88E50D6E668 /* BreakoutGameView.swift */,
+				4028CE89A97AB2F9883782D1 /* DestructionPhysicsView.swift */,
+				C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */,
+				C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */,
+				E016F67E557F3D7BDE29D28C /* MagneticFieldView.swift */,
+				D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */,
 				B454C5532365909BB19F8213 /* SpriteKitPhysicsView.swift */,
 			);
 			path = SpriteKitPhysics;
@@ -160,6 +188,11 @@
 			isa = PBXGroup;
 			children = (
 				D11BCBA8994CFE7B4D0AECCB /* DrawingCanvasView.swift */,
+				4B304A26B7D0F854D81EDB5F /* FreehandDrawingView.swift */,
+				D1EF0C7D8D979EFC1E8AA1A5 /* GenerativeArtView.swift */,
+				D1CAF7028C36D957D22E4DBE /* PencilKitCanvasView.swift */,
+				65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */,
+				66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */,
 			);
 			path = DrawingCanvas;
 			sourceTree = "<group>";
@@ -240,21 +273,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DFAC2437EE9BC0D52D69568D /* BreakoutGameView.swift in Sources */,
 				721E01A92ED971DD4B99EDD6 /* ContentView.swift in Sources */,
 				4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */,
 				B0FCFFB7FE63323458ECCAF2 /* DemoCard.swift in Sources */,
 				F6693B9ECBDE0168C296112C /* DemoDetailView.swift in Sources */,
 				0A5BFBE55725B4126841324C /* DemoModule.swift in Sources */,
+				82E7384175608A0643DF1B8C /* DestructionPhysicsView.swift in Sources */,
 				70FFC5D23882D7383AD52CF4 /* DrawingCanvasView.swift in Sources */,
+				82C097C829CF73CA68CD8389 /* FluidSimulationView.swift in Sources */,
+				95D3B0FCA3D47F0ED8020606 /* FreehandDrawingView.swift in Sources */,
+				FA46B57FE1AA4AEC6A2D20C8 /* GenerativeArtView.swift in Sources */,
+				6EFDEB1F0825789B3F39A31C /* GravityBallsView.swift in Sources */,
 				B0CF186FCC46335A9F61A79E /* ImageFiltersView.swift in Sources */,
 				86385BD4984481572F63B2CA /* KeyframeAnimationsView.swift in Sources */,
+				1817101F39700628E6FC34E9 /* MagneticFieldView.swift in Sources */,
 				E84C47DD5A6B36BC6E10FEE0 /* MatchedGeometryView.swift in Sources */,
 				A997C56364DAE82DACAC9B4E /* MorphingShapesView.swift in Sources */,
 				F12833BEB5E9E7B1C5659C34 /* ParticleEffectsView.swift in Sources */,
+				2361A7EE73CC83C58B519943 /* PencilKitCanvasView.swift in Sources */,
 				F8A6DEDAE022AFE1EEA08F7C /* PhaseAnimationsView.swift in Sources */,
+				4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */,
 				BA3C9369D80B5BF7024818EC /* RichGraphicsApp.swift in Sources */,
 				AFC87944DBC8A841AD9AA3A0 /* SceneKit3DView.swift in Sources */,
 				56413923DE33CD545C1AD33E /* ScrollEffectsView.swift in Sources */,
+				D1B34FC118B7793F9558AC85 /* ShapeBuilderView.swift in Sources */,
+				357D81A75F3043F093A0D161 /* SignaturePadView.swift in Sources */,
 				39F145A26E6F7B1288B00604 /* SpringPlaygroundView.swift in Sources */,
 				05203B3B2710756C572C03EC /* SpriteKitPhysicsView.swift in Sources */,
 				C78A97806E7AD616F6E9326E /* SwiftUIAnimationsView.swift in Sources */,

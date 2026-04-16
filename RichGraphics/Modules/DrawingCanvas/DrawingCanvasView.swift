@@ -1,102 +1,98 @@
 import SwiftUI
 
-struct DrawingCanvasView: View {
-    @State private var lines: [DrawingLine] = []
-    @State private var currentLine: DrawingLine?
-    @State private var selectedColor: Color = .black
-    @State private var lineWidth: Double = 4.0
+struct DrawingCanvasDemo: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let icon: String
+    let color: Color
+    let destination: AnyView
 
-    private let colors: [Color] = [.black, .red, .blue, .green, .orange, .purple]
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Canvas { context, size in
-                for line in lines {
-                    drawLine(line, in: &context)
-                }
-                if let current = currentLine {
-                    drawLine(current, in: &context)
-                }
-            }
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        let point = value.location
-                        if currentLine == nil {
-                            currentLine = DrawingLine(
-                                points: [point],
-                                color: selectedColor,
-                                lineWidth: lineWidth
-                            )
-                        } else {
-                            currentLine?.points.append(point)
-                        }
-                    }
-                    .onEnded { _ in
-                        if let line = currentLine {
-                            lines.append(line)
-                        }
-                        currentLine = nil
-                    }
-            )
-            .background(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 0))
-
-            Divider()
-
-            HStack(spacing: 16) {
-                ForEach(colors, id: \.self) { color in
-                    Circle()
-                        .fill(color)
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            if color == selectedColor {
-                                Circle()
-                                    .stroke(.primary, lineWidth: 3)
-                                    .padding(-3)
-                            }
-                        }
-                        .onTapGesture {
-                            selectedColor = color
-                        }
-                }
-
-                Spacer()
-
-                Slider(value: $lineWidth, in: 1...20, step: 1)
-                    .frame(width: 100)
-
-                Button("Clear") {
-                    lines.removeAll()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(.red)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(.systemGroupedBackground))
-        }
-    }
-
-    private func drawLine(_ line: DrawingLine, in context: inout GraphicsContext) {
-        guard line.points.count > 1 else { return }
-        var path = Path()
-        path.move(to: line.points[0])
-        for point in line.points.dropFirst() {
-            path.addLine(to: point)
-        }
-        context.stroke(
-            path,
-            with: .color(line.color),
-            style: StrokeStyle(lineWidth: line.lineWidth, lineCap: .round, lineJoin: .round)
-        )
+    @MainActor
+    init<V: View>(title: String, description: String, icon: String, color: Color, @ViewBuilder destination: () -> V) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.color = color
+        self.destination = AnyView(destination())
     }
 }
 
-private struct DrawingLine {
-    var points: [CGPoint]
-    var color: Color
-    var lineWidth: Double
+struct DrawingCanvasView: View {
+    @MainActor
+    private var demos: [DrawingCanvasDemo] {
+        [
+            DrawingCanvasDemo(
+                title: "Freehand Drawing",
+                description: "CoreGraphics-based drawing with color palette and undo/redo",
+                icon: "hand.draw",
+                color: .orange
+            ) {
+                FreehandDrawingView()
+            },
+            DrawingCanvasDemo(
+                title: "PencilKit Canvas",
+                description: "Full PencilKit integration with tool picker and image export",
+                icon: "pencil.tip.crop.circle",
+                color: .blue
+            ) {
+                PencilKitCanvasView()
+            },
+            DrawingCanvasDemo(
+                title: "Shape Builder",
+                description: "Draw lines, rectangles, circles, and triangles by gesture",
+                icon: "rectangle.on.rectangle",
+                color: .green
+            ) {
+                ShapeBuilderView()
+            },
+            DrawingCanvasDemo(
+                title: "Generative Art",
+                description: "Spirograph generator with animated curves and presets",
+                icon: "sparkle",
+                color: .purple
+            ) {
+                GenerativeArtView()
+            },
+            DrawingCanvasDemo(
+                title: "Signature Pad",
+                description: "Smooth Bezier-interpolated signature capture",
+                icon: "signature",
+                color: .indigo
+            ) {
+                SignaturePadView()
+            },
+        ]
+    }
+
+    var body: some View {
+        List(demos) { demo in
+            NavigationLink {
+                demo.destination
+                    .navigationTitle(demo.title)
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: demo.icon)
+                        .font(.title2)
+                        .foregroundStyle(.white)
+                        .frame(width: 44, height: 44)
+                        .background(demo.color.gradient)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(demo.title)
+                            .font(.headline)
+                        Text(demo.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+        }
+        .listStyle(.insetGrouped)
+    }
 }
 
 #Preview {
