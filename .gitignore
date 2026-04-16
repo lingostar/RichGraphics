@@ -35,3 +35,4 @@ Pods/
 # Misc
 *.swp
 *~
+.claude/worktrees/
