@@ -3,16 +3,11 @@ layout: default
 title: Drawing Canvas
 ---
 
-<div class="breadcrumb">
-  <a href="{{ '/' | relative_url }}">Home</a> &gt; Drawing Canvas
-</div>
+[Home]({{ '/' | relative_url }}) > Drawing Canvas
 
-<div class="page-header">
-  <h1>Drawing Canvas</h1>
-  <p class="subtitle">CoreGraphics(Quartz 2D)의 저수준 드로잉 API와 PencilKit의 고수준 필기/드로잉 프레임워크를 함께 학습합니다. 벡터 경로부터 Apple Pencil 필압 인식까지 다룹니다.</p>
-</div>
+# Drawing Canvas
 
-<article markdown="1">
+CoreGraphics(Quartz 2D)의 저수준 드로잉 API와 PencilKit의 고수준 필기/드로잉 프레임워크를 함께 학습합니다. 벡터 경로부터 Apple Pencil 필압 인식까지 다룹니다.
 
 ## 개요
 
@@ -89,51 +84,27 @@ struct DrawingCanvas: UIViewRepresentable {
 
 ## 데모 목록
 
-<div class="demo-list">
-  <div class="demo-item">
-    <h4>1. Bezier Path Editor</h4>
-    <p>Control Point를 드래그하여 3차 베지어 곡선을 실시간으로 조작합니다. CGPath의 구조와 곡선 수학을 시각적으로 이해합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>2. Gradient & Pattern Lab</h4>
-    <p>Linear, Radial, Conic Gradient와 타일링 패턴을 CoreGraphics로 직접 그립니다. CGGradient과 CGPattern API를 실습합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>3. PencilKit Sketchpad</h4>
-    <p>PKCanvasView와 PKToolPicker를 활용한 드로잉 앱. 필압에 따른 선 굵기 변화와 도구 전환을 체험합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>4. Transform Playground</h4>
-    <p>CGAffineTransform(이동, 회전, 스케일)을 조합하며 좌표 변환의 순서가 결과에 미치는 영향을 실험합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>5. Image Compositing</h4>
-    <p>CGContext의 blendMode를 활용하여 여러 이미지를 합성합니다. 마스킹과 클리핑 경로 기법도 함께 다룹니다.</p>
-  </div>
-</div>
+| # | 데모 | 설명 |
+|---|------|------|
+| 1 | **Bezier Path Editor** | Control Point를 드래그하여 3차 베지어 곡선을 실시간으로 조작합니다. CGPath의 구조와 곡선 수학을 시각적으로 이해합니다. |
+| 2 | **Gradient & Pattern Lab** | Linear, Radial, Conic Gradient와 타일링 패턴을 CoreGraphics로 직접 그립니다. CGGradient과 CGPattern API를 실습합니다. |
+| 3 | **PencilKit Sketchpad** | PKCanvasView와 PKToolPicker를 활용한 드로잉 앱. 필압에 따른 선 굵기 변화와 도구 전환을 체험합니다. |
+| 4 | **Transform Playground** | CGAffineTransform(이동, 회전, 스케일)을 조합하며 좌표 변환의 순서가 결과에 미치는 영향을 실험합니다. |
+| 5 | **Image Compositing** | CGContext의 blendMode를 활용하여 여러 이미지를 합성합니다. 마스킹과 클리핑 경로 기법도 함께 다룹니다. |
 
 ## 실전 팁
 
-<div class="pros-cons">
-  <div class="pros">
-    <h4>Best Practices</h4>
-    <ul>
-      <li>단순 드로잉/필기 앱이라면 PencilKit이 개발 속도와 품질 면에서 유리합니다.</li>
-      <li>CoreGraphics는 좌표계 원점이 좌하단(UIKit에서는 좌상단)임에 주의하세요.</li>
-      <li>SwiftUI `Canvas` 뷰는 매 프레임 다시 그리므로, 복잡한 드로잉은 캐싱을 고려하세요.</li>
-      <li>PKDrawing은 Data로 직렬화되어 저장/복원이 간편합니다.</li>
-      <li>Apple Pencil의 예측(predicted) 터치를 활용하면 체감 지연을 줄일 수 있습니다.</li>
-    </ul>
-  </div>
-  <div class="cons">
-    <h4>주의 사항</h4>
-    <ul>
-      <li>CGContext 기반 드로잉은 반드시 `saveGState()`/`restoreGState()` 쌍으로 상태를 관리하세요.</li>
-      <li>PencilKit은 iOS/iPadOS 전용으로, macOS에서는 제한적입니다.</li>
-      <li>UIBezierPath와 CGPath는 변환 가능하지만, 혼용 시 좌표계 차이에 주의하세요.</li>
-      <li>고해상도(Retina) 디스플레이에서는 `UIScreen.main.scale`을 반영해야 선명하게 그려집니다.</li>
-    </ul>
-  </div>
-</div>
+### Best Practices
 
-</article>
+- 단순 드로잉/필기 앱이라면 PencilKit이 개발 속도와 품질 면에서 유리합니다.
+- CoreGraphics는 좌표계 원점이 좌하단(UIKit에서는 좌상단)임에 주의하세요.
+- SwiftUI `Canvas` 뷰는 매 프레임 다시 그리므로, 복잡한 드로잉은 캐싱을 고려하세요.
+- PKDrawing은 Data로 직렬화되어 저장/복원이 간편합니다.
+- Apple Pencil의 예측(predicted) 터치를 활용하면 체감 지연을 줄일 수 있습니다.
+
+### 주의 사항
+
+- CGContext 기반 드로잉은 반드시 `saveGState()`/`restoreGState()` 쌍으로 상태를 관리하세요.
+- PencilKit은 iOS/iPadOS 전용으로, macOS에서는 제한적입니다.
+- UIBezierPath와 CGPath는 변환 가능하지만, 혼용 시 좌표계 차이에 주의하세요.
+- 고해상도(Retina) 디스플레이에서는 `UIScreen.main.scale`을 반영해야 선명하게 그려집니다.

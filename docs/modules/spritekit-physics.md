@@ -3,16 +3,11 @@ layout: default
 title: SpriteKit Physics
 ---
 
-<div class="breadcrumb">
-  <a href="{{ '/' | relative_url }}">Home</a> &gt; SpriteKit Physics
-</div>
+[Home]({{ '/' | relative_url }}) > SpriteKit Physics
 
-<div class="page-header">
-  <h1>SpriteKit Physics</h1>
-  <p class="subtitle">SpriteKit의 2D 물리 엔진을 활용하여 중력, 충돌, 관절, 자기장 시뮬레이션을 구현합니다. CoreMotion과 연동한 디바이스 기울기 기반 물리도 다룹니다.</p>
-</div>
+# SpriteKit Physics
 
-<article markdown="1">
+SpriteKit의 2D 물리 엔진을 활용하여 중력, 충돌, 관절, 자기장 시뮬레이션을 구현합니다. CoreMotion과 연동한 디바이스 기울기 기반 물리도 다룹니다.
 
 ## 개요
 
@@ -72,54 +67,27 @@ SpriteView(scene: PhysicsScene(size: CGSize(width: 400, height: 600)))
 
 ## 데모 목록
 
-<div class="demo-list">
-  <div class="demo-item">
-    <h4>1. Gravity Balls</h4>
-    <p>다양한 물리 속성(질량, 반발계수, 마찰)을 가진 공들이 중력 아래 튕기고 충돌하는 시뮬레이션. 파라미터를 실시간으로 조절합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>2. Collision Lab</h4>
-    <p>categoryBitMask와 contactTestBitMask를 설정하며 선택적 충돌 감지를 실습합니다. 충돌 시 시각/사운드 피드백을 구현합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>3. Joint Playground</h4>
-    <p>Pin, Spring, Fixed Joint로 진자, 체인, 브리지 구조물을 만듭니다. 관절 파라미터 조절에 따른 동작 변화를 관찰합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>4. Field Forces</h4>
-    <p>SKFieldNode(radialGravity, vortex, noise, spring)를 배치하여 파티클에 미치는 힘을 시각화합니다. 필드 세기와 범위를 조절합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>5. Tilt Maze</h4>
-    <p>CoreMotion 가속도계와 SpriteKit 중력을 연동하여 디바이스 기울기로 공을 굴려 미로를 통과하는 게임입니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>6. Ragdoll Physics</h4>
-    <p>여러 SKPhysicsJoint를 조합하여 래그돌 캐릭터를 구성하고, 터치로 던지거나 당기는 인터랙션을 구현합니다.</p>
-  </div>
-</div>
+| # | 데모 | 설명 |
+|---|------|------|
+| 1 | **Gravity Balls** | 다양한 물리 속성(질량, 반발계수, 마찰)을 가진 공들이 중력 아래 튕기고 충돌하는 시뮬레이션. 파라미터를 실시간으로 조절합니다. |
+| 2 | **Collision Lab** | categoryBitMask와 contactTestBitMask를 설정하며 선택적 충돌 감지를 실습합니다. 충돌 시 시각/사운드 피드백을 구현합니다. |
+| 3 | **Joint Playground** | Pin, Spring, Fixed Joint로 진자, 체인, 브리지 구조물을 만듭니다. 관절 파라미터 조절에 따른 동작 변화를 관찰합니다. |
+| 4 | **Field Forces** | SKFieldNode(radialGravity, vortex, noise, spring)를 배치하여 파티클에 미치는 힘을 시각화합니다. 필드 세기와 범위를 조절합니다. |
+| 5 | **Tilt Maze** | CoreMotion 가속도계와 SpriteKit 중력을 연동하여 디바이스 기울기로 공을 굴려 미로를 통과하는 게임입니다. |
+| 6 | **Ragdoll Physics** | 여러 SKPhysicsJoint를 조합하여 래그돌 캐릭터를 구성하고, 터치로 던지거나 당기는 인터랙션을 구현합니다. |
 
 ## 실전 팁
 
-<div class="pros-cons">
-  <div class="pros">
-    <h4>Best Practices</h4>
-    <ul>
-      <li>SpriteView의 `isPaused`, `preferredFramesPerSecond` 옵션으로 배터리를 절약하세요.</li>
-      <li>물리 시뮬레이션 스케일은 실제 단위(미터)가 아닌 포인트 기준입니다. 적절한 스케일링이 중요합니다.</li>
-      <li>`SKScene.update(_:)`에서 deltaTime을 활용하여 프레임 독립적 로직을 작성하세요.</li>
-      <li>SpriteView에 `.ignoresSafeArea()`를 붙이면 전체 화면 씬을 쉽게 만들 수 있습니다.</li>
-    </ul>
-  </div>
-  <div class="cons">
-    <h4>주의 사항</h4>
-    <ul>
-      <li>물리 바디가 너무 많으면(수백 개 이상) 시뮬레이션 부하가 급격히 증가합니다.</li>
-      <li>물리 바디의 크기가 너무 작으면 터널링(관통) 현상이 발생할 수 있습니다. `usesPreciseCollisionDetection`을 활성화하세요.</li>
-      <li>SpriteView는 SwiftUI 뷰 업데이트와 SpriteKit 렌더 루프가 별도로 돌아가므로, 상태 동기화에 주의하세요.</li>
-      <li>CoreMotion은 Simulator에서 동작하지 않으므로 실기기 테스트가 필수입니다.</li>
-    </ul>
-  </div>
-</div>
+### Best Practices
 
-</article>
+- SpriteView의 `isPaused`, `preferredFramesPerSecond` 옵션으로 배터리를 절약하세요.
+- 물리 시뮬레이션 스케일은 실제 단위(미터)가 아닌 포인트 기준입니다. 적절한 스케일링이 중요합니다.
+- `SKScene.update(_:)`에서 deltaTime을 활용하여 프레임 독립적 로직을 작성하세요.
+- SpriteView에 `.ignoresSafeArea()`를 붙이면 전체 화면 씬을 쉽게 만들 수 있습니다.
+
+### 주의 사항
+
+- 물리 바디가 너무 많으면(수백 개 이상) 시뮬레이션 부하가 급격히 증가합니다.
+- 물리 바디의 크기가 너무 작으면 터널링(관통) 현상이 발생할 수 있습니다. `usesPreciseCollisionDetection`을 활성화하세요.
+- SpriteView는 SwiftUI 뷰 업데이트와 SpriteKit 렌더 루프가 별도로 돌아가므로, 상태 동기화에 주의하세요.
+- CoreMotion은 Simulator에서 동작하지 않으므로 실기기 테스트가 필수입니다.

@@ -3,16 +3,11 @@ layout: default
 title: SceneKit / Metal 3D
 ---
 
-<div class="breadcrumb">
-  <a href="{{ '/' | relative_url }}">Home</a> &gt; SceneKit / Metal 3D
-</div>
+[Home]({{ '/' | relative_url }}) > SceneKit / Metal 3D
 
-<div class="page-header">
-  <h1>SceneKit / Metal 3D</h1>
-  <p class="subtitle">SceneKit의 고수준 3D 렌더링 파이프라인과 Metal Shader Modifier를 결합하여 3D 시각화, 프로시저럴 지형, 커스텀 셰이더 이펙트를 구현합니다.</p>
-</div>
+# SceneKit / Metal 3D
 
-<article markdown="1">
+SceneKit의 고수준 3D 렌더링 파이프라인과 Metal Shader Modifier를 결합하여 3D 시각화, 프로시저럴 지형, 커스텀 셰이더 이펙트를 구현합니다.
 
 ## 개요
 
@@ -81,50 +76,26 @@ sphere.geometry?.shaderModifiers = [
 
 ## 데모 목록
 
-<div class="demo-list">
-  <div class="demo-item">
-    <h4>1. 3D Primitives Gallery</h4>
-    <p>Box, Sphere, Cylinder, Torus 등 기본 geometry에 PBR(Physically Based Rendering) 재질을 적용하고, 조명 설정을 실험합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>2. Procedural Terrain</h4>
-    <p>Perlin Noise 알고리즘으로 높이맵(height map)을 생성하고, Shader Modifier의 geometry entry point로 지형을 실시간 변형합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>3. Shader Modifier Lab</h4>
-    <p>4개의 shader entry point(.geometry, .surface, .lightingModel, .fragment)에 코드를 삽입하며 셰이더 프로그래밍의 기초를 실습합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>4. Solar System</h4>
-    <p>SCNNode 계층 구조와 SCNAction을 활용하여 태양계 행성의 공전/자전 시뮬레이션을 구현합니다. 부모-자식 좌표계를 학습합니다.</p>
-  </div>
-  <div class="demo-item">
-    <h4>5. Model Viewer</h4>
-    <p>USDZ/OBJ 3D 모델을 로드하고, 카메라 제어, 환경 조명(IBL), 애니메이션 재생을 구현하는 모델 뷰어입니다.</p>
-  </div>
-</div>
+| # | 데모 | 설명 |
+|---|------|------|
+| 1 | **3D Primitives Gallery** | Box, Sphere, Cylinder, Torus 등 기본 geometry에 PBR(Physically Based Rendering) 재질을 적용하고, 조명 설정을 실험합니다. |
+| 2 | **Procedural Terrain** | Perlin Noise 알고리즘으로 높이맵(height map)을 생성하고, Shader Modifier의 geometry entry point로 지형을 실시간 변형합니다. |
+| 3 | **Shader Modifier Lab** | 4개의 shader entry point(.geometry, .surface, .lightingModel, .fragment)에 코드를 삽입하며 셰이더 프로그래밍의 기초를 실습합니다. |
+| 4 | **Solar System** | SCNNode 계층 구조와 SCNAction을 활용하여 태양계 행성의 공전/자전 시뮬레이션을 구현합니다. 부모-자식 좌표계를 학습합니다. |
+| 5 | **Model Viewer** | USDZ/OBJ 3D 모델을 로드하고, 카메라 제어, 환경 조명(IBL), 애니메이션 재생을 구현하는 모델 뷰어입니다. |
 
 ## 실전 팁
 
-<div class="pros-cons">
-  <div class="pros">
-    <h4>Best Practices</h4>
-    <ul>
-      <li>대부분의 3D 시각화는 SceneKit으로 충분합니다. Raw Metal은 극한 성능이나 커스텀 렌더링 파이프라인이 필요할 때만 고려하세요.</li>
-      <li>Shader Modifier는 Metal Shading Language(MSL) 문법을 사용하지만, 보일러플레이트 없이 핵심 로직만 작성하면 됩니다.</li>
-      <li>`SCNMaterial.lightingModel = .physicallyBased`와 HDR 환경맵을 조합하면 사실적인 렌더링을 쉽게 얻을 수 있습니다.</li>
-      <li>`u_time` uniform 변수를 활용하면 시간 기반 애니메이션 셰이더를 간단히 만들 수 있습니다.</li>
-    </ul>
-  </div>
-  <div class="cons">
-    <h4>주의 사항</h4>
-    <ul>
-      <li>SceneKit의 물리 엔진은 SpriteKit에 비해 제한적입니다. 복잡한 물리가 필요하면 별도 물리 엔진을 고려하세요.</li>
-      <li>Shader Modifier 디버깅은 어렵습니다. 단순한 코드부터 점진적으로 복잡도를 높이세요.</li>
-      <li>노드 수가 많아지면 draw call이 증가하여 성능이 저하됩니다. `flattenedClone()`으로 노드를 병합하세요.</li>
-      <li>SceneView의 `allowsCameraControl`은 편리하지만 커스텀 카메라 조작이 필요하면 직접 구현해야 합니다.</li>
-    </ul>
-  </div>
-</div>
+### Best Practices
 
-</article>
+- 대부분의 3D 시각화는 SceneKit으로 충분합니다. Raw Metal은 극한 성능이나 커스텀 렌더링 파이프라인이 필요할 때만 고려하세요.
+- Shader Modifier는 Metal Shading Language(MSL) 문법을 사용하지만, 보일러플레이트 없이 핵심 로직만 작성하면 됩니다.
+- `SCNMaterial.lightingModel = .physicallyBased`와 HDR 환경맵을 조합하면 사실적인 렌더링을 쉽게 얻을 수 있습니다.
+- `u_time` uniform 변수를 활용하면 시간 기반 애니메이션 셰이더를 간단히 만들 수 있습니다.
+
+### 주의 사항
+
+- SceneKit의 물리 엔진은 SpriteKit에 비해 제한적입니다. 복잡한 물리가 필요하면 별도 물리 엔진을 고려하세요.
+- Shader Modifier 디버깅은 어렵습니다. 단순한 코드부터 점진적으로 복잡도를 높이세요.
+- 노드 수가 많아지면 draw call이 증가하여 성능이 저하됩니다. `flattenedClone()`으로 노드를 병합하세요.
+- SceneView의 `allowsCameraControl`은 편리하지만 커스텀 카메라 조작이 필요하면 직접 구현해야 합니다.
