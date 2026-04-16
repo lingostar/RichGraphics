@@ -109,11 +109,11 @@ enum ShaderPreset: String, CaseIterable, Identifiable {
 }
 
 @MainActor
-final class ShaderSceneController: NSObject, ObservableObject, SCNSceneRendererDelegate {
+final class ShaderSceneController: NSObject, ObservableObject {
     let scene = SCNScene()
     @Published var selectedPreset: ShaderPreset = .plasma
-    private var startTime: TimeInterval = 0
-    private var shaderNode: SCNNode?
+    nonisolated(unsafe) var renderStartTime: TimeInterval = 0
+    nonisolated(unsafe) var renderShaderNode: SCNNode?
 
     func setup() {
         scene.background.contents = UIColor(white: 0.1, alpha: 1)
@@ -136,7 +136,7 @@ final class ShaderSceneController: NSObject, ObservableObject, SCNSceneRendererD
     }
 
     func applyPreset() {
-        shaderNode?.removeFromParentNode()
+        renderShaderNode?.removeFromParentNode()
 
         let geometry: SCNGeometry
         if selectedPreset == .ripple || selectedPreset == .rainbowWave {
@@ -173,16 +173,26 @@ final class ShaderSceneController: NSObject, ObservableObject, SCNSceneRendererD
         node.runAction(SCNAction.repeatForever(spin))
 
         scene.rootNode.addChildNode(node)
-        shaderNode = node
-        startTime = 0
+        renderShaderNode = node
+        renderStartTime = 0
     }
 
-    nonisolated func renderer(_ renderer: any SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        MainActor.assumeIsolated {
-            if startTime == 0 { startTime = time }
-            let elapsed = Float(time - startTime)
-            shaderNode?.geometry?.materials.first?.setValue(elapsed, forKey: "uTime")
-        }
+}
+
+// MARK: - Render Delegate (called on SceneKit render thread)
+
+final class ShaderRenderDelegate: NSObject, SCNSceneRendererDelegate {
+    private weak var controller: ShaderSceneController?
+
+    init(controller: ShaderSceneController) {
+        self.controller = controller
+    }
+
+    func renderer(_ renderer: any SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        guard let controller else { return }
+        if controller.renderStartTime == 0 { controller.renderStartTime = time }
+        let elapsed = Float(time - controller.renderStartTime)
+        controller.renderShaderNode?.geometry?.materials.first?.setValue(elapsed, forKey: "uTime")
     }
 }
 
@@ -223,13 +233,17 @@ struct ShaderPlaygroundView: View {
 struct ShaderSceneRepresentable: UIViewRepresentable {
     let controller: ShaderSceneController
 
+    func makeCoordinator() -> ShaderRenderDelegate {
+        ShaderRenderDelegate(controller: controller)
+    }
+
     func makeUIView(context: Context) -> SCNView {
         let scnView = SCNView()
         scnView.scene = controller.scene
         scnView.allowsCameraControl = true
         scnView.autoenablesDefaultLighting = false
         scnView.backgroundColor = .black
-        scnView.delegate = controller
+        scnView.delegate = context.coordinator
         scnView.isPlaying = true
         return scnView
     }
