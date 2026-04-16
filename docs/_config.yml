@@ -1,0 +1,13 @@
+title: RichGraphics
+description: Apple 그래픽 프레임워크 학습 레퍼런스
+baseurl: "/RichGraphics"
+url: "https://lingostar.github.io"
+theme: null
+plugins:
+  - jekyll-seo-tag
+markdown: kramdown
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false

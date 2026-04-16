@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — RichGraphics</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="topnav">
+    <div class="nav-inner">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">🎨 RichGraphics</a>
+      <div class="nav-links">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/comparison' | relative_url }}">Framework 비교</a>
+        <a href="https://github.com/lingostar/RichGraphics" target="_blank">GitHub ↗</a>
+      </div>
+    </div>
+  </nav>
+  <main>
+    {{ content }}
+  </main>
+  <footer>
+    <p>RichGraphics — Apple Graphics Framework Reference for Students</p>
+    <p><a href="https://github.com/lingostar/RichGraphics">github.com/lingostar/RichGraphics</a></p>
+  </footer>
+</body>
+</html>
