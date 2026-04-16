@@ -1,56 +1,78 @@
 import SwiftUI
 
-struct SwiftUIAnimationsView: View {
-    @State private var dampingFraction: Double = 0.5
-    @State private var animated = false
+struct AnimationDemo: Identifiable {
+    let id = UUID()
+    let title: String
+    let description: String
+    let icon: String
+    let color: Color
+    let destination: AnyView
 
-    private let colors: [Color] = [.red, .orange, .yellow, .green, .blue, .purple]
+    @MainActor
+    init<V: View>(title: String, description: String, icon: String, color: Color, @ViewBuilder destination: () -> V) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.color = color
+        self.destination = AnyView(destination())
+    }
+}
+
+struct SwiftUIAnimationsView: View {
+    @MainActor
+    private var demos: [AnimationDemo] {
+        [
+            AnimationDemo(title: "Spring Playground", description: "Tune spring parameters and compare curves in real time", icon: "waveform.path.ecg", color: .purple) {
+                SpringPlaygroundView()
+            },
+            AnimationDemo(title: "Morphing Shapes", description: "Custom shapes with animatableData morph between forms", icon: "pentagon", color: .orange) {
+                MorphingShapesView()
+            },
+            AnimationDemo(title: "Keyframe Animations", description: "Multi-property keyframe sequences with iOS 17 API", icon: "film.stack", color: .blue) {
+                KeyframeAnimationsView()
+            },
+            AnimationDemo(title: "Phase Animations", description: "State-machine animations using PhaseAnimator", icon: "circle.hexagongrid", color: .green) {
+                PhaseAnimationsView()
+            },
+            AnimationDemo(title: "Matched Geometry", description: "Hero transitions with shared element effects", icon: "rectangle.on.rectangle.angled", color: .pink) {
+                MatchedGeometryView()
+            },
+            AnimationDemo(title: "Custom Transitions", description: "Build unique AnyTransition effects from scratch", icon: "rectangle.2.swap", color: .teal) {
+                CustomTransitionsView()
+            },
+            AnimationDemo(title: "Scroll Effects", description: "ScrollView visual effects with parallax and 3D rotation", icon: "scroll", color: .indigo) {
+                ScrollEffectsView()
+            },
+        ]
+    }
 
     var body: some View {
-        VStack(spacing: 24) {
-            Spacer()
-
-            ZStack {
-                ForEach(Array(colors.enumerated()), id: \.offset) { index, color in
-                    Circle()
-                        .fill(color.gradient)
-                        .frame(width: 60, height: 60)
-                        .offset(
-                            x: animated ? cos(Double(index) * .pi / 3) * 100 : 0,
-                            y: animated ? sin(Double(index) * .pi / 3) * 100 : 0
-                        )
-                        .scaleEffect(animated ? 1.0 : 0.3)
-                        .opacity(animated ? 1.0 : 0.5)
-                }
-            }
-            .frame(height: 280)
-
-            Spacer()
-
-            VStack(spacing: 12) {
-                Text("Damping Fraction: \(dampingFraction, specifier: "%.2f")")
-                    .font(.subheadline.monospaced())
-
-                Slider(value: $dampingFraction, in: 0.05...1.0, step: 0.05)
-                    .padding(.horizontal, 32)
-
-                Button {
-                    withAnimation(.spring(duration: 0.8, bounce: 1.0 - dampingFraction)) {
-                        animated.toggle()
-                    }
-                } label: {
-                    Text(animated ? "Collapse" : "Expand")
-                        .font(.headline)
+        List(demos) { demo in
+            NavigationLink {
+                demo.destination
+                    .navigationTitle(demo.title)
+            } label: {
+                HStack(spacing: 14) {
+                    Image(systemName: demo.icon)
+                        .font(.title2)
                         .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 14)
-                        .background(.purple.gradient)
-                        .clipShape(RoundedRectangle(cornerRadius: 14))
+                        .frame(width: 44, height: 44)
+                        .background(demo.color.gradient)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(demo.title)
+                            .font(.headline)
+                        Text(demo.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
                 }
-                .padding(.horizontal, 32)
+                .padding(.vertical, 4)
             }
-            .padding(.bottom, 32)
         }
+        .listStyle(.insetGrouped)
     }
 }
 
