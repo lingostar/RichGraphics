@@ -13,19 +13,9 @@ private struct MorphableShape: Shape {
         guard points.count >= 3 else { return Path() }
         var path = Path()
         let scaled = points.map { CGPoint(x: $0.x * rect.width, y: $0.y * rect.height) }
-
-        // Use Catmull-Rom spline for smooth curves through all points
         path.move(to: scaled[0])
-        let n = scaled.count
-        for i in 0..<n {
-            let p0 = scaled[(i - 1 + n) % n]
-            let p1 = scaled[i]
-            let p2 = scaled[(i + 1) % n]
-            let p3 = scaled[(i + 2) % n]
-
-            let cp1 = CGPoint(x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6)
-            let cp2 = CGPoint(x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6)
-            path.addCurve(to: p2, control1: cp1, control2: cp2)
+        for i in 1..<scaled.count {
+            path.addLine(to: scaled[i])
         }
         path.closeSubpath()
         return path
@@ -83,42 +73,56 @@ extension Array: @retroactive VectorArithmetic where Element == CGPoint {
 
 // MARK: - Shape Data
 
+private let pointCount = 64
+
 private enum ShapePair: String, CaseIterable, Identifiable {
-    case circleToStar = "Circle -> Star"
-    case squareToTriangle = "Square -> Triangle"
-    case heartToDiamond = "Heart -> Diamond"
+    case circleToStar = "Circle → Star"
+    case squareToTriangle = "Square → Triangle"
+    case heartToDiamond = "Heart → Diamond"
 
     var id: String { rawValue }
 }
 
-private func circlePoints(n: Int = 48) -> [CGPoint] {
+private func circlePoints(n: Int = pointCount) -> [CGPoint] {
     (0..<n).map { i in
         let angle = Double(i) * (2 * .pi / Double(n)) - .pi / 2
-        return CGPoint(x: 0.5 + 0.45 * cos(angle), y: 0.5 + 0.45 * sin(angle))
+        return CGPoint(x: 0.5 + 0.4 * cos(angle), y: 0.5 + 0.4 * sin(angle))
     }
 }
 
-private func starPoints(n: Int = 48) -> [CGPoint] {
+private func starPoints(n: Int = pointCount) -> [CGPoint] {
+    // 5-pointed star: every point alternates between outer and inner radius
     (0..<n).map { i in
         let angle = Double(i) * (2 * .pi / Double(n)) - .pi / 2
-        let r: Double = i.isMultiple(of: 2) ? 0.45 : 0.2
+        // 10 segments: 5 outer peaks, 5 inner valleys
+        let segment = Double(i) / Double(n) * 10.0
+        let segFrac = segment - floor(segment) // 0..1 within segment
+        let isRising = Int(segment) % 2 == 0
+        let outerR = 0.4
+        let innerR = 0.18
+        let r: Double
+        if isRising {
+            r = innerR + (outerR - innerR) * segFrac
+        } else {
+            r = outerR - (outerR - innerR) * segFrac
+        }
         return CGPoint(x: 0.5 + r * cos(angle), y: 0.5 + r * sin(angle))
     }
 }
 
-private func squarePoints(n: Int = 48) -> [CGPoint] {
+private func squarePoints(n: Int = pointCount) -> [CGPoint] {
     let perSide = n / 4
     var pts: [CGPoint] = []
-    let inset = 0.1
-    let minV = inset, maxV = 1.0 - inset
+    let minV = 0.1, maxV = 0.9
     for i in 0..<perSide { pts.append(CGPoint(x: minV + (maxV - minV) * Double(i) / Double(perSide), y: minV)) }
     for i in 0..<perSide { pts.append(CGPoint(x: maxV, y: minV + (maxV - minV) * Double(i) / Double(perSide))) }
     for i in 0..<perSide { pts.append(CGPoint(x: maxV - (maxV - minV) * Double(i) / Double(perSide), y: maxV)) }
-    for i in 0..<(n - 3 * perSide) { pts.append(CGPoint(x: minV, y: maxV - (maxV - minV) * Double(i) / Double(n - 3 * perSide))) }
+    let remaining = n - 3 * perSide
+    for i in 0..<remaining { pts.append(CGPoint(x: minV, y: maxV - (maxV - minV) * Double(i) / Double(remaining))) }
     return pts
 }
 
-private func trianglePoints(n: Int = 48) -> [CGPoint] {
+private func trianglePoints(n: Int = pointCount) -> [CGPoint] {
     let perSide = n / 3
     var pts: [CGPoint] = []
     let top = CGPoint(x: 0.5, y: 0.08)
@@ -126,20 +130,21 @@ private func trianglePoints(n: Int = 48) -> [CGPoint] {
     let br = CGPoint(x: 0.92, y: 0.88)
     for i in 0..<perSide { pts.append(lerp(top, bl, t: Double(i) / Double(perSide))) }
     for i in 0..<perSide { pts.append(lerp(bl, br, t: Double(i) / Double(perSide))) }
-    for i in 0..<(n - 2 * perSide) { pts.append(lerp(br, top, t: Double(i) / Double(n - 2 * perSide))) }
+    let remaining = n - 2 * perSide
+    for i in 0..<remaining { pts.append(lerp(br, top, t: Double(i) / Double(remaining))) }
     return pts
 }
 
-private func heartPoints(n: Int = 48) -> [CGPoint] {
+private func heartPoints(n: Int = pointCount) -> [CGPoint] {
     (0..<n).map { i in
         let t = Double(i) * (2 * .pi / Double(n))
         let x = 16 * pow(sin(t), 3)
         let y = -(13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t))
-        return CGPoint(x: 0.5 + x / 40.0, y: 0.5 + y / 40.0)
+        return CGPoint(x: 0.5 + x / 42.0, y: 0.48 + y / 42.0)
     }
 }
 
-private func diamondPoints(n: Int = 48) -> [CGPoint] {
+private func diamondPoints(n: Int = pointCount) -> [CGPoint] {
     let perSide = n / 4
     var pts: [CGPoint] = []
     let top = CGPoint(x: 0.5, y: 0.05)
@@ -149,7 +154,8 @@ private func diamondPoints(n: Int = 48) -> [CGPoint] {
     for i in 0..<perSide { pts.append(lerp(top, right, t: Double(i) / Double(perSide))) }
     for i in 0..<perSide { pts.append(lerp(right, bottom, t: Double(i) / Double(perSide))) }
     for i in 0..<perSide { pts.append(lerp(bottom, left, t: Double(i) / Double(perSide))) }
-    for i in 0..<(n - 3 * perSide) { pts.append(lerp(left, top, t: Double(i) / Double(n - 3 * perSide))) }
+    let remaining = n - 3 * perSide
+    for i in 0..<remaining { pts.append(lerp(left, top, t: Double(i) / Double(remaining))) }
     return pts
 }
 
