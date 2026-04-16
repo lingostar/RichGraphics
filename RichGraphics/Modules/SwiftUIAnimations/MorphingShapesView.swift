@@ -1,210 +1,161 @@
 import SwiftUI
 
-// MARK: - Morphable Shape using animatableData
-
-/// All shapes use exactly `pointCount` points, sampled uniformly around the perimeter.
-/// Every shape starts at the TOP-CENTER (12 o'clock) and goes CLOCKWISE.
-/// This ensures 1:1 point correspondence during morphing with no crossing.
+// MARK: - Shape Morphing (Educational Pattern)
+//
+// The correct way to morph shapes in SwiftUI:
+// 1. Use a single Double (progress) as animatableData
+// 2. Store both source and target point arrays
+// 3. Lerp between them inside path(in:)
+//
+// This avoids the fragile Array<CGPoint>+VectorArithmetic hack.
 
 private let pointCount = 120
 
-private struct MorphableShape: Shape {
-    var points: [CGPoint]
-    var animatableData: [CGPoint] {
-        get { points }
-        set { points = newValue }
+// MARK: - MorphShape
+
+/// A shape that interpolates between two sets of points based on `progress`.
+///
+/// - `progress = 0` → draws shapeA
+/// - `progress = 1` → draws shapeB
+/// - values between → smooth linear interpolation
+private struct MorphShape: Shape {
+    let shapeA: [CGPoint]
+    let shapeB: [CGPoint]
+    var progress: Double
+
+    var animatableData: Double {
+        get { progress }
+        set { progress = newValue }
     }
 
     func path(in rect: CGRect) -> Path {
-        guard points.count >= 3 else { return Path() }
+        guard shapeA.count == shapeB.count, shapeA.count >= 3 else { return Path() }
+        let t = progress
         var path = Path()
-        let scaled = points.map { CGPoint(x: $0.x * rect.width, y: $0.y * rect.height) }
-        path.move(to: scaled[0])
-        for i in 1..<scaled.count {
-            path.addLine(to: scaled[i])
+        let first = lerpPoint(shapeA[0], shapeB[0], t: t, in: rect)
+        path.move(to: first)
+        for i in 1..<shapeA.count {
+            path.addLine(to: lerpPoint(shapeA[i], shapeB[i], t: t, in: rect))
         }
         path.closeSubpath()
         return path
     }
-}
 
-// MARK: - VectorArithmetic conformance for [CGPoint]
-
-extension CGPoint: @retroactive AdditiveArithmetic {
-    public static func - (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
+    private func lerpPoint(_ a: CGPoint, _ b: CGPoint, t: Double, in rect: CGRect) -> CGPoint {
+        CGPoint(
+            x: (a.x + (b.x - a.x) * t) * rect.width,
+            y: (a.y + (b.y - a.y) * t) * rect.height
+        )
     }
-    public static func + (lhs: CGPoint, rhs: CGPoint) -> CGPoint {
-        CGPoint(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
-    }
-    public static var zero: CGPoint { CGPoint(x: 0, y: 0) }
-}
-
-extension CGPoint: @retroactive VectorArithmetic {
-    public mutating func scale(by rhs: Double) { x *= rhs; y *= rhs }
-    public var magnitudeSquared: Double { x * x + y * y }
-}
-
-extension Array: @retroactive AdditiveArithmetic where Element == CGPoint {}
-
-extension Array: @retroactive VectorArithmetic where Element == CGPoint {
-    public mutating func scale(by rhs: Double) {
-        for i in indices { self[i].scale(by: rhs) }
-    }
-    public var magnitudeSquared: Double {
-        reduce(0) { $0 + $1.magnitudeSquared }
-    }
-    public static func + (lhs: [CGPoint], rhs: [CGPoint]) -> [CGPoint] {
-        let count = Swift.max(lhs.count, rhs.count)
-        return (0..<count).map { i in
-            let l = i < lhs.count ? lhs[i] : (lhs.last ?? .zero)
-            let r = i < rhs.count ? rhs[i] : (rhs.last ?? .zero)
-            return CGPoint(x: l.x + r.x, y: l.y + r.y)
-        }
-    }
-    public static func - (lhs: [CGPoint], rhs: [CGPoint]) -> [CGPoint] {
-        let count = Swift.max(lhs.count, rhs.count)
-        return (0..<count).map { i in
-            let l = i < lhs.count ? lhs[i] : (lhs.last ?? .zero)
-            let r = i < rhs.count ? rhs[i] : (rhs.last ?? .zero)
-            return CGPoint(x: l.x - r.x, y: l.y - r.y)
-        }
-    }
-    public static var zero: [CGPoint] { [] }
 }
 
 // MARK: - Shape Generators
-// ALL shapes: center (0.5, 0.5), start at top-center, go clockwise.
+// All shapes: center (0.5, 0.5), start at top (12 o'clock), go clockwise.
+// All return exactly `pointCount` points in normalized 0..1 coordinates.
 
-/// Circle: starts at top (0.5, 0.1), clockwise
 private func circlePoints() -> [CGPoint] {
-    let cx = 0.5, cy = 0.5, r = 0.38
-    return (0..<pointCount).map { i in
+    (0..<pointCount).map { i in
         let angle = -Double.pi / 2 + Double(i) * (2 * .pi / Double(pointCount))
-        return CGPoint(x: cx + r * cos(angle), y: cy + r * sin(angle))
+        return CGPoint(x: 0.5 + 0.38 * cos(angle), y: 0.5 + 0.38 * sin(angle))
     }
 }
 
-/// Star (5-pointed): starts at top peak, clockwise
 private func starPoints() -> [CGPoint] {
-    let cx = 0.5, cy = 0.5
-    let outerR = 0.38, innerR = 0.16
-    // Pre-compute 10 key points (5 outer + 5 inner), then interpolate
-    var keyPoints: [CGPoint] = []
+    var keyPts: [CGPoint] = []
     for i in 0..<10 {
         let angle = -Double.pi / 2 + Double(i) * (2 * .pi / 10.0)
-        let r = i % 2 == 0 ? outerR : innerR
-        keyPoints.append(CGPoint(x: cx + r * cos(angle), y: cy + r * sin(angle)))
+        let r: Double = i % 2 == 0 ? 0.38 : 0.16
+        keyPts.append(CGPoint(x: 0.5 + r * cos(angle), y: 0.5 + r * sin(angle)))
     }
-    return interpolateAlongPolygon(keyPoints, count: pointCount)
+    return evenlyDistribute(keyPts, count: pointCount)
 }
 
-/// Square: starts at top-center of top edge, clockwise
 private func squarePoints() -> [CGPoint] {
-    let keyPoints: [CGPoint] = [
-        CGPoint(x: 0.5, y: 0.12),  // top center
-        CGPoint(x: 0.88, y: 0.12), // top right
-        CGPoint(x: 0.88, y: 0.88), // bottom right
-        CGPoint(x: 0.12, y: 0.88), // bottom left
-        CGPoint(x: 0.12, y: 0.12), // top left
-    ]
-    return interpolateAlongPolygon(keyPoints, count: pointCount)
+    evenlyDistribute([
+        CGPoint(x: 0.5, y: 0.12),
+        CGPoint(x: 0.88, y: 0.12),
+        CGPoint(x: 0.88, y: 0.88),
+        CGPoint(x: 0.12, y: 0.88),
+        CGPoint(x: 0.12, y: 0.12),
+    ], count: pointCount)
 }
 
-/// Triangle: starts at top vertex, clockwise
 private func trianglePoints() -> [CGPoint] {
-    let keyPoints: [CGPoint] = [
-        CGPoint(x: 0.5, y: 0.08),  // top
-        CGPoint(x: 0.92, y: 0.88), // bottom right
-        CGPoint(x: 0.08, y: 0.88), // bottom left
-    ]
-    return interpolateAlongPolygon(keyPoints, count: pointCount)
+    evenlyDistribute([
+        CGPoint(x: 0.5, y: 0.08),
+        CGPoint(x: 0.92, y: 0.88),
+        CGPoint(x: 0.08, y: 0.88),
+    ], count: pointCount)
 }
 
-/// Heart: parametric heart curve, re-indexed to start at top-center dip, clockwise
 private func heartPoints() -> [CGPoint] {
-    // Generate raw heart points starting from the parametric t=0
+    // Parametric heart: generate raw, then rotate to start at top
     let raw: [CGPoint] = (0..<pointCount).map { i in
         let t = Double(i) * (2 * .pi / Double(pointCount))
         let x = 16 * pow(sin(t), 3)
         let y = -(13 * cos(t) - 5 * cos(2 * t) - 2 * cos(3 * t) - cos(4 * t))
         return CGPoint(x: 0.5 + x / 42.0, y: 0.48 + y / 42.0)
     }
-    // The parametric heart at t=0 is actually at the bottom cusp.
-    // Find the topmost point (lowest y = top of screen) to re-index
-    let topIndex = raw.enumerated().min(by: { $0.element.y < $1.element.y })?.offset ?? 0
-    // Rotate array so it starts from the top
-    return Array(raw[topIndex...] + raw[..<topIndex])
+    // Find topmost point (smallest y) and rotate array to start there
+    guard let topIdx = raw.enumerated().min(by: { $0.element.y < $1.element.y })?.offset else { return raw }
+    return Array(raw[topIdx...]) + Array(raw[..<topIdx])
 }
 
-/// Diamond: starts at top vertex, clockwise
 private func diamondPoints() -> [CGPoint] {
-    let keyPoints: [CGPoint] = [
-        CGPoint(x: 0.5, y: 0.05),  // top
-        CGPoint(x: 0.92, y: 0.5),  // right
-        CGPoint(x: 0.5, y: 0.95),  // bottom
-        CGPoint(x: 0.08, y: 0.5),  // left
-    ]
-    return interpolateAlongPolygon(keyPoints, count: pointCount)
+    evenlyDistribute([
+        CGPoint(x: 0.5, y: 0.05),
+        CGPoint(x: 0.92, y: 0.5),
+        CGPoint(x: 0.5, y: 0.95),
+        CGPoint(x: 0.08, y: 0.5),
+    ], count: pointCount)
 }
 
-/// Distribute `count` points evenly along the perimeter of a polygon defined by `vertices`.
-private func interpolateAlongPolygon(_ vertices: [CGPoint], count: Int) -> [CGPoint] {
+/// Distribute `count` points evenly along the perimeter of a closed polygon.
+private func evenlyDistribute(_ vertices: [CGPoint], count: Int) -> [CGPoint] {
     let n = vertices.count
-    // Calculate total perimeter
     var edgeLengths: [Double] = []
     var totalLength: Double = 0
     for i in 0..<n {
-        let a = vertices[i]
-        let b = vertices[(i + 1) % n]
+        let a = vertices[i], b = vertices[(i + 1) % n]
         let len = hypot(b.x - a.x, b.y - a.y)
         edgeLengths.append(len)
         totalLength += len
     }
-
     var result: [CGPoint] = []
-    var edgeIndex = 0
+    var edgeIdx = 0
     var distOnEdge: Double = 0
     let step = totalLength / Double(count)
-
     for _ in 0..<count {
-        let a = vertices[edgeIndex]
-        let b = vertices[(edgeIndex + 1) % n]
-        let t = distOnEdge / edgeLengths[edgeIndex]
+        let a = vertices[edgeIdx], b = vertices[(edgeIdx + 1) % n]
+        let t = edgeLengths[edgeIdx] > 0 ? distOnEdge / edgeLengths[edgeIdx] : 0
         result.append(CGPoint(x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t))
-
         distOnEdge += step
-        while edgeIndex < n && distOnEdge > edgeLengths[edgeIndex] + 1e-9 {
-            distOnEdge -= edgeLengths[edgeIndex]
-            edgeIndex = (edgeIndex + 1) % n
+        while edgeIdx < n && distOnEdge > edgeLengths[edgeIdx] + 1e-9 {
+            distOnEdge -= edgeLengths[edgeIdx]
+            edgeIdx = (edgeIdx + 1) % n
         }
     }
     return result
 }
 
-// MARK: - Shape Pair Enum
+// MARK: - Shape Pair
 
 private enum ShapePair: String, CaseIterable, Identifiable {
     case circleToStar = "Circle → Star"
     case squareToTriangle = "Square → Triangle"
     case heartToDiamond = "Heart → Diamond"
-
     var id: String { rawValue }
-}
 
-// MARK: - View
-
-struct MorphingShapesView: View {
-    @State private var selectedPair: ShapePair = .circleToStar
-    @State private var morphed = false
-
-    private var currentPoints: [CGPoint] {
-        let pair = shapeData(for: selectedPair)
-        return morphed ? pair.1 : pair.0
+    var shapes: (from: [CGPoint], to: [CGPoint]) {
+        switch self {
+        case .circleToStar: (circlePoints(), starPoints())
+        case .squareToTriangle: (squarePoints(), trianglePoints())
+        case .heartToDiamond: (heartPoints(), diamondPoints())
+        }
     }
 
-    private var gradient: LinearGradient {
-        switch selectedPair {
+    var gradient: LinearGradient {
+        switch self {
         case .circleToStar:
             LinearGradient(colors: [.purple, .pink], startPoint: .topLeading, endPoint: .bottomTrailing)
         case .squareToTriangle:
@@ -213,28 +164,36 @@ struct MorphingShapesView: View {
             LinearGradient(colors: [.red, .orange], startPoint: .topLeading, endPoint: .bottomTrailing)
         }
     }
+}
 
-    private func shapeData(for pair: ShapePair) -> ([CGPoint], [CGPoint]) {
-        switch pair {
-        case .circleToStar: (circlePoints(), starPoints())
-        case .squareToTriangle: (squarePoints(), trianglePoints())
-        case .heartToDiamond: (heartPoints(), diamondPoints())
-        }
-    }
+// MARK: - View
+
+struct MorphingShapesView: View {
+    @State private var selectedPair: ShapePair = .circleToStar
+    @State private var progress: Double = 0
 
     var body: some View {
         VStack(spacing: 24) {
             Spacer()
 
-            MorphableShape(points: currentPoints)
-                .fill(gradient)
+            let shapes = selectedPair.shapes
+            MorphShape(shapeA: shapes.from, shapeB: shapes.to, progress: progress)
+                .fill(selectedPair.gradient)
                 .shadow(color: .purple.opacity(0.3), radius: 16, y: 8)
                 .frame(width: 260, height: 260)
-                .animation(.easeInOut(duration: 1.2), value: morphed)
 
             Spacer()
 
             VStack(spacing: 16) {
+                // Progress slider for fine control
+                VStack(spacing: 4) {
+                    Text("Progress: \(progress, specifier: "%.0f%%")")
+                        .font(.subheadline.monospaced())
+                        .foregroundStyle(.secondary)
+                    Slider(value: $progress, in: 0...1)
+                        .padding(.horizontal, 20)
+                }
+
                 Picker("Shape Pair", selection: $selectedPair) {
                     ForEach(ShapePair.allCases) { pair in
                         Text(pair.rawValue).tag(pair)
@@ -243,13 +202,15 @@ struct MorphingShapesView: View {
                 .pickerStyle(.segmented)
                 .padding(.horizontal, 20)
                 .onChange(of: selectedPair) { _, _ in
-                    morphed = false
+                    progress = 0
                 }
 
                 Button {
-                    morphed.toggle()
+                    withAnimation(.easeInOut(duration: 1.2)) {
+                        progress = progress < 0.5 ? 1 : 0
+                    }
                 } label: {
-                    Text(morphed ? "Revert" : "Morph")
+                    Text(progress > 0.5 ? "Revert" : "Morph")
                         .font(.headline)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
