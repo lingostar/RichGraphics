@@ -32,15 +32,22 @@ struct PendulumContainerFinal: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: CradleView, context: Context) {
-        if context.coordinator.animator == nil {
-            context.coordinator.setupCradle(in: uiView)
-        }
+        // Setup is deferred to CradleView.layoutSubviews so bounds are finalized
     }
 
     // The custom UIView that draws strings
     @MainActor
     final class CradleView: UIView {
         weak var coordinator: Coordinator?
+        private var didSetup = false
+
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            if !didSetup, bounds.width > 0, let coordinator {
+                didSetup = true
+                coordinator.setupCradle(in: self)
+            }
+        }
 
         override func draw(_ rect: CGRect) {
             guard let ctx = UIGraphicsGetCurrentContext(),
