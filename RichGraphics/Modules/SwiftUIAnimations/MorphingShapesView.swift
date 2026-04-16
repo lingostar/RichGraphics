@@ -13,12 +13,19 @@ private struct MorphableShape: Shape {
         guard points.count >= 3 else { return Path() }
         var path = Path()
         let scaled = points.map { CGPoint(x: $0.x * rect.width, y: $0.y * rect.height) }
+
+        // Use Catmull-Rom spline for smooth curves through all points
         path.move(to: scaled[0])
-        for i in 1..<scaled.count {
-            let prev = scaled[i - 1]
-            let curr = scaled[i]
-            let cp = CGPoint(x: (prev.x + curr.x) / 2, y: (prev.y + curr.y) / 2)
-            path.addQuadCurve(to: curr, control: cp)
+        let n = scaled.count
+        for i in 0..<n {
+            let p0 = scaled[(i - 1 + n) % n]
+            let p1 = scaled[i]
+            let p2 = scaled[(i + 1) % n]
+            let p3 = scaled[(i + 2) % n]
+
+            let cp1 = CGPoint(x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6)
+            let cp2 = CGPoint(x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6)
+            path.addCurve(to: p2, control1: cp1, control2: cp2)
         }
         path.closeSubpath()
         return path
@@ -84,14 +91,14 @@ private enum ShapePair: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-private func circlePoints(n: Int = 24) -> [CGPoint] {
+private func circlePoints(n: Int = 48) -> [CGPoint] {
     (0..<n).map { i in
         let angle = Double(i) * (2 * .pi / Double(n)) - .pi / 2
         return CGPoint(x: 0.5 + 0.45 * cos(angle), y: 0.5 + 0.45 * sin(angle))
     }
 }
 
-private func starPoints(n: Int = 24) -> [CGPoint] {
+private func starPoints(n: Int = 48) -> [CGPoint] {
     (0..<n).map { i in
         let angle = Double(i) * (2 * .pi / Double(n)) - .pi / 2
         let r: Double = i.isMultiple(of: 2) ? 0.45 : 0.2
@@ -99,7 +106,7 @@ private func starPoints(n: Int = 24) -> [CGPoint] {
     }
 }
 
-private func squarePoints(n: Int = 24) -> [CGPoint] {
+private func squarePoints(n: Int = 48) -> [CGPoint] {
     let perSide = n / 4
     var pts: [CGPoint] = []
     let inset = 0.1
@@ -111,7 +118,7 @@ private func squarePoints(n: Int = 24) -> [CGPoint] {
     return pts
 }
 
-private func trianglePoints(n: Int = 24) -> [CGPoint] {
+private func trianglePoints(n: Int = 48) -> [CGPoint] {
     let perSide = n / 3
     var pts: [CGPoint] = []
     let top = CGPoint(x: 0.5, y: 0.08)
@@ -123,7 +130,7 @@ private func trianglePoints(n: Int = 24) -> [CGPoint] {
     return pts
 }
 
-private func heartPoints(n: Int = 24) -> [CGPoint] {
+private func heartPoints(n: Int = 48) -> [CGPoint] {
     (0..<n).map { i in
         let t = Double(i) * (2 * .pi / Double(n))
         let x = 16 * pow(sin(t), 3)
@@ -132,7 +139,7 @@ private func heartPoints(n: Int = 24) -> [CGPoint] {
     }
 }
 
-private func diamondPoints(n: Int = 24) -> [CGPoint] {
+private func diamondPoints(n: Int = 48) -> [CGPoint] {
     let perSide = n / 4
     var pts: [CGPoint] = []
     let top = CGPoint(x: 0.5, y: 0.05)
