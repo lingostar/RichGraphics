@@ -85,9 +85,11 @@ struct WeatherEmitterView: UIViewRepresentable {
         let bounds = uiView.bounds
         guard bounds.width > 0 else { return }
 
+        emitterLayer.frame = bounds
         emitterLayer.emitterPosition = CGPoint(x: bounds.midX, y: -20)
         emitterLayer.emitterShape = .line
         emitterLayer.emitterSize = CGSize(width: bounds.width * 1.5, height: 1)
+        emitterLayer.renderMode = .unordered
 
         switch weatherType {
         case .snow:
@@ -100,31 +102,31 @@ struct WeatherEmitterView: UIViewRepresentable {
     }
 
     private func configureSnow(_ layer: CAEmitterLayer) {
-        let baseBirthRate = 30 * intensity
+        let baseBirthRate = 40 * intensity
 
         let small = CAEmitterCell()
         small.birthRate = baseBirthRate
         small.lifetime = 14
-        small.velocity = 30
-        small.velocityRange = 15
+        small.velocity = 50
+        small.velocityRange = 20
         small.emissionLongitude = .pi
         small.emissionRange = .pi / 6
         small.xAcceleration = 5
-        small.scale = 0.02
-        small.scaleRange = 0.01
+        small.scale = 0.4
+        small.scaleRange = 0.2
         small.alphaRange = 0.3
         small.contents = Self.makeCircleImage(color: .white)
 
         let large = CAEmitterCell()
-        large.birthRate = baseBirthRate * 0.3
+        large.birthRate = baseBirthRate * 0.4
         large.lifetime = 16
-        large.velocity = 25
-        large.velocityRange = 10
+        large.velocity = 40
+        large.velocityRange = 15
         large.emissionLongitude = .pi
         large.emissionRange = .pi / 8
         large.xAcceleration = 3
-        large.scale = 0.05
-        large.scaleRange = 0.02
+        large.scale = 0.8
+        large.scaleRange = 0.3
         large.alphaRange = 0.2
         large.spin = 0.3
         large.spinRange = 0.6
@@ -134,17 +136,17 @@ struct WeatherEmitterView: UIViewRepresentable {
     }
 
     private func configureRain(_ layer: CAEmitterLayer) {
-        let baseBirthRate = 80 * intensity
+        let baseBirthRate = 120 * intensity
 
         let drop = CAEmitterCell()
         drop.birthRate = baseBirthRate
         drop.lifetime = 4
-        drop.velocity = 400
-        drop.velocityRange = 100
+        drop.velocity = 700
+        drop.velocityRange = 150
         drop.emissionLongitude = .pi
         drop.emissionRange = .pi / 30
-        drop.scale = 0.06
-        drop.scaleRange = 0.03
+        drop.scale = 1.2
+        drop.scaleRange = 0.5
         drop.alphaRange = 0.3
         drop.contents = Self.makeRainDropImage()
 
@@ -152,37 +154,37 @@ struct WeatherEmitterView: UIViewRepresentable {
     }
 
     private func configureCherryBlossom(_ layer: CAEmitterLayer) {
-        let baseBirthRate = 12 * intensity
+        let baseBirthRate = 20 * intensity
 
         let petal = CAEmitterCell()
         petal.birthRate = baseBirthRate
-        petal.lifetime = 12
+        petal.lifetime = 14
         petal.lifetimeRange = 3
-        petal.velocity = 25
-        petal.velocityRange = 15
+        petal.velocity = 40
+        petal.velocityRange = 20
         petal.emissionLongitude = .pi
         petal.emissionRange = .pi / 4
-        petal.xAcceleration = 8
+        petal.xAcceleration = 15
         petal.spin = 1.5
         petal.spinRange = 3.0
-        petal.scale = 0.06
-        petal.scaleRange = 0.03
-        petal.alphaSpeed = -0.05
+        petal.scale = 0.8
+        petal.scaleRange = 0.3
+        petal.alphaRange = 0.3
         petal.contents = Self.makePetalImage()
 
         let smallPetal = CAEmitterCell()
-        smallPetal.birthRate = baseBirthRate * 0.5
-        smallPetal.lifetime = 10
-        smallPetal.velocity = 20
-        smallPetal.velocityRange = 10
+        smallPetal.birthRate = baseBirthRate * 0.7
+        smallPetal.lifetime = 12
+        smallPetal.velocity = 35
+        smallPetal.velocityRange = 15
         smallPetal.emissionLongitude = .pi
         smallPetal.emissionRange = .pi / 3
-        smallPetal.xAcceleration = 12
+        smallPetal.xAcceleration = 20
         smallPetal.spin = 2.0
         smallPetal.spinRange = 4.0
-        smallPetal.scale = 0.03
-        smallPetal.scaleRange = 0.015
-        smallPetal.alphaSpeed = -0.06
+        smallPetal.scale = 0.5
+        smallPetal.scaleRange = 0.2
+        smallPetal.alphaRange = 0.3
         smallPetal.contents = Self.makePetalImage()
 
         layer.emitterCells = [petal, smallPetal]
@@ -203,8 +205,8 @@ struct WeatherEmitterView: UIViewRepresentable {
         return renderer.image { ctx in
             let gradient = CGGradient(
                 colorsSpace: CGColorSpaceCreateDeviceRGB(),
-                colors: [UIColor(red: 0.6, green: 0.7, blue: 0.9, alpha: 0.8).cgColor,
-                         UIColor(red: 0.6, green: 0.7, blue: 0.9, alpha: 0.2).cgColor] as CFArray,
+                colors: [UIColor(red: 0.7, green: 0.8, blue: 1.0, alpha: 0.9).cgColor,
+                         UIColor(red: 0.7, green: 0.8, blue: 1.0, alpha: 0.3).cgColor] as CFArray,
                 locations: [0, 1]
             )!
             ctx.cgContext.drawLinearGradient(
@@ -217,13 +219,49 @@ struct WeatherEmitterView: UIViewRepresentable {
     }
 
     private static func makePetalImage() -> CGImage? {
-        let size = CGSize(width: 16, height: 12)
+        let size = CGSize(width: 32, height: 24)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { ctx in
-            let pink = UIColor(red: 1.0, green: 0.7, blue: 0.78, alpha: 0.9)
-            pink.setFill()
-            let path = UIBezierPath(ovalIn: CGRect(origin: .zero, size: size))
-            path.fill()
+            let cg = ctx.cgContext
+            let pink = UIColor(red: 1.0, green: 0.6, blue: 0.75, alpha: 1.0)
+            let darkPink = UIColor(red: 0.95, green: 0.4, blue: 0.6, alpha: 1.0)
+
+            // Draw a petal shape (heart-like, teardrop)
+            let path = UIBezierPath()
+            let w = size.width
+            let h = size.height
+            // Start at left tip
+            path.move(to: CGPoint(x: 2, y: h / 2))
+            // Curve up to top-right
+            path.addCurve(
+                to: CGPoint(x: w - 2, y: h / 2),
+                controlPoint1: CGPoint(x: w * 0.3, y: -2),
+                controlPoint2: CGPoint(x: w * 0.7, y: -2)
+            )
+            // Curve down to bottom-right, meeting at left tip
+            path.addCurve(
+                to: CGPoint(x: 2, y: h / 2),
+                controlPoint1: CGPoint(x: w * 0.7, y: h + 2),
+                controlPoint2: CGPoint(x: w * 0.3, y: h + 2)
+            )
+            path.close()
+
+            // Fill with gradient
+            cg.saveGState()
+            cg.addPath(path.cgPath)
+            cg.clip()
+            let gradient = CGGradient(
+                colorsSpace: CGColorSpaceCreateDeviceRGB(),
+                colors: [pink.cgColor, darkPink.cgColor] as CFArray,
+                locations: [0, 1]
+            )!
+            cg.drawLinearGradient(
+                gradient,
+                start: CGPoint(x: 0, y: 0),
+                end: CGPoint(x: w, y: h),
+                options: []
+            )
+            cg.restoreGState()
         }.cgImage
     }
 }
