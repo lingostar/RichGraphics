@@ -55,93 +55,136 @@ struct ConfettiEmitterView: UIViewRepresentable {
     @Binding var triggerBurst: Bool
     let continuousMode: Bool
 
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
+    func makeUIView(context: Context) -> ConfettiUIView {
+        let view = ConfettiUIView()
         view.backgroundColor = .clear
-        let emitterLayer = CAEmitterLayer()
-        emitterLayer.name = "confetti"
-        emitterLayer.birthRate = 0
-        view.layer.addSublayer(emitterLayer)
         return view
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {
-        guard let emitterLayer = uiView.layer.sublayers?.first(where: { $0.name == "confetti" }) as? CAEmitterLayer else { return }
+    func updateUIView(_ uiView: ConfettiUIView, context: Context) {
+        uiView.continuousMode = continuousMode
+        uiView.refreshIfNeeded()
 
-        let bounds = uiView.bounds
-        guard bounds.width > 0 else { return }
-
-        emitterLayer.emitterPosition = CGPoint(x: bounds.midX, y: -20)
-        emitterLayer.emitterShape = .line
-        emitterLayer.emitterSize = CGSize(width: bounds.width, height: 1)
-
-        let colors: [UIColor] = [.systemRed, .systemBlue, .systemGreen, .systemYellow,
-                                  .systemOrange, .systemPink, .systemPurple, .cyan,
-                                  .magenta, .systemTeal]
-
-        var cells: [CAEmitterCell] = []
-        for color in colors {
-            let rect = CAEmitterCell()
-            rect.birthRate = 4
-            rect.lifetime = 8
-            rect.lifetimeRange = 2
-            rect.velocity = 150
-            rect.velocityRange = 60
-            rect.emissionLongitude = .pi
-            rect.emissionRange = .pi / 4
-            rect.spin = 3
-            rect.spinRange = 6
-            rect.scale = 0.04
-            rect.scaleRange = 0.02
-            rect.yAcceleration = 40
-            rect.contents = Self.makeRectImage(color: color)
-            cells.append(rect)
-
-            let circle = CAEmitterCell()
-            circle.birthRate = 2
-            circle.lifetime = 8
-            circle.lifetimeRange = 2
-            circle.velocity = 130
-            circle.velocityRange = 50
-            circle.emissionLongitude = .pi
-            circle.emissionRange = .pi / 3
-            circle.spin = 2
-            circle.spinRange = 4
-            circle.scale = 0.03
-            circle.scaleRange = 0.015
-            circle.yAcceleration = 35
-            circle.contents = Self.makeCircleImage(color: color)
-            cells.append(circle)
-        }
-
-        emitterLayer.emitterCells = cells
-
-        if continuousMode {
-            emitterLayer.birthRate = 1
-        } else if triggerBurst {
-            emitterLayer.birthRate = 1
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                emitterLayer.birthRate = 0
-            }
+        if triggerBurst {
+            uiView.celebrate()
             DispatchQueue.main.async {
                 self.triggerBurst = false
             }
-        } else {
-            emitterLayer.birthRate = 0
+        }
+    }
+}
+
+final class ConfettiUIView: UIView {
+    var continuousMode: Bool = false {
+        didSet {
+            if continuousMode != oldValue {
+                emitterLayer.birthRate = continuousMode ? 1 : 0
+            }
         }
     }
 
+    private let emitterLayer = CAEmitterLayer()
+    private var configuredWidth: CGFloat = 0
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        emitterLayer.birthRate = 0
+        layer.addSublayer(emitterLayer)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        emitterLayer.birthRate = 0
+        layer.addSublayer(emitterLayer)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        refreshIfNeeded()
+    }
+
+    func refreshIfNeeded() {
+        guard bounds.width > 0, configuredWidth != bounds.width else { return }
+
+        emitterLayer.frame = bounds
+        emitterLayer.emitterPosition = CGPoint(x: bounds.midX, y: -20)
+        emitterLayer.emitterShape = .line
+        emitterLayer.emitterSize = CGSize(width: bounds.width, height: 1)
+        emitterLayer.renderMode = .unordered
+        emitterLayer.emitterCells = Self.makeCells()
+        emitterLayer.birthRate = continuousMode ? 1 : 0
+
+        configuredWidth = bounds.width
+    }
+
+    /// Trigger a burst: high birthRate for a short moment
+    func celebrate() {
+        // Temporarily ramp up the birthRate multiplier
+        emitterLayer.birthRate = 5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            guard let self else { return }
+            self.emitterLayer.birthRate = self.continuousMode ? 1 : 0
+        }
+    }
+
+    private static func makeCells() -> [CAEmitterCell] {
+        let colors: [UIColor] = [.systemRed, .systemBlue, .systemGreen, .systemYellow,
+                                 .systemOrange, .systemPink, .systemPurple, .cyan,
+                                 .magenta, .systemTeal]
+
+        var cells: [CAEmitterCell] = []
+        for color in colors {
+            let rectImg = makeRectImage(color: color)
+            let circleImg = makeCircleImage(color: color)
+
+            // Rectangle confetti (large, tumbling)
+            let rect = CAEmitterCell()
+            rect.birthRate = 6
+            rect.lifetime = 8
+            rect.lifetimeRange = 2
+            rect.velocity = 220
+            rect.velocityRange = 80
+            rect.emissionLongitude = .pi
+            rect.emissionRange = .pi / 4
+            rect.spin = 4
+            rect.spinRange = 8
+            rect.scale = 1.0
+            rect.scaleRange = 0.4
+            rect.yAcceleration = 80
+            rect.contents = rectImg
+            cells.append(rect)
+
+            // Circle confetti (medium)
+            let circle = CAEmitterCell()
+            circle.birthRate = 3
+            circle.lifetime = 8
+            circle.lifetimeRange = 2
+            circle.velocity = 200
+            circle.velocityRange = 60
+            circle.emissionLongitude = .pi
+            circle.emissionRange = .pi / 3
+            circle.spin = 3
+            circle.spinRange = 6
+            circle.scale = 0.8
+            circle.scaleRange = 0.3
+            circle.yAcceleration = 70
+            circle.contents = circleImg
+            cells.append(circle)
+        }
+        return cells
+    }
+
     private static func makeRectImage(color: UIColor) -> CGImage? {
-        let size = CGSize(width: 12, height: 8)
+        let size = CGSize(width: 18, height: 10)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { ctx in
             color.setFill()
-            ctx.fill(CGRect(origin: .zero, size: size))
+            UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: 2).fill()
         }.cgImage
     }
 
     private static func makeCircleImage(color: UIColor) -> CGImage? {
-        let size = CGSize(width: 10, height: 10)
+        let size = CGSize(width: 14, height: 14)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { ctx in
             color.setFill()
