@@ -117,11 +117,10 @@ final class ConfettiUIView: UIView {
         configuredWidth = bounds.width
     }
 
-    /// Trigger a burst: high birthRate for a short moment
+    /// Trigger a burst: short dense spawn, then stop
     func celebrate() {
-        // Temporarily ramp up the birthRate multiplier
-        emitterLayer.birthRate = 5
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+        emitterLayer.birthRate = 2.5
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [weak self] in
             guard let self else { return }
             self.emitterLayer.birthRate = self.continuousMode ? 1 : 0
         }
@@ -137,37 +136,39 @@ final class ConfettiUIView: UIView {
             let rectImg = makeRectImage(color: color)
             let circleImg = makeCircleImage(color: color)
 
-            // Rectangle confetti (large, tumbling)
+            // Rectangle confetti (tumbling)
             let rect = CAEmitterCell()
-            rect.birthRate = 6
-            rect.lifetime = 8
-            rect.lifetimeRange = 2
+            rect.birthRate = 3
+            rect.lifetime = 5
+            rect.lifetimeRange = 1.5
             rect.velocity = 220
             rect.velocityRange = 80
             rect.emissionLongitude = .pi
             rect.emissionRange = .pi / 4
             rect.spin = 4
             rect.spinRange = 8
-            rect.scale = 1.0
-            rect.scaleRange = 0.4
-            rect.yAcceleration = 80
+            rect.scale = 0.4
+            rect.scaleRange = 0.15
+            rect.yAcceleration = 120
+            rect.alphaSpeed = -0.2
             rect.contents = rectImg
             cells.append(rect)
 
-            // Circle confetti (medium)
+            // Circle confetti (smaller, accent)
             let circle = CAEmitterCell()
-            circle.birthRate = 3
-            circle.lifetime = 8
-            circle.lifetimeRange = 2
+            circle.birthRate = 1.5
+            circle.lifetime = 5
+            circle.lifetimeRange = 1.5
             circle.velocity = 200
             circle.velocityRange = 60
             circle.emissionLongitude = .pi
             circle.emissionRange = .pi / 3
             circle.spin = 3
             circle.spinRange = 6
-            circle.scale = 0.8
-            circle.scaleRange = 0.3
-            circle.yAcceleration = 70
+            circle.scale = 0.3
+            circle.scaleRange = 0.1
+            circle.yAcceleration = 110
+            circle.alphaSpeed = -0.2
             circle.contents = circleImg
             cells.append(circle)
         }
