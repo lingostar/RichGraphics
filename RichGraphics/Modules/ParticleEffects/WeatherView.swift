@@ -147,47 +147,64 @@ final class WeatherEmitterUIView: UIView {
     private static func snowCells(intensity: Float) -> [CAEmitterCell] {
         let circle = makeCircleImage(color: .white)
 
-        // FAR: tiny, slow, faint
+        // FAR: tiny, slow, faint. xAcceleration = 0 so it falls straight.
         let far = CAEmitterCell()
         far.birthRate = 60 * intensity
         far.lifetime = 18
         far.velocity = 20
         far.velocityRange = 8
         far.emissionLongitude = .pi
-        far.emissionRange = .pi / 10
-        far.xAcceleration = 3
+        far.emissionRange = .pi / 8
+        far.xAcceleration = 0
         far.scale = 0.08
         far.scaleRange = 0.04
         far.alphaRange = 0.3
         far.color = UIColor(white: 1.0, alpha: 0.4).cgColor
         far.contents = circle
 
-        // MID: medium
-        let mid = CAEmitterCell()
-        mid.birthRate = 25 * intensity
-        mid.lifetime = 14
-        mid.velocity = 40
-        mid.velocityRange = 15
-        mid.emissionLongitude = .pi
-        mid.emissionRange = .pi / 8
-        mid.xAcceleration = 5
-        mid.scale = 0.18
-        mid.scaleRange = 0.08
-        mid.alphaRange = 0.25
-        mid.color = UIColor(white: 1.0, alpha: 0.7).cgColor
-        mid.contents = circle
-        mid.spin = 0.2
-        mid.spinRange = 0.5
+        // MID (left drift): half drifts slightly left
+        let midLeft = CAEmitterCell()
+        midLeft.birthRate = 12 * intensity
+        midLeft.lifetime = 14
+        midLeft.velocity = 40
+        midLeft.velocityRange = 15
+        midLeft.emissionLongitude = .pi
+        midLeft.emissionRange = .pi / 8
+        midLeft.xAcceleration = -4
+        midLeft.scale = 0.18
+        midLeft.scaleRange = 0.08
+        midLeft.alphaRange = 0.25
+        midLeft.color = UIColor(white: 1.0, alpha: 0.7).cgColor
+        midLeft.contents = circle
+        midLeft.spin = 0.2
+        midLeft.spinRange = 0.5
 
-        // NEAR: larger, faster, bright
+        // MID (right drift): half drifts slightly right → balanced
+        let midRight = CAEmitterCell()
+        midRight.birthRate = 12 * intensity
+        midRight.lifetime = 14
+        midRight.velocity = 40
+        midRight.velocityRange = 15
+        midRight.emissionLongitude = .pi
+        midRight.emissionRange = .pi / 8
+        midRight.xAcceleration = 4
+        midRight.scale = 0.18
+        midRight.scaleRange = 0.08
+        midRight.alphaRange = 0.25
+        midRight.color = UIColor(white: 1.0, alpha: 0.7).cgColor
+        midRight.contents = circle
+        midRight.spin = -0.2
+        midRight.spinRange = 0.5
+
+        // NEAR: larger, faster, bright. Wide emission for spread.
         let near = CAEmitterCell()
         near.birthRate = 10 * intensity
         near.lifetime = 10
         near.velocity = 70
         near.velocityRange = 20
         near.emissionLongitude = .pi
-        near.emissionRange = .pi / 6
-        near.xAcceleration = 8
+        near.emissionRange = .pi / 5
+        near.xAcceleration = 0
         near.scale = 0.32
         near.scaleRange = 0.12
         near.alphaRange = 0.15
@@ -196,7 +213,7 @@ final class WeatherEmitterUIView: UIView {
         near.spin = 0.5
         near.spinRange = 1.0
 
-        return [far, mid, near]
+        return [far, midLeft, midRight, near]
     }
 
     // MARK: - Rain (3 depth layers)
@@ -252,34 +269,52 @@ final class WeatherEmitterUIView: UIView {
     private static func cherryBlossomCells(intensity: Float) -> [CAEmitterCell] {
         let petal = makePetalImage()
 
-        // FAR / small
-        let smallPetal = CAEmitterCell()
-        smallPetal.birthRate = 15 * intensity
-        smallPetal.lifetime = 14
-        smallPetal.lifetimeRange = 3
-        smallPetal.velocity = 30
-        smallPetal.velocityRange = 10
-        smallPetal.emissionLongitude = .pi
-        smallPetal.emissionRange = .pi / 4
-        smallPetal.xAcceleration = 15
-        smallPetal.spin = 2.0
-        smallPetal.spinRange = 4.0
-        smallPetal.scale = 0.2
-        smallPetal.scaleRange = 0.08
-        smallPetal.alphaRange = 0.25
-        smallPetal.color = UIColor(white: 1.0, alpha: 0.7).cgColor
-        smallPetal.contents = petal
+        // SMALL — drifts slightly left
+        let smallLeft = CAEmitterCell()
+        smallLeft.birthRate = 8 * intensity
+        smallLeft.lifetime = 16
+        smallLeft.lifetimeRange = 3
+        smallLeft.velocity = 28
+        smallLeft.velocityRange = 12
+        smallLeft.emissionLongitude = .pi
+        smallLeft.emissionRange = .pi / 4
+        smallLeft.xAcceleration = -8
+        smallLeft.spin = 2.0
+        smallLeft.spinRange = 4.0
+        smallLeft.scale = 0.2
+        smallLeft.scaleRange = 0.08
+        smallLeft.alphaRange = 0.25
+        smallLeft.color = UIColor(white: 1.0, alpha: 0.7).cgColor
+        smallLeft.contents = petal
 
-        // NEAR / large (80% of previous: 0.8 → 0.5, 0.3 → 0.2 for range)
+        // SMALL — drifts slightly right
+        let smallRight = CAEmitterCell()
+        smallRight.birthRate = 8 * intensity
+        smallRight.lifetime = 16
+        smallRight.lifetimeRange = 3
+        smallRight.velocity = 28
+        smallRight.velocityRange = 12
+        smallRight.emissionLongitude = .pi
+        smallRight.emissionRange = .pi / 4
+        smallRight.xAcceleration = 8
+        smallRight.spin = -2.0
+        smallRight.spinRange = 4.0
+        smallRight.scale = 0.2
+        smallRight.scaleRange = 0.08
+        smallRight.alphaRange = 0.25
+        smallRight.color = UIColor(white: 1.0, alpha: 0.7).cgColor
+        smallRight.contents = petal
+
+        // LARGE — mostly straight down (natural fall)
         let largePetal = CAEmitterCell()
         largePetal.birthRate = 10 * intensity
-        largePetal.lifetime = 12
+        largePetal.lifetime = 13
         largePetal.lifetimeRange = 2
-        largePetal.velocity = 40
-        largePetal.velocityRange = 15
+        largePetal.velocity = 45
+        largePetal.velocityRange = 18
         largePetal.emissionLongitude = .pi
         largePetal.emissionRange = .pi / 5
-        largePetal.xAcceleration = 12
+        largePetal.xAcceleration = 0
         largePetal.spin = 1.5
         largePetal.spinRange = 3.0
         largePetal.scale = 0.4
@@ -288,7 +323,7 @@ final class WeatherEmitterUIView: UIView {
         largePetal.color = UIColor(white: 1.0, alpha: 1.0).cgColor
         largePetal.contents = petal
 
-        return [smallPetal, largePetal]
+        return [smallLeft, smallRight, largePetal]
     }
 
     // MARK: - Particle Images

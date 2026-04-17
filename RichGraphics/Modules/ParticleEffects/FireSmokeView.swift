@@ -23,6 +23,11 @@ struct FireSmokeView: View {
             VStack {
                 Spacer()
 
+                Text("Tap anywhere to throw a log 🪵")
+                    .font(.caption)
+                    .foregroundStyle(.white.opacity(0.5))
+                    .padding(.bottom, 8)
+
                 VStack(spacing: 16) {
                     HStack {
                         Text("Fire Intensity")
@@ -102,18 +107,46 @@ final class FireSmokeUIView: UIView {
     }
 
     private func setupLayers() {
-        // Glow halo behind the fire (soft orange light)
+        // Soft glow halo behind fire (very subtle ambient light)
         glowLayer.contents = Self.makeHaloImage()?.cgImage
-        glowLayer.opacity = 0.7
+        glowLayer.opacity = 0.25
+        glowLayer.compositingFilter = "screenBlendMode"
         layer.addSublayer(glowLayer)
 
-        // Smoke layer (behind fire in z-order, but smoke rises higher)
+        // Smoke layer (behind fire in z-order)
         smokeLayer.renderMode = .unordered
         layer.addSublayer(smokeLayer)
 
         // Fire layer (additive → brighter overlapping = hotter)
         fireLayer.renderMode = .additive
         layer.addSublayer(fireLayer)
+
+        // Tap gesture — "throw a log" to boost fire briefly
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        addGestureRecognizer(tap)
+    }
+
+    @objc private func handleTap(_ gesture: UITapGestureRecognizer) {
+        // Briefly boost the fire: increase birthRate for ~0.8s
+        guard let cells = fireLayer.emitterCells, !cells.isEmpty else { return }
+        let originalRates = cells.map { $0.birthRate }
+        for cell in cells {
+            cell.birthRate *= 3.5
+        }
+        // Pulse the halo too
+        let haloPulse = CABasicAnimation(keyPath: "opacity")
+        haloPulse.fromValue = glowLayer.opacity * 2.5
+        haloPulse.toValue = glowLayer.opacity
+        haloPulse.duration = 0.8
+        haloPulse.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        glowLayer.add(haloPulse, forKey: "pulse")
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { [weak self] in
+            guard let self, let currentCells = self.fireLayer.emitterCells else { return }
+            for (i, cell) in currentCells.enumerated() where i < originalRates.count {
+                cell.birthRate = originalRates[i]
+            }
+        }
     }
 
     override func layoutSubviews() {
@@ -130,18 +163,18 @@ final class FireSmokeUIView: UIView {
 
         guard needsReconfig else { return }
 
-        let baseY = bounds.maxY - 110    // where the fire sits
+        let baseY = bounds.maxY - 250    // where the fire sits (above the controls)
         let midX = bounds.midX
 
-        // Halo behind fire
-        let haloSize: CGFloat = 300
+        // Subtle halo behind fire (smaller + lower opacity)
+        let haloSize: CGFloat = 220
         glowLayer.frame = CGRect(
             x: midX - haloSize / 2,
-            y: baseY - haloSize / 2,
+            y: baseY - haloSize / 2 - 30,
             width: haloSize,
             height: haloSize
         )
-        glowLayer.opacity = 0.5 + 0.5 * Float(intensity)
+        glowLayer.opacity = 0.15 + 0.2 * Float(intensity)
 
         // Fire layer positioning
         fireLayer.frame = bounds
@@ -377,24 +410,24 @@ final class FireSmokeUIView: UIView {
     }
 
     private static func makeHaloImage() -> UIImage? {
-        let size = CGSize(width: 300, height: 300)
+        let size = CGSize(width: 220, height: 220)
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { ctx in
             let cg = ctx.cgContext
             let gradient = CGGradient(
                 colorsSpace: CGColorSpaceCreateDeviceRGB(),
                 colors: [
-                    UIColor(red: 1.0, green: 0.5, blue: 0.15, alpha: 0.35).cgColor,
-                    UIColor(red: 0.9, green: 0.3, blue: 0.1, alpha: 0.15).cgColor,
+                    UIColor(red: 1.0, green: 0.55, blue: 0.2, alpha: 0.18).cgColor,
+                    UIColor(red: 0.9, green: 0.3, blue: 0.1, alpha: 0.06).cgColor,
                     UIColor(red: 0.5, green: 0.1, blue: 0.0, alpha: 0.0).cgColor,
                 ] as CFArray,
-                locations: [0, 0.4, 1]
+                locations: [0, 0.5, 1]
             )!
-            let center = CGPoint(x: 150, y: 150)
+            let center = CGPoint(x: 110, y: 110)
             cg.drawRadialGradient(
                 gradient,
                 startCenter: center, startRadius: 0,
-                endCenter: center, endRadius: 150,
+                endCenter: center, endRadius: 110,
                 options: .drawsBeforeStartLocation
             )
         }
