@@ -133,7 +133,7 @@ final class StarfieldUIView: UIView {
         cell.emissionRange = .pi * 2
         // Start tiny, grow over lifetime → warp-speed feel
         cell.scale = 0.02
-        cell.scaleSpeed = Float(finalScale) / 3.0
+        cell.scaleSpeed = finalScale / 3.0
         cell.alphaRange = 0.3
         cell.color = color.cgColor
         cell.contents = makeStarGlow(color: color)
