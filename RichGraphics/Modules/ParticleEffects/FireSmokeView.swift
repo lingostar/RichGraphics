@@ -163,7 +163,7 @@ final class FireSmokeUIView: UIView {
 
         guard needsReconfig else { return }
 
-        let baseY = bounds.maxY - 250    // where the fire sits (above the controls)
+        let baseY = bounds.midY + 80     // fire base slightly below vertical center
         let midX = bounds.midX
 
         // Subtle halo behind fire (smaller + lower opacity)
