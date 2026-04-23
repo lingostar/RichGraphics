@@ -38,7 +38,6 @@ struct SpringPlaygroundView: View {
         ScrollView {
             VStack(spacing: 28) {
                 animationArea
-                comparisonSection
                 controlsSection
             }
             .padding(.bottom, 32)
@@ -81,42 +80,6 @@ struct SpringPlaygroundView: View {
         )
         .padding(.horizontal, 16)
         .padding(.top, 8)
-    }
-
-    // MARK: - Comparison
-
-    private var comparisonSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Spring Comparison")
-                .font(.headline)
-                .padding(.horizontal, 20)
-
-            HStack(spacing: 12) {
-                springBar(label: "Bouncy", color: .purple, spring: .spring(response: 0.5, dampingFraction: 0.3))
-                springBar(label: "Smooth", color: .blue, spring: .spring(response: 0.8, dampingFraction: 0.9))
-                springBar(label: "Snappy", color: .green, spring: .spring(response: 0.3, dampingFraction: 0.7))
-            }
-            .padding(.horizontal, 20)
-        }
-    }
-
-    private func springBar(label: String, color: Color, spring: Animation) -> some View {
-        VStack(spacing: 8) {
-            ZStack(alignment: .bottom) {
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(color.opacity(0.15))
-                    .frame(height: 120)
-
-                RoundedRectangle(cornerRadius: 8)
-                    .fill(color.gradient)
-                    .frame(height: animated ? 120 : 20)
-                    .animation(spring, value: animated)
-            }
-            Text(label)
-                .font(.caption2.bold())
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
     }
 
     // MARK: - Controls
