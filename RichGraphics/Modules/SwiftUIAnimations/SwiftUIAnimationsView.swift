@@ -53,21 +53,9 @@ struct SwiftUIAnimationsView: View {
                     },
                 ]
             ),
-            AnimationSection(
-                title: "Transitions & Effects",
-                footer: "뷰 전환과 시각 효과",
-                demos: [
-                    AnimationDemo(title: "Matched Geometry", description: "Hero transitions with shared element effects", icon: "rectangle.on.rectangle.angled", color: .pink) {
-                        MatchedGeometryView()
-                    },
-                    AnimationDemo(title: "Custom Transitions", description: "Build unique AnyTransition effects from scratch", icon: "rectangle.2.swap", color: .teal) {
-                        CustomTransitionsView()
-                    },
-                    AnimationDemo(title: "Scroll Effects", description: "ScrollView visual effects with parallax and 3D rotation", icon: "scroll", color: .indigo) {
-                        ScrollEffectsView()
-                    },
-                ]
-            ),
+            // Hidden from UI (files kept for future reference):
+            // - Matched Geometry (MatchedGeometryView.swift)
+            // - Custom Transitions (CustomTransitionsView.swift)
         ]
     }
 

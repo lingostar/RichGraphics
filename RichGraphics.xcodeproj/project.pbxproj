@@ -22,7 +22,6 @@
 		39F145A26E6F7B1288B00604 /* SpringPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C0C0CF14A8D8A2E99F8C /* SpringPlaygroundView.swift */; };
 		4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */; };
 		4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */; };
-		56413923DE33CD545C1AD33E /* ScrollEffectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52BBADA316CCFA760DBCCC5 /* ScrollEffectsView.swift */; };
 		643DB8DE07FEF66506E95C65 /* GravityCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF93C4360FD80A004DBFCD8 /* GravityCardsView.swift */; };
 		6EFDEB1F0825789B3F39A31C /* GravityBallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */; };
 		70FFC5D23882D7383AD52CF4 /* DrawingCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11BCBA8994CFE7B4D0AECCB /* DrawingCanvasView.swift */; };
@@ -95,7 +94,6 @@
 		B63954BAEA0CF5A4DD700B06 /* PendulumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendulumView.swift; sourceTree = "<group>"; };
 		B747DA1760A02261E38DCB06 /* TouchTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTrailView.swift; sourceTree = "<group>"; };
 		BAECF8764CF6BA84ADFE688A /* CameraFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFiltersView.swift; sourceTree = "<group>"; };
-		C52BBADA316CCFA760DBCCC5 /* ScrollEffectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollEffectsView.swift; sourceTree = "<group>"; };
 		C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityBallsView.swift; sourceTree = "<group>"; };
 		C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidSimulationView.swift; sourceTree = "<group>"; };
 		CB5CA416A1F61D467C105C65 /* SolarSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemView.swift; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 				DDCCD85030DBAC8D2EFBCF44 /* MatchedGeometryView.swift */,
 				5DA70063F22F901D6DEE244C /* MorphingShapesView.swift */,
 				D755DD27E2AB08CA700CF88B /* PhaseAnimationsView.swift */,
-				C52BBADA316CCFA760DBCCC5 /* ScrollEffectsView.swift */,
 				5AA5C0C0CF14A8D8A2E99F8C /* SpringPlaygroundView.swift */,
 				F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */,
 			);
@@ -373,7 +370,6 @@
 				4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */,
 				BA3C9369D80B5BF7024818EC /* RichGraphicsApp.swift in Sources */,
 				AFC87944DBC8A841AD9AA3A0 /* SceneKit3DView.swift in Sources */,
-				56413923DE33CD545C1AD33E /* ScrollEffectsView.swift in Sources */,
 				38969E05FED64C762BEADC2C /* ShaderPlaygroundView.swift in Sources */,
 				D1B34FC118B7793F9558AC85 /* ShapeBuilderView.swift in Sources */,
 				357D81A75F3043F093A0D161 /* SignaturePadView.swift in Sources */,
