@@ -15,6 +15,7 @@
 		1C88FB111CA31CD33D1C3ED3 /* HologramEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5A39FC7F93D23D3B786553 /* HologramEffectView.swift */; };
 		1EF998FC36F376BCDC331098 /* TouchTrailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B747DA1760A02261E38DCB06 /* TouchTrailView.swift */; };
 		2361A7EE73CC83C58B519943 /* PencilKitCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CAF7028C36D957D22E4DBE /* PencilKitCanvasView.swift */; };
+		2C248517C29B99C2925049A9 /* ThreeDWorldAndPhysicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058B8741BFD89C96831813CF /* ThreeDWorldAndPhysicsView.swift */; };
 		35041B233F97BA1F2DA2C9BD /* FilterGalleryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48134C32D6B6EAC5D314665 /* FilterGalleryView.swift */; };
 		357D81A75F3043F093A0D161 /* SignaturePadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */; };
 		37538B5AA401DABBC5C5B983 /* ModelViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534BD5FAFF93DAC9FD80F0DE /* ModelViewerView.swift */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		01B395AC619B26E5030EB84D /* ProceduralGeometryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProceduralGeometryView.swift; sourceTree = "<group>"; };
+		058B8741BFD89C96831813CF /* ThreeDWorldAndPhysicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeDWorldAndPhysicsView.swift; sourceTree = "<group>"; };
 		0CF93C4360FD80A004DBFCD8 /* GravityCardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityCardsView.swift; sourceTree = "<group>"; };
 		1018556897D9FB175CEB951F /* ImageFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFiltersView.swift; sourceTree = "<group>"; };
 		12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransitionsView.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				587A72D0C0FF2F474A54F26F /* SceneKit3D */,
 				82A97CDE8D31D0F72C50BBF2 /* SpriteKitPhysics */,
 				7F7830ADA9DF52BA28D72802 /* SwiftUIAnimations */,
+				9060D718C61BB5B531EF5E15 /* ThreeDWorldAndPhysics */,
 				A458AE0CEECB305404955436 /* UIKitDynamics */,
 			);
 			path = Modules;
@@ -253,6 +256,14 @@
 				66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */,
 			);
 			path = DrawingCanvas;
+			sourceTree = "<group>";
+		};
+		9060D718C61BB5B531EF5E15 /* ThreeDWorldAndPhysics */ = {
+			isa = PBXGroup;
+			children = (
+				058B8741BFD89C96831813CF /* ThreeDWorldAndPhysicsView.swift */,
+			);
+			path = ThreeDWorldAndPhysics;
 			sourceTree = "<group>";
 		};
 		A458AE0CEECB305404955436 /* UIKitDynamics */ = {
@@ -384,6 +395,7 @@
 				E163C784FEDB57F1C3599ADE /* StarfieldView.swift in Sources */,
 				C78A97806E7AD616F6E9326E /* SwiftUIAnimationsView.swift in Sources */,
 				8D466C630330DC546E067BCE /* SwipeBackDisabler.swift in Sources */,
+				2C248517C29B99C2925049A9 /* ThreeDWorldAndPhysicsView.swift in Sources */,
 				1EF998FC36F376BCDC331098 /* TouchTrailView.swift in Sources */,
 				F28F5A581998B01DD320F65F /* UIKitDynamicsView.swift in Sources */,
 				FA7E6D3A8F02C68358B078EA /* WeatherView.swift in Sources */,
