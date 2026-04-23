@@ -56,7 +56,7 @@ struct ContentView: View {
             .navigationDestination(for: DemoModule.self) { module in
                 DemoDetailView(module: module)
             }
-            .sheet(isPresented: $showingDocs) {
+            .fullScreenCover(isPresented: $showingDocs) {
                 DocsWebSheet()
             }
             .sheet(isPresented: $showingTest) {
