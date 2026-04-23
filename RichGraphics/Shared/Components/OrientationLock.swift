@@ -3,17 +3,21 @@ import UIKit
 
 // MARK: - Orientation Manager
 //
-// App starts with no lock (.all). Specific views may call lock(to:) on
-// appear and unlock() on disappear. The lock mask is stored both on this
-// manager (for UI observation) AND on AppDelegate.orientationLock (which
-// is what iOS actually reads on every rotation check).
+// The lock is applied through two cooperating mechanisms:
+//
+// 1. `AppDelegate.orientationLock` — the mask iOS reads on every rotation check.
+// 2. `UIDevice.orientationDidChangeNotification` — a belt-and-suspenders
+//    observer that re-issues requestGeometryUpdate the moment the physical
+//    device rotates, so even if iOS's internal caching misses the AppDelegate
+//    callback, we snap the UI back to the locked orientation.
 
 @MainActor
 final class OrientationManager: ObservableObject {
     static let shared = OrientationManager()
 
-    /// nil = no lock (all supported orientations allowed)
     @Published private(set) var lockedMask: UIInterfaceOrientationMask?
+
+    private var motionObserver: NSObjectProtocol?
 
     private init() {}
 
@@ -21,33 +25,69 @@ final class OrientationManager: ObservableObject {
         lockedMask = mask
         AppDelegate.orientationLock = mask
         applyRotation(mask: mask)
+        startObservingDeviceOrientation()
     }
 
     func unlock() {
         lockedMask = nil
         AppDelegate.orientationLock = .all
+        stopObservingDeviceOrientation()
         applyRotation(mask: .all)
     }
 
+    // MARK: Private
+
     private func applyRotation(mask: UIInterfaceOrientationMask) {
+        // 1) Invalidate cached supportedInterfaceOrientations on every VC
+        //    before requesting the geometry change.
+        for scene in UIApplication.shared.connectedScenes {
+            guard let windowScene = scene as? UIWindowScene else { continue }
+            for window in windowScene.windows {
+                window.rootViewController?.forceOrientationUpdate()
+            }
+        }
+
+        // 2) Request the rotation on the foreground scene.
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first(where: { $0.activationState == .foregroundActive })
         else { return }
 
-        // 1) Force immediate rotation to match the new mask.
-        scene.requestGeometryUpdate(.iOS(interfaceOrientations: mask)) { _ in }
+        let prefs = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: mask)
+        scene.requestGeometryUpdate(prefs) { _ in }
+    }
 
-        // 2) Invalidate cached supported orientations on every VC so the
-        //    next rotation check re-queries AppDelegate.
-        for window in scene.windows {
-            window.rootViewController?.forceOrientationUpdate()
+    private func startObservingDeviceOrientation() {
+        stopObservingDeviceOrientation()
+
+        if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+        }
+
+        motionObserver = NotificationCenter.default.addObserver(
+            forName: UIDevice.orientationDidChangeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                guard let self, let mask = self.lockedMask else { return }
+                // Re-issue the geometry request; iOS will rotate back to the
+                // locked orientation if the physical device drifted away from it.
+                self.applyRotation(mask: mask)
+            }
+        }
+    }
+
+    private func stopObservingDeviceOrientation() {
+        if let observer = motionObserver {
+            NotificationCenter.default.removeObserver(observer)
+            motionObserver = nil
         }
     }
 }
 
 private extension UIViewController {
-    /// Recursively marks the VC tree as needing an orientation refresh.
+    /// Recursively flags children and presented VCs as needing an orientation refresh.
     func forceOrientationUpdate() {
         setNeedsUpdateOfSupportedInterfaceOrientations()
         for child in children {

@@ -84,11 +84,11 @@ struct DynamicsView: UIViewControllerRepresentable {
 
 | # | 데모 | 설명 |
 |---|------|------|
-| 1 | **Gravity Cards** | 여러 카드 뷰에 중력과 충돌을 적용합니다. 디바이스를 기울이면 중력 방향이 바뀌어 카드가 쏟아지는 효과를 체험합니다. |
-| 2 | **Newton's Cradle** | UIAttachmentBehavior(pendulum)와 UICollisionBehavior로 뉴턴의 요람을 구현합니다. 운동량 보존 법칙을 시각적으로 확인합니다. |
-| 3 | **Snap Grid** | UISnapBehavior로 드래그한 아이콘이 가장 가까운 그리드 위치로 스냅되는 인터랙션을 구현합니다. damping 값에 따른 스냅 느낌 변화를 실험합니다. |
-| 4 | **Elastic Menu** | UIAttachmentBehavior의 spring 설정으로 탄성 있는 메뉴 열기/닫기 애니메이션을 구현합니다. 드래그 속도에 반응하는 자연스러운 모션을 만듭니다. |
-| 5 | **Collision Playground** | 커스텀 충돌 경계(UIBezierPath)를 그리고 뷰를 던져 충돌하는 인터랙티브 놀이터. UIPushBehavior의 instantaneous/continuous 차이를 비교합니다. |
+| 1 | **Gravity Cards** | 여러 카드에 중력과 충돌을 적용합니다. 디바이스를 기울이면 중력 방향이 바뀝니다 (이 뷰는 Portrait 방향으로 자동 잠김). |
+| 2 | **Snap Grid** | `UISnapBehavior`로 드래그한 아이콘이 가장 가까운 그리드 위치로 스냅됩니다. damping 슬라이더로 스냅 느낌을 조절합니다. |
+| 3 | **Collision Bubbles** | 원형 버블들이 서로 충돌하며 자유 배치되는 태그 클라우드. 탭하면 주변으로 밀어내는 `UIPushBehavior`가 적용됩니다. |
+| 4 | **Pendulum (Newton's Cradle)** | `UIAttachmentBehavior`로 줄을 구현한 뉴턴의 요람. `UISnapBehavior`로 공을 드래그해 자연스럽게 놓을 수 있습니다. |
+| 5 | **Elastic Menu** | `UIAttachmentBehavior`의 spring 설정으로 탄성 있는 메뉴. 아이템 간 체인 연결로 한 항목 당기면 다른 항목도 따라옵니다. |
 
 ## 실전 팁
 

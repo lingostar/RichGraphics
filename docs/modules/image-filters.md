@@ -63,10 +63,10 @@ if let output = hueAdjust.outputImage,
 
 | # | 데모 | 설명 |
 |---|------|------|
-| 1 | **Filter Gallery** | Core Image의 주요 필터 카테고리(Blur, Color, Distortion, Stylize)를 탐색하고, 파라미터를 실시간으로 조절하며 결과를 미리봅니다. |
-| 2 | **Filter Chain Builder** | 여러 필터를 드래그 앤 드롭으로 체이닝하여 커스텀 이미지 처리 파이프라인을 시각적으로 구성합니다. 필터 순서에 따른 결과 차이를 비교합니다. |
-| 3 | **Live Camera Filter** | AVCaptureSession과 Core Image를 연동하여 실시간 카메라 프리뷰에 필터를 적용합니다. 필터 전환 시 부드러운 트랜지션을 구현합니다. |
-| 4 | **Face Detection Effects** | CIDetector로 얼굴 영역을 감지하고, 해당 영역에만 선택적으로 필터(모자이크, 블러, 스타일 전환)를 적용하는 기법을 실습합니다. |
+| 1 | **Filter Gallery** | 15개 Core Image 필터 썸네일 그리드 + 강도 슬라이더. Sepia, Chrome, Noir, Bloom, Crystallize 등을 한눈에 비교. |
+| 2 | **Camera Filters** | `AVCaptureSession`과 Core Image를 연동한 실시간 카메라 필터. 시뮬레이터에서는 절차적 이미지 폴백을 사용합니다. |
+| 3 | **Filter Chain Builder** | 최대 5개 필터 슬롯을 스택으로 연결하여 커스텀 이미지 처리 파이프라인을 구성합니다. |
+| 4 | **Custom Effects** | 여러 필터를 조합한 창의적 이펙트(글리치, 빈티지, 팝아트, 네온 글로우). Before/After 비교 슬라이더 포함. |
 
 ## 실전 팁
 

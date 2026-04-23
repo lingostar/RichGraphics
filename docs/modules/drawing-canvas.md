@@ -86,11 +86,9 @@ struct DrawingCanvas: UIViewRepresentable {
 
 | # | 데모 | 설명 |
 |---|------|------|
-| 1 | **Bezier Path Editor** | Control Point를 드래그하여 3차 베지어 곡선을 실시간으로 조작합니다. CGPath의 구조와 곡선 수학을 시각적으로 이해합니다. |
-| 2 | **Gradient & Pattern Lab** | Linear, Radial, Conic Gradient와 타일링 패턴을 CoreGraphics로 직접 그립니다. CGGradient과 CGPattern API를 실습합니다. |
-| 3 | **PencilKit Sketchpad** | PKCanvasView와 PKToolPicker를 활용한 드로잉 앱. 필압에 따른 선 굵기 변화와 도구 전환을 체험합니다. |
-| 4 | **Transform Playground** | CGAffineTransform(이동, 회전, 스케일)을 조합하며 좌표 변환의 순서가 결과에 미치는 영향을 실험합니다. |
-| 5 | **Image Compositing** | CGContext의 blendMode를 활용하여 여러 이미지를 합성합니다. 마스킹과 클리핑 경로 기법도 함께 다룹니다. |
+| 1 | **Freehand Drawing** | SwiftUI `Canvas` 기반 자유 드로잉. 8색 팔레트, 선 굵기 슬라이더, 지우개, undo/redo를 구현합니다. |
+| 2 | **PencilKit Canvas** | `PKCanvasView` + `PKToolPicker` 통합. Apple Pencil 필압/기울기 지원, 이미지 내보내기 기능을 포함합니다. |
+| 3 | **Shape Builder** | 터치 제스처로 선/사각형/원/삼각형을 그리고 스트로크와 채우기 색상을 조합합니다. |
 
 ## 실전 팁
 

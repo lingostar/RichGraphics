@@ -42,6 +42,7 @@
 		B0CF186FCC46335A9F61A79E /* ImageFiltersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1018556897D9FB175CEB951F /* ImageFiltersView.swift */; };
 		B0FCFFB7FE63323458ECCAF2 /* DemoCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */; };
 		B1068D90316D8F2125AE2FD0 /* ElasticMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADF93F8A1EBC616DBAE3952 /* ElasticMenuView.swift */; };
+		B4B9236E3A6DB9FB36F8F321 /* InAppWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CD2DA2F1A44371C163974E /* InAppWebView.swift */; };
 		BA3C9369D80B5BF7024818EC /* RichGraphicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */; };
 		C78A97806E7AD616F6E9326E /* SwiftUIAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */; };
 		D1B34FC118B7793F9558AC85 /* ShapeBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */; };
@@ -98,6 +99,7 @@
 		B747DA1760A02261E38DCB06 /* TouchTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTrailView.swift; sourceTree = "<group>"; };
 		BAECF8764CF6BA84ADFE688A /* CameraFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFiltersView.swift; sourceTree = "<group>"; };
 		BF88E01BD6573439A69DF59A /* OrientationLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationLock.swift; sourceTree = "<group>"; };
+		C4CD2DA2F1A44371C163974E /* InAppWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppWebView.swift; sourceTree = "<group>"; };
 		C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityBallsView.swift; sourceTree = "<group>"; };
 		C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidSimulationView.swift; sourceTree = "<group>"; };
 		CB5CA416A1F61D467C105C65 /* SolarSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			children = (
 				8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */,
 				56DE8902CCFE6BA1E5865B07 /* DemoDetailView.swift */,
+				C4CD2DA2F1A44371C163974E /* InAppWebView.swift */,
 				BF88E01BD6573439A69DF59A /* OrientationLock.swift */,
 				53B677A242E1E31BAE58349D /* SwipeBackDisabler.swift */,
 			);
@@ -372,6 +375,7 @@
 				643DB8DE07FEF66506E95C65 /* GravityCardsView.swift in Sources */,
 				1C88FB111CA31CD33D1C3ED3 /* HologramEffectView.swift in Sources */,
 				B0CF186FCC46335A9F61A79E /* ImageFiltersView.swift in Sources */,
+				B4B9236E3A6DB9FB36F8F321 /* InAppWebView.swift in Sources */,
 				86385BD4984481572F63B2CA /* KeyframeAnimationsView.swift in Sources */,
 				1817101F39700628E6FC34E9 /* MagneticFieldView.swift in Sources */,
 				E84C47DD5A6B36BC6E10FEE0 /* MatchedGeometryView.swift in Sources */,
