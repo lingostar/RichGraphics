@@ -46,22 +46,9 @@ struct DrawingCanvasView: View {
             ) {
                 ShapeBuilderView()
             },
-            DrawingCanvasDemo(
-                title: "Generative Art",
-                description: "Spirograph generator with animated curves and presets",
-                icon: "sparkle",
-                color: .purple
-            ) {
-                GenerativeArtView()
-            },
-            DrawingCanvasDemo(
-                title: "Signature Pad",
-                description: "Smooth Bezier-interpolated signature capture",
-                icon: "signature",
-                color: .indigo
-            ) {
-                SignaturePadView()
-            },
+            // Hidden from UI (files kept in project for future reference):
+            // - Generative Art: covered by Freehand Drawing paradigm shift
+            // - Signature Pad: overlaps heavily with Freehand Drawing
         ]
     }
 
