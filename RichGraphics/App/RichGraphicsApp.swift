@@ -13,17 +13,20 @@ struct RichGraphicsApp: App {
 }
 
 // MARK: - AppDelegate
-// Needed for `application(_:supportedInterfaceOrientationsFor:)` callback,
-// which is the authoritative hook iOS uses to decide allowed orientations.
+//
+// iOS queries this callback on every rotation check. It must return the
+// currently desired orientation mask synchronously, on the main thread,
+// without actor hops. We use a `nonisolated(unsafe) static var` because
+// UIInterfaceOrientationMask is Sendable and we only ever mutate it from
+// the main actor (via OrientationManager).
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    nonisolated(unsafe) static var orientationLock: UIInterfaceOrientationMask = .all
+
     func application(
         _ application: UIApplication,
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
-        // If a view has locked the orientation, honor it; otherwise allow all.
-        MainActor.assumeIsolated {
-            OrientationManager.shared.lockedMask ?? .all
-        }
+        AppDelegate.orientationLock
     }
 }

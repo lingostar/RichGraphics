@@ -3,45 +3,57 @@ import UIKit
 
 // MARK: - Orientation Manager
 //
-// Views that rely on device motion (gravity, tilt) need a stable orientation
-// so the physics feel correct relative to the user's frame of reference.
-// This manager lets any view request an orientation lock on appear and
-// release it on disappear. The AppDelegate consults this manager to decide
-// which orientations to report via supportedInterfaceOrientationsFor.
+// App starts with no lock (.all). Specific views may call lock(to:) on
+// appear and unlock() on disappear. The lock mask is stored both on this
+// manager (for UI observation) AND on AppDelegate.orientationLock (which
+// is what iOS actually reads on every rotation check).
 
 @MainActor
 final class OrientationManager: ObservableObject {
     static let shared = OrientationManager()
 
     /// nil = no lock (all supported orientations allowed)
-    /// non-nil = only this mask is allowed, and UI will rotate to match
     @Published private(set) var lockedMask: UIInterfaceOrientationMask?
 
     private init() {}
 
     func lock(to mask: UIInterfaceOrientationMask) {
         lockedMask = mask
-        forceUpdate(mask: mask)
+        AppDelegate.orientationLock = mask
+        applyRotation(mask: mask)
     }
 
     func unlock() {
         lockedMask = nil
-        // Reset back to the full mask so the system picks whatever is appropriate
-        forceUpdate(mask: .all)
+        AppDelegate.orientationLock = .all
+        applyRotation(mask: .all)
     }
 
-    private func forceUpdate(mask: UIInterfaceOrientationMask) {
+    private func applyRotation(mask: UIInterfaceOrientationMask) {
         guard let scene = UIApplication.shared.connectedScenes
             .compactMap({ $0 as? UIWindowScene })
             .first(where: { $0.activationState == .foregroundActive })
         else { return }
 
-        let prefs = UIWindowScene.GeometryPreferences.iOS(interfaceOrientations: mask)
-        scene.requestGeometryUpdate(prefs) { _ in
-            // errors are non-fatal; the next rotation attempt will reconcile
+        // 1) Force immediate rotation to match the new mask.
+        scene.requestGeometryUpdate(.iOS(interfaceOrientations: mask)) { _ in }
+
+        // 2) Invalidate cached supported orientations on every VC so the
+        //    next rotation check re-queries AppDelegate.
+        for window in scene.windows {
+            window.rootViewController?.forceOrientationUpdate()
         }
-        // Ask every view controller in the window to re-query supported orientations
-        scene.keyWindow?.rootViewController?.setNeedsUpdateOfSupportedInterfaceOrientations()
+    }
+}
+
+private extension UIViewController {
+    /// Recursively marks the VC tree as needing an orientation refresh.
+    func forceOrientationUpdate() {
+        setNeedsUpdateOfSupportedInterfaceOrientations()
+        for child in children {
+            child.forceOrientationUpdate()
+        }
+        presentedViewController?.forceOrientationUpdate()
     }
 }
 
@@ -49,7 +61,7 @@ final class OrientationManager: ObservableObject {
 
 extension View {
     /// Locks the device orientation to the given mask while this view is on screen.
-    /// An indicator badge appears in the top-trailing corner to inform the user.
+    /// A small badge appears in the top-trailing corner to inform the user.
     func lockOrientation(_ mask: UIInterfaceOrientationMask) -> some View {
         modifier(OrientationLockModifier(mask: mask))
     }
@@ -67,6 +79,7 @@ private struct OrientationLockModifier: ViewModifier {
                         .padding(.top, 8)
                         .padding(.trailing, 12)
                         .transition(.opacity.combined(with: .scale))
+                        .allowsHitTesting(false)
                 }
             }
             .onAppear {
@@ -81,9 +94,7 @@ private struct OrientationLockModifier: ViewModifier {
         switch mask {
         case .portrait: "Portrait"
         case .portraitUpsideDown: "Upside Down"
-        case .landscapeLeft: "Landscape"
-        case .landscapeRight: "Landscape"
-        case .landscape: "Landscape"
+        case .landscapeLeft, .landscapeRight, .landscape: "Landscape"
         default: "Locked"
         }
     }
