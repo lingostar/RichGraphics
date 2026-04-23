@@ -1,46 +1,23 @@
 import SwiftUI
 
 struct ContentView: View {
-    private let columns = [
-        GridItem(.flexible(), spacing: 16),
-        GridItem(.flexible(), spacing: 16)
-    ]
-
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    // MARK: - Featured 3D Carousel
-                    // Demonstrates SwiftUI's scrollTransition + rotation3DEffect
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Featured")
-                            .font(.title3.bold())
-                            .padding(.horizontal, 16)
-                            .padding(.top, 4)
+            ZStack {
+                Color(.systemGroupedBackground).ignoresSafeArea()
 
-                        FeaturedCarousel()
-                    }
+                VStack(alignment: .leading, spacing: 0) {
+                    Text("Choose a Module")
+                        .font(.title2.weight(.bold))
+                        .padding(.horizontal, 24)
+                        .padding(.top, 8)
+                        .padding(.bottom, 20)
 
-                    // MARK: - All Modules Grid
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("All Modules")
-                            .font(.title3.bold())
-                            .padding(.horizontal, 16)
+                    FeaturedCarousel()
 
-                        LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(DemoModule.allCases) { module in
-                                NavigationLink(value: module) {
-                                    DemoCard(module: module)
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                    }
+                    Spacer(minLength: 0)
                 }
-                .padding(.bottom, 24)
             }
-            .background(Color(.systemGroupedBackground))
             .navigationTitle("RichGraphics")
             .navigationDestination(for: DemoModule.self) { module in
                 DemoDetailView(module: module)
@@ -54,7 +31,7 @@ struct ContentView: View {
 private struct FeaturedCarousel: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            LazyHStack(spacing: 16) {
+            LazyHStack(spacing: 20) {
                 ForEach(DemoModule.allCases) { module in
                     NavigationLink(value: module) {
                         CarouselCard(module: module)
@@ -62,11 +39,11 @@ private struct FeaturedCarousel: View {
                     .buttonStyle(.plain)
                 }
             }
-            .padding(.horizontal, 48)
             .scrollTargetLayout()
+            .padding(.horizontal, 50)
         }
         .scrollTargetBehavior(.viewAligned)
-        .frame(height: 260)
+        .frame(height: 460)
     }
 }
 
@@ -74,38 +51,45 @@ private struct CarouselCard: View {
     let module: DemoModule
 
     var body: some View {
-        RoundedRectangle(cornerRadius: 20)
+        RoundedRectangle(cornerRadius: 28)
             .fill(module.gradient)
-            .frame(width: 200, height: 260)
+            .frame(width: 300, height: 420)
             .overlay(
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: 12) {
                     Image(systemName: module.iconName)
-                        .font(.system(size: 44, weight: .semibold))
+                        .font(.system(size: 56, weight: .semibold))
                         .foregroundStyle(.white)
+                        .shadow(color: .black.opacity(0.15), radius: 4, y: 2)
+
                     Spacer()
+
                     Text(module.name)
-                        .font(.title3.bold())
+                        .font(.title.weight(.bold))
                         .foregroundStyle(.white)
                         .multilineTextAlignment(.leading)
                     Text(module.description)
-                        .font(.caption)
-                        .foregroundStyle(.white.opacity(0.85))
-                        .lineLimit(2)
+                        .font(.subheadline)
+                        .foregroundStyle(.white.opacity(0.9))
+                        .lineLimit(3)
                         .multilineTextAlignment(.leading)
                 }
-                .padding(20),
+                .padding(28),
                 alignment: .topLeading
             )
-            .shadow(color: .black.opacity(0.2), radius: 10, y: 6)
-            .scrollTransition(.animated(.spring()), axis: .horizontal) { content, phase in
-                content
+            .shadow(color: .black.opacity(0.25), radius: 16, y: 10)
+            .scrollTransition(.animated(.spring(response: 0.5, dampingFraction: 0.85)),
+                              axis: .horizontal) { content, phase in
+                // Amplify phase so cards start folding/scaling while still mostly
+                // on-screen (nearer the center) rather than only at the edges.
+                let amplified = max(-1.0, min(1.0, phase.value * 2.2))
+                return content
                     .rotation3DEffect(
-                        .degrees(phase.value * 35),
+                        .degrees(amplified * 45),
                         axis: (x: 0, y: 1, z: 0),
-                        perspective: 0.5
+                        perspective: 0.6
                     )
-                    .scaleEffect(1.0 - abs(phase.value) * 0.15)
-                    .opacity(1.0 - abs(phase.value) * 0.3)
+                    .scaleEffect(1.0 - abs(amplified) * 0.22)
+                    .opacity(1.0 - abs(amplified) * 0.45)
             }
     }
 }
