@@ -20,6 +20,7 @@
 		37538B5AA401DABBC5C5B983 /* ModelViewerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534BD5FAFF93DAC9FD80F0DE /* ModelViewerView.swift */; };
 		38969E05FED64C762BEADC2C /* ShaderPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0578BD25D09AF4243D79D4 /* ShaderPlaygroundView.swift */; };
 		39F145A26E6F7B1288B00604 /* SpringPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA5C0C0CF14A8D8A2E99F8C /* SpringPlaygroundView.swift */; };
+		39F517E0E244FBBA9AC5F96C /* OrientationLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF88E01BD6573439A69DF59A /* OrientationLock.swift */; };
 		4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */; };
 		4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */; };
 		643DB8DE07FEF66506E95C65 /* GravityCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF93C4360FD80A004DBFCD8 /* GravityCardsView.swift */; };
@@ -94,6 +95,7 @@
 		B63954BAEA0CF5A4DD700B06 /* PendulumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendulumView.swift; sourceTree = "<group>"; };
 		B747DA1760A02261E38DCB06 /* TouchTrailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchTrailView.swift; sourceTree = "<group>"; };
 		BAECF8764CF6BA84ADFE688A /* CameraFiltersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFiltersView.swift; sourceTree = "<group>"; };
+		BF88E01BD6573439A69DF59A /* OrientationLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationLock.swift; sourceTree = "<group>"; };
 		C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GravityBallsView.swift; sourceTree = "<group>"; };
 		C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FluidSimulationView.swift; sourceTree = "<group>"; };
 		CB5CA416A1F61D467C105C65 /* SolarSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolarSystemView.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			children = (
 				8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */,
 				56DE8902CCFE6BA1E5865B07 /* DemoDetailView.swift */,
+				BF88E01BD6573439A69DF59A /* OrientationLock.swift */,
 				53B677A242E1E31BAE58349D /* SwipeBackDisabler.swift */,
 			);
 			path = Components;
@@ -362,6 +365,7 @@
 				E84C47DD5A6B36BC6E10FEE0 /* MatchedGeometryView.swift in Sources */,
 				37538B5AA401DABBC5C5B983 /* ModelViewerView.swift in Sources */,
 				A997C56364DAE82DACAC9B4E /* MorphingShapesView.swift in Sources */,
+				39F517E0E244FBBA9AC5F96C /* OrientationLock.swift in Sources */,
 				F12833BEB5E9E7B1C5659C34 /* ParticleEffectsView.swift in Sources */,
 				2361A7EE73CC83C58B519943 /* PencilKitCanvasView.swift in Sources */,
 				DB5B92C77E612E3EC97CC028 /* PendulumView.swift in Sources */,
@@ -458,7 +462,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -486,7 +490,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeLeft;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

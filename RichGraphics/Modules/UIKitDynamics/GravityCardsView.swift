@@ -44,6 +44,7 @@ struct GravityCardsView: View {
             .padding(.vertical, 12)
             .background(Color(.systemGroupedBackground))
         }
+        .lockOrientation(.portrait)
     }
 }
 
