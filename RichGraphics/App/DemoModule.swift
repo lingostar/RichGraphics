@@ -35,7 +35,7 @@ enum DemoModule: String, CaseIterable, Identifiable {
         case .drawingCanvas: "paintbrush.pointed"
         case .threeDWorldAndPhysics: "cube.transparent"
         case .imageFilters: "camera.filters"
-        case .uiKitDynamics: "arrow.triangle.bounce"
+        case .uiKitDynamics: "move.3d"
         }
     }
 

@@ -130,7 +130,7 @@ struct GravityCardsContainer: UIViewRepresentable {
             ib.elasticity = 0.4
             ib.friction = 0.3
             ib.resistance = 0.1
-            ib.angularResistance = 0.3
+            ib.allowsRotation = false   // cards stay upright, no spin
             animator?.addBehavior(ib)
             itemBehavior = ib
 
