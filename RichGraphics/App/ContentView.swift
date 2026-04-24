@@ -37,7 +37,7 @@ struct ContentView: View {
 
                         ActionCard(
                             title: "테스트하기",
-                            subtitle: "직접 실습",
+                            subtitle: "확인해 볼까요?",
                             icon: "play.rectangle.fill",
                             gradient: LinearGradient(
                                 colors: [.orange, .pink],
@@ -60,7 +60,7 @@ struct ContentView: View {
                 DocsWebSheet()
             }
             .sheet(isPresented: $showingTest) {
-                TestPlaceholderSheet()
+                TestQuizSheet()
             }
         }
     }
@@ -172,37 +172,6 @@ private struct ActionCard: View {
             .shadow(color: .black.opacity(0.12), radius: 6, y: 3)
         }
         .buttonStyle(.plain)
-    }
-}
-
-// MARK: - Test placeholder
-
-private struct TestPlaceholderSheet: View {
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 16) {
-                Spacer()
-                Image(systemName: "wrench.and.screwdriver")
-                    .font(.system(size: 64))
-                    .foregroundStyle(.orange.gradient)
-                Text("준비 중")
-                    .font(.title2.bold())
-                Text("테스트 콘텐츠는 곧 제공됩니다.")
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .navigationTitle("테스트하기")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") { dismiss() }
-                }
-            }
-        }
     }
 }
 
