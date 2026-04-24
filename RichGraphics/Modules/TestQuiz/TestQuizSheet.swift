@@ -87,17 +87,16 @@ struct QuizPageView: View {
                         explanationView
                             .padding(.horizontal, 16)
                             .padding(.bottom, 60)
-                            .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
                 } else {
                     Button {
                         withAnimation(.spring(response: 0.6, dampingFraction: 0.75)) {
                             revealed = true
                         }
+                        // Explanation shows after the answer-rise animation
+                        // completes, but without its own transition animation.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                showExplanation = true
-                            }
+                            showExplanation = true
                         }
                     } label: {
                         Text("정답확인")
