@@ -64,37 +64,36 @@ struct QuizPageView: View {
 
                 Spacer(minLength: 40)
 
-                if revealed {
-                    // Answer text rises from bottom with opacity
-                    HStack(spacing: 8) {
-                        Text("A.")
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundStyle(.yellow.opacity(0.8))
-                        Text(question.answer)
-                            .font(.system(size: 34, weight: .heavy))
-                            .foregroundStyle(.yellow)
-                    }
-                    .padding(.horizontal, 24)
-                    .padding(.bottom, 20)
-                    .transition(
-                        .asymmetric(
-                            insertion: .move(edge: .bottom).combined(with: .opacity),
-                            removal: .opacity
-                        )
-                    )
+                // Reveal area: button and answer+explanation share the same
+                // layout slot (ZStack) so toggling `revealed` doesn't resize
+                // the view. The VStack inside always occupies its natural size
+                // — even when invisible — which fixes the total height.
+                ZStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 20) {
+                        HStack(spacing: 8) {
+                            Text("A.")
+                                .font(.system(size: 28, weight: .bold))
+                                .foregroundStyle(.yellow.opacity(0.8))
+                            Text(question.answer)
+                                .font(.system(size: 34, weight: .heavy))
+                                .foregroundStyle(.yellow)
+                        }
+                        .padding(.horizontal, 24)
+                        .opacity(revealed ? 1 : 0)
+                        .offset(y: revealed ? 0 : 20)
 
-                    if showExplanation {
                         explanationView
                             .padding(.horizontal, 16)
-                            .padding(.bottom, 60)
+                            .opacity(showExplanation ? 1 : 0)
                     }
-                } else {
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
                     Button {
                         withAnimation(.spring(response: 0.6, dampingFraction: 0.75)) {
                             revealed = true
                         }
-                        // Explanation shows after the answer-rise animation
-                        // completes, but without its own transition animation.
+                        // Explanation appears after the answer rise animation,
+                        // but itself is not animated.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) {
                             showExplanation = true
                         }
@@ -107,8 +106,10 @@ struct QuizPageView: View {
                             .background(.white, in: Capsule())
                     }
                     .padding(.horizontal, 24)
-                    .padding(.bottom, 60)
+                    .opacity(revealed ? 0 : 1)
+                    .allowsHitTesting(!revealed)
                 }
+                .padding(.bottom, 60)
             }
         }
         .scrollBounceBehavior(.basedOnSize)
