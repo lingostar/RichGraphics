@@ -59,7 +59,7 @@ struct ContentView: View {
             .fullScreenCover(isPresented: $showingDocs) {
                 DocsWebSheet()
             }
-            .sheet(isPresented: $showingTest) {
+            .fullScreenCover(isPresented: $showingTest) {
                 TestQuizSheet()
             }
         }
