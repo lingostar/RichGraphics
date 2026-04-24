@@ -92,7 +92,7 @@ extension QuizQuestion {
 
         // Page 4 — SceneKit vs Metal
         QuizQuestion(
-            question: "3D 제품 뷰어를 며칠 안에 프로토타이핑해야 하는데, GPU 파이프라인까지 직접 다룰 여유가 없다면?",
+            question: "3D 모델을 보여주고 싶은데, 퍼포먼스가 치명적으로 중요하지 않다면?",
             answer: "SceneKit",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "SceneKit",
