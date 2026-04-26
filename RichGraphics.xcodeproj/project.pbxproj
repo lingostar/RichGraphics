@@ -31,6 +31,7 @@
 		721E01A92ED971DD4B99EDD6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F48227653248D8C56637DE8 /* ContentView.swift */; };
 		759971B3C795124319D67CC6 /* ConfettiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5020D500733AA3BD990E8A4A /* ConfettiView.swift */; };
 		7C1088D2C126731D4B1CCE59 /* CollisionBubblesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A180C05F5DE4BF40287ACD3B /* CollisionBubblesView.swift */; };
+		7D0E4A495EDB58D548F7C662 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F86F96AB715D1345800DE1FA /* Assets.xcassets */; };
 		803BA7AEE3ABC8812802C219 /* SolarSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB5CA416A1F61D467C105C65 /* SolarSystemView.swift */; };
 		82C097C829CF73CA68CD8389 /* FluidSimulationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C736C5DB643787C3B72255 /* FluidSimulationView.swift */; };
 		82E7384175608A0643DF1B8C /* DestructionPhysicsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4028CE89A97AB2F9883782D1 /* DestructionPhysicsView.swift */; };
@@ -118,6 +119,7 @@
 		E6DEACB4BCC1C88E50D6E668 /* BreakoutGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakoutGameView.swift; sourceTree = "<group>"; };
 		F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIAnimationsView.swift; sourceTree = "<group>"; };
 		F48134C32D6B6EAC5D314665 /* FilterGalleryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGalleryView.swift; sourceTree = "<group>"; };
+		F86F96AB715D1345800DE1FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8C636C8BA92156C7325D97A /* FilterChainBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChainBuilderView.swift; sourceTree = "<group>"; };
 		FAFBAEB1F80C2E5809F68968 /* FireworksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireworksView.swift; sourceTree = "<group>"; };
 		FB5A39FC7F93D23D3B786553 /* HologramEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HologramEffectView.swift; sourceTree = "<group>"; };
@@ -299,6 +301,7 @@
 		E40BF1F90EF9304FC5EF2568 /* RichGraphics */ = {
 			isa = PBXGroup;
 			children = (
+				F86F96AB715D1345800DE1FA /* Assets.xcassets */,
 				12339D3E714AEFEDBE23668A /* App */,
 				09AC857CCE9E8A85063C0481 /* Modules */,
 				84DB951563AAC47E8F7023A3 /* Shared */,
@@ -314,6 +317,7 @@
 			buildConfigurationList = 31EC54DD4847704D1523BE5F /* Build configuration list for PBXNativeTarget "RichGraphics" */;
 			buildPhases = (
 				DE5FF658445083A7B14C5ADE /* Sources */,
+				B33DCE9E2AB4AB3DE0B72F18 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -359,6 +363,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B33DCE9E2AB4AB3DE0B72F18 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D0E4A495EDB58D548F7C662 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DE5FF658445083A7B14C5ADE /* Sources */ = {
