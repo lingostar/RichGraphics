@@ -134,6 +134,72 @@ private struct DemoSidebar: View {
 
     var body: some View {
         List(selection: $selectedDemo) {
+            // Resources section pinned at the top so it stays prominent
+            // even with the long catalog of demos below.
+            Section {
+                Button {
+                    showingDocs = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "book.pages.fill")
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .frame(width: 28, height: 28)
+                            .background(
+                                LinearGradient(
+                                    colors: [.indigo, .purple],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                in: RoundedRectangle(cornerRadius: 6)
+                            )
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("정리노트")
+                                .font(.subheadline.weight(.semibold))
+                            Text("프레임워크 가이드")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    showingTest = true
+                } label: {
+                    HStack(spacing: 12) {
+                        Image(systemName: "play.rectangle.fill")
+                            .font(.callout.weight(.semibold))
+                            .foregroundStyle(.white)
+                            .frame(width: 28, height: 28)
+                            .background(
+                                LinearGradient(
+                                    colors: [.orange, .pink],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                in: RoundedRectangle(cornerRadius: 6)
+                            )
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("테스트하기")
+                                .font(.subheadline.weight(.semibold))
+                            Text("확인해 볼까요?")
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .padding(.vertical, 2)
+                }
+                .buttonStyle(.plain)
+            } header: {
+                Text("Resources")
+                    .font(.subheadline.weight(.bold))
+                    .textCase(nil)
+            }
+
             ForEach(DemoModule.allCases) { module in
                 Section {
                     ForEach(DemoCatalog.entries(for: module)) { entry in
@@ -145,23 +211,11 @@ private struct DemoSidebar: View {
                     Text(module.name)
                         .font(.subheadline.weight(.bold))
                         .textCase(nil)
+                } footer: {
+                    Text(module.description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
-            }
-
-            Section("Resources") {
-                Button {
-                    showingDocs = true
-                } label: {
-                    Label("정리노트", systemImage: "book.pages.fill")
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    showingTest = true
-                } label: {
-                    Label("테스트하기", systemImage: "play.rectangle.fill")
-                }
-                .buttonStyle(.plain)
             }
         }
         .listStyle(.sidebar)
