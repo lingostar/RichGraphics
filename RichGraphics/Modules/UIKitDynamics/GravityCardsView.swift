@@ -142,8 +142,13 @@ struct GravityCardsContainer: UIViewRepresentable {
             motionManager.deviceMotionUpdateInterval = 1.0 / 30.0
             motionManager.startDeviceMotionUpdates(to: .main) { [weak self] motion, _ in
                 guard let motion, let self else { return }
-                let g = motion.gravity
-                self.gravity?.gravityDirection = CGVector(dx: g.x * 2.0, dy: -g.y * 2.0)
+                // Map device-frame gravity to UIKit screen frame
+                // (top-left origin) using the current interface orientation.
+                let v = OrientationAwareGravity.uiKitVector(
+                    deviceX: motion.gravity.x,
+                    deviceY: motion.gravity.y
+                )
+                self.gravity?.gravityDirection = CGVector(dx: v.dx * 2.0, dy: v.dy * 2.0)
             }
         }
 

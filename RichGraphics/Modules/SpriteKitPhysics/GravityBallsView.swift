@@ -67,11 +67,13 @@ final class GravityBallsScene: SKScene {
         motionManager.accelerometerUpdateInterval = 1.0 / 60.0
         motionManager.startAccelerometerUpdates(to: .main) { [weak self] data, _ in
             guard let data = data, let self = self else { return }
-            let gravity = CGVector(
-                dx: data.acceleration.x * 9.8,
-                dy: data.acceleration.y * 9.8
+            // Map device-frame acceleration to SpriteKit screen frame
+            // (lower-left origin) using the current interface orientation.
+            let v = OrientationAwareGravity.spriteKitVector(
+                deviceX: data.acceleration.x,
+                deviceY: data.acceleration.y
             )
-            self.physicsWorld.gravity = gravity
+            self.physicsWorld.gravity = CGVector(dx: v.dx * 9.8, dy: v.dy * 9.8)
         }
     }
 

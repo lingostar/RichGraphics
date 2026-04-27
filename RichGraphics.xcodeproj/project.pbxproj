@@ -47,6 +47,7 @@
 		B1068D90316D8F2125AE2FD0 /* ElasticMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ADF93F8A1EBC616DBAE3952 /* ElasticMenuView.swift */; };
 		B4B9236E3A6DB9FB36F8F321 /* InAppWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CD2DA2F1A44371C163974E /* InAppWebView.swift */; };
 		BA3C9369D80B5BF7024818EC /* RichGraphicsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */; };
+		BA919EF871366910788A082A /* OrientationAwareGravity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F6B34BF05E81E2F3F7E2161 /* OrientationAwareGravity.swift */; };
 		C78A97806E7AD616F6E9326E /* SwiftUIAnimationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EA7D63837FDA37C56B0FEF /* SwiftUIAnimationsView.swift */; };
 		CCD00B6E509EBDF948A01A76 /* TestQuizSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A2E9DD2209A6E8CD4177941 /* TestQuizSheet.swift */; };
 		D1B34FC118B7793F9558AC85 /* ShapeBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */; };
@@ -74,6 +75,7 @@
 		12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransitionsView.swift; sourceTree = "<group>"; };
 		19CE73F7DC79B3C162BBF748 /* SceneKit3DView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneKit3DView.swift; sourceTree = "<group>"; };
 		2A2E9DD2209A6E8CD4177941 /* TestQuizSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestQuizSheet.swift; sourceTree = "<group>"; };
+		2F6B34BF05E81E2F3F7E2161 /* OrientationAwareGravity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationAwareGravity.swift; sourceTree = "<group>"; };
 		319F55D96381BE3AC1AABCB3 /* FireSmokeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireSmokeView.swift; sourceTree = "<group>"; };
 		4028CE89A97AB2F9883782D1 /* DestructionPhysicsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestructionPhysicsView.swift; sourceTree = "<group>"; };
 		4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichGraphicsApp.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				8AF64E90C5FB6B200F43F9C5 /* DemoCard.swift */,
 				56DE8902CCFE6BA1E5865B07 /* DemoDetailView.swift */,
 				C4CD2DA2F1A44371C163974E /* InAppWebView.swift */,
+				2F6B34BF05E81E2F3F7E2161 /* OrientationAwareGravity.swift */,
 				BF88E01BD6573439A69DF59A /* OrientationLock.swift */,
 				53B677A242E1E31BAE58349D /* SwipeBackDisabler.swift */,
 			);
@@ -414,6 +417,7 @@
 				E84C47DD5A6B36BC6E10FEE0 /* MatchedGeometryView.swift in Sources */,
 				37538B5AA401DABBC5C5B983 /* ModelViewerView.swift in Sources */,
 				A997C56364DAE82DACAC9B4E /* MorphingShapesView.swift in Sources */,
+				BA919EF871366910788A082A /* OrientationAwareGravity.swift in Sources */,
 				39F517E0E244FBBA9AC5F96C /* OrientationLock.swift in Sources */,
 				F12833BEB5E9E7B1C5659C34 /* ParticleEffectsView.swift in Sources */,
 				2361A7EE73CC83C58B519943 /* PencilKitCanvasView.swift in Sources */,

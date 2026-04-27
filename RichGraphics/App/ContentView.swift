@@ -134,72 +134,28 @@ private struct DemoSidebar: View {
 
     var body: some View {
         List(selection: $selectedDemo) {
-            // Resources section pinned at the top so it stays prominent
-            // even with the long catalog of demos below.
+            // 정리노트 — pinned at the top (most prominent reference).
             Section {
                 Button {
                     showingDocs = true
                 } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: "book.pages.fill")
-                            .font(.callout.weight(.semibold))
-                            .foregroundStyle(.white)
-                            .frame(width: 28, height: 28)
-                            .background(
-                                LinearGradient(
-                                    colors: [.indigo, .purple],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                in: RoundedRectangle(cornerRadius: 6)
-                            )
-
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("정리노트")
-                                .font(.subheadline.weight(.semibold))
-                            Text("프레임워크 가이드")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 2)
+                    resourceRow(
+                        icon: "book.pages.fill",
+                        title: "정리노트",
+                        subtitle: "프레임워크 가이드",
+                        gradient: LinearGradient(
+                            colors: [.indigo, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                 }
                 .buttonStyle(.plain)
-
-                Button {
-                    showingTest = true
-                } label: {
-                    HStack(spacing: 12) {
-                        Image(systemName: "play.rectangle.fill")
-                            .font(.callout.weight(.semibold))
-                            .foregroundStyle(.white)
-                            .frame(width: 28, height: 28)
-                            .background(
-                                LinearGradient(
-                                    colors: [.orange, .pink],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ),
-                                in: RoundedRectangle(cornerRadius: 6)
-                            )
-
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text("테스트하기")
-                                .font(.subheadline.weight(.semibold))
-                            Text("확인해 볼까요?")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .padding(.vertical, 2)
-                }
-                .buttonStyle(.plain)
-            } header: {
-                Text("Resources")
-                    .font(.subheadline.weight(.bold))
-                    .textCase(nil)
             }
 
+            // Modules — each section has title + description in its header
+            // (Gestalt's Proximity Principle: descriptions belong to the
+            //  title above them, not the section that follows).
             ForEach(DemoModule.allCases) { module in
                 Section {
                     ForEach(DemoCatalog.entries(for: module)) { entry in
@@ -208,17 +164,63 @@ private struct DemoSidebar: View {
                         }
                     }
                 } header: {
-                    Text(module.name)
-                        .font(.subheadline.weight(.bold))
-                        .textCase(nil)
-                } footer: {
-                    Text(module.description)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(module.name)
+                            .font(.subheadline.weight(.bold))
+                            .textCase(nil)
+                        Text(module.description)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .textCase(nil)
+                    }
+                    .padding(.vertical, 2)
                 }
+            }
+
+            // 테스트하기 — at the bottom (conclusion, after exploring modules).
+            Section {
+                Button {
+                    showingTest = true
+                } label: {
+                    resourceRow(
+                        icon: "play.rectangle.fill",
+                        title: "테스트하기",
+                        subtitle: "확인해 볼까요?",
+                        gradient: LinearGradient(
+                            colors: [.orange, .pink],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                }
+                .buttonStyle(.plain)
             }
         }
         .listStyle(.sidebar)
+    }
+
+    private func resourceRow(
+        icon: String,
+        title: String,
+        subtitle: String,
+        gradient: LinearGradient
+    ) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.callout.weight(.semibold))
+                .foregroundStyle(.white)
+                .frame(width: 28, height: 28)
+                .background(gradient, in: RoundedRectangle(cornerRadius: 6))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Text(subtitle)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.vertical, 2)
     }
 
     private func sidebarRow(for entry: DemoEntry) -> some View {
