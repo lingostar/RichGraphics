@@ -5,6 +5,12 @@ import UIKit
 struct RichGraphicsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
 
+    init() {
+        // Kick off background preload of the 정리노트 web page so that
+        // when the sheet is opened later, the content is already cached.
+        DocsLoader.shared.preload()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

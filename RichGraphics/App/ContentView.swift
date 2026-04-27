@@ -170,6 +170,9 @@ private struct ModuleSidebar: View {
 }
 
 // MARK: - iPad Detail Welcome
+//
+// Pure visual welcome — no navigation here. All module navigation is
+// driven from the sidebar.
 
 private struct WelcomeDetail: View {
     var body: some View {
@@ -178,19 +181,28 @@ private struct WelcomeDetail: View {
 
             VStack(spacing: 24) {
                 Image(systemName: "sparkles")
-                    .font(.system(size: 80))
-                    .foregroundStyle(.purple.gradient)
+                    .font(.system(size: 96))
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [.purple, .pink, .orange],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
 
-                VStack(spacing: 8) {
+                VStack(spacing: 12) {
                     Text("RichGraphics")
-                        .font(.largeTitle.bold())
-                    Text("왼쪽 사이드바에서 모듈을 선택하세요")
+                        .font(.system(size: 44, weight: .heavy, design: .rounded))
+
+                    Text("Apple 그래픽 프레임워크 탐험")
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                }
 
-                FeaturedCarousel()
-                    .padding(.top, 20)
+                    Label("왼쪽 사이드바에서 모듈을 선택하세요", systemImage: "sidebar.left")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 8)
+                }
             }
             .padding()
         }
