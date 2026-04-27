@@ -1,68 +1,201 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showingDocs = false
     @State private var showingTest = false
+    @State private var selectedModule: DemoModule?
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Color(.systemGroupedBackground).ignoresSafeArea()
-
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Choose a Module")
-                        .font(.title2.weight(.bold))
-                        .padding(.horizontal, 24)
-                        .padding(.top, 8)
-                        .padding(.bottom, 20)
-
-                    FeaturedCarousel()
-
-                    Spacer(minLength: 20)
-
-                    // Two action cards
-                    HStack(spacing: 12) {
-                        ActionCard(
-                            title: "정리노트",
-                            subtitle: "프레임워크 가이드",
-                            icon: "book.pages.fill",
-                            gradient: LinearGradient(
-                                colors: [.indigo, .purple],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        ) {
-                            showingDocs = true
-                        }
-
-                        ActionCard(
-                            title: "테스트하기",
-                            subtitle: "확인해 볼까요?",
-                            icon: "play.rectangle.fill",
-                            gradient: LinearGradient(
-                                colors: [.orange, .pink],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        ) {
-                            showingTest = true
-                        }
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 20)
-                }
+        Group {
+            if sizeClass == .regular {
+                // iPad / regular width — sidebar + detail (HIG-recommended)
+                iPadLayout
+            } else {
+                // iPhone / compact width — stack-based navigation
+                iPhoneLayout
             }
+        }
+        .fullScreenCover(isPresented: $showingDocs) {
+            DocsWebSheet()
+        }
+        .fullScreenCover(isPresented: $showingTest) {
+            TestQuizSheet()
+        }
+    }
+
+    // MARK: iPhone Layout
+
+    private var iPhoneLayout: some View {
+        NavigationStack {
+            HomeContent(
+                showingDocs: $showingDocs,
+                showingTest: $showingTest
+            )
             .navigationTitle("RichGraphics")
             .navigationDestination(for: DemoModule.self) { module in
                 DemoDetailView(module: module)
             }
-            .fullScreenCover(isPresented: $showingDocs) {
-                DocsWebSheet()
-            }
-            .fullScreenCover(isPresented: $showingTest) {
-                TestQuizSheet()
+        }
+    }
+
+    // MARK: iPad Layout (NavigationSplitView)
+
+    private var iPadLayout: some View {
+        NavigationSplitView {
+            ModuleSidebar(
+                selectedModule: $selectedModule,
+                showingDocs: $showingDocs,
+                showingTest: $showingTest
+            )
+            .navigationTitle("RichGraphics")
+        } detail: {
+            NavigationStack {
+                if let module = selectedModule {
+                    DemoDetailView(module: module)
+                        .id(module.id) // force fresh detail when sidebar selection changes
+                } else {
+                    WelcomeDetail()
+                }
             }
         }
+        .navigationSplitViewStyle(.balanced)
+    }
+}
+
+// MARK: - Home Content (iPhone)
+
+private struct HomeContent: View {
+    @Binding var showingDocs: Bool
+    @Binding var showingTest: Bool
+
+    var body: some View {
+        ZStack {
+            Color(.systemGroupedBackground).ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Choose a Module")
+                    .font(.title2.weight(.bold))
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+                    .padding(.bottom, 20)
+
+                FeaturedCarousel()
+
+                Spacer(minLength: 20)
+
+                HStack(spacing: 12) {
+                    ActionCard(
+                        title: "정리노트",
+                        subtitle: "프레임워크 가이드",
+                        icon: "book.pages.fill",
+                        gradient: LinearGradient(
+                            colors: [.indigo, .purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    ) {
+                        showingDocs = true
+                    }
+
+                    ActionCard(
+                        title: "테스트하기",
+                        subtitle: "확인해 볼까요?",
+                        icon: "play.rectangle.fill",
+                        gradient: LinearGradient(
+                            colors: [.orange, .pink],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    ) {
+                        showingTest = true
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 20)
+            }
+        }
+    }
+}
+
+// MARK: - iPad Sidebar
+
+private struct ModuleSidebar: View {
+    @Binding var selectedModule: DemoModule?
+    @Binding var showingDocs: Bool
+    @Binding var showingTest: Bool
+
+    var body: some View {
+        List(selection: $selectedModule) {
+            Section("Modules") {
+                ForEach(DemoModule.allCases) { module in
+                    NavigationLink(value: module) {
+                        HStack(spacing: 12) {
+                            Image(systemName: module.iconName)
+                                .font(.body.weight(.semibold))
+                                .foregroundStyle(.white)
+                                .frame(width: 32, height: 32)
+                                .background(module.gradient, in: RoundedRectangle(cornerRadius: 8))
+
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(module.name)
+                                    .font(.subheadline.weight(.semibold))
+                                Text(module.description)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                    .lineLimit(2)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+            }
+
+            Section("Resources") {
+                Button {
+                    showingDocs = true
+                } label: {
+                    Label("정리노트", systemImage: "book.pages.fill")
+                }
+
+                Button {
+                    showingTest = true
+                } label: {
+                    Label("테스트하기", systemImage: "play.rectangle.fill")
+                }
+            }
+        }
+        .listStyle(.sidebar)
+    }
+}
+
+// MARK: - iPad Detail Welcome
+
+private struct WelcomeDetail: View {
+    var body: some View {
+        ZStack {
+            Color(.systemGroupedBackground).ignoresSafeArea()
+
+            VStack(spacing: 24) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 80))
+                    .foregroundStyle(.purple.gradient)
+
+                VStack(spacing: 8) {
+                    Text("RichGraphics")
+                        .font(.largeTitle.bold())
+                    Text("왼쪽 사이드바에서 모듈을 선택하세요")
+                        .font(.title3)
+                        .foregroundStyle(.secondary)
+                }
+
+                FeaturedCarousel()
+                    .padding(.top, 20)
+            }
+            .padding()
+        }
+        .navigationTitle("Welcome")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -119,7 +252,6 @@ private struct CarouselCard: View {
             .shadow(color: .black.opacity(0.25), radius: 16, y: 10)
             .scrollTransition(.animated(.spring(response: 0.5, dampingFraction: 0.85)),
                               axis: .horizontal) { content, phase in
-                // Amplify phase so cards fold/scale while still close to center.
                 let amplified = max(-1.0, min(1.0, phase.value * 2.2))
                 return content
                     .rotation3DEffect(
@@ -133,7 +265,7 @@ private struct CarouselCard: View {
     }
 }
 
-// MARK: - Action Card
+// MARK: - Action Card (iPhone)
 
 private struct ActionCard: View {
     let title: String
@@ -175,6 +307,6 @@ private struct ActionCard: View {
     }
 }
 
-#Preview {
+#Preview("iPhone") {
     ContentView()
 }
