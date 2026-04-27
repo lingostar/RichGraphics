@@ -4,7 +4,8 @@ struct ContentView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var showingDocs = false
     @State private var showingTest = false
-    @State private var selectedModule: DemoModule?
+    @State private var selectedModule: DemoModule?     // iPhone path (push)
+    @State private var selectedDemo: DemoEntry?         // iPad path (sidebar)
 
     var body: some View {
         Group {
@@ -43,17 +44,19 @@ struct ContentView: View {
 
     private var iPadLayout: some View {
         NavigationSplitView {
-            ModuleSidebar(
-                selectedModule: $selectedModule,
+            DemoSidebar(
+                selectedDemo: $selectedDemo,
                 showingDocs: $showingDocs,
                 showingTest: $showingTest
             )
             .navigationTitle("RichGraphics")
         } detail: {
             NavigationStack {
-                if let module = selectedModule {
-                    DemoDetailView(module: module)
-                        .id(module.id) // force fresh detail when sidebar selection changes
+                if let demo = selectedDemo {
+                    DemoCatalog.destinationView(for: demo)
+                        .navigationTitle(demo.title)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .id(demo.id) // ensure VC swap when selection changes
                 } else {
                     WelcomeDetail()
                 }
@@ -119,35 +122,29 @@ private struct HomeContent: View {
 }
 
 // MARK: - iPad Sidebar
+//
+// Every sub-demo is exposed directly in the sidebar, grouped by the
+// parent module name. Selecting a row swaps the detail pane to that
+// demo. There is no intermediate "module list" step on iPad.
 
-private struct ModuleSidebar: View {
-    @Binding var selectedModule: DemoModule?
+private struct DemoSidebar: View {
+    @Binding var selectedDemo: DemoEntry?
     @Binding var showingDocs: Bool
     @Binding var showingTest: Bool
 
     var body: some View {
-        List(selection: $selectedModule) {
-            Section("Modules") {
-                ForEach(DemoModule.allCases) { module in
-                    NavigationLink(value: module) {
-                        HStack(spacing: 12) {
-                            Image(systemName: module.iconName)
-                                .font(.body.weight(.semibold))
-                                .foregroundStyle(.white)
-                                .frame(width: 32, height: 32)
-                                .background(module.gradient, in: RoundedRectangle(cornerRadius: 8))
-
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(module.name)
-                                    .font(.subheadline.weight(.semibold))
-                                Text(module.description)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .lineLimit(2)
-                            }
+        List(selection: $selectedDemo) {
+            ForEach(DemoModule.allCases) { module in
+                Section {
+                    ForEach(DemoCatalog.entries(for: module)) { entry in
+                        NavigationLink(value: entry) {
+                            sidebarRow(for: entry)
                         }
-                        .padding(.vertical, 4)
                     }
+                } header: {
+                    Text(module.name)
+                        .font(.subheadline.weight(.bold))
+                        .textCase(nil)
                 }
             }
 
@@ -157,15 +154,37 @@ private struct ModuleSidebar: View {
                 } label: {
                     Label("정리노트", systemImage: "book.pages.fill")
                 }
+                .buttonStyle(.plain)
 
                 Button {
                     showingTest = true
                 } label: {
                     Label("테스트하기", systemImage: "play.rectangle.fill")
                 }
+                .buttonStyle(.plain)
             }
         }
         .listStyle(.sidebar)
+    }
+
+    private func sidebarRow(for entry: DemoEntry) -> some View {
+        HStack(spacing: 12) {
+            Image(systemName: entry.icon)
+                .font(.callout.weight(.semibold))
+                .foregroundStyle(.white)
+                .frame(width: 28, height: 28)
+                .background(entry.color.gradient, in: RoundedRectangle(cornerRadius: 6))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(entry.title)
+                    .font(.subheadline.weight(.semibold))
+                Text(entry.description)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+            }
+        }
+        .padding(.vertical, 2)
     }
 }
 

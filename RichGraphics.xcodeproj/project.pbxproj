@@ -25,6 +25,7 @@
 		39F517E0E244FBBA9AC5F96C /* OrientationLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF88E01BD6573439A69DF59A /* OrientationLock.swift */; };
 		4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12A63DD145BF0B90CF23150E /* CustomTransitionsView.swift */; };
 		4AA74AC60222CEED0402066E /* RagdollPlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C1D5C0C4A633B959A5D76 /* RagdollPlaygroundView.swift */; };
+		62EDDA94443F9AEDB8F5467D /* DemoCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 672A24EB882B0B404FF5B238 /* DemoCatalog.swift */; };
 		643DB8DE07FEF66506E95C65 /* GravityCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF93C4360FD80A004DBFCD8 /* GravityCardsView.swift */; };
 		6EFDEB1F0825789B3F39A31C /* GravityBallsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B1F5CEA68F872445050A5F /* GravityBallsView.swift */; };
 		70FFC5D23882D7383AD52CF4 /* DrawingCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11BCBA8994CFE7B4D0AECCB /* DrawingCanvasView.swift */; };
@@ -87,6 +88,7 @@
 		6389F395B9B5A977A897FE96 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		65D0479C82E41FEB67C7587E /* ShapeBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeBuilderView.swift; sourceTree = "<group>"; };
 		66F4D21FAA8EAA9B0E3184B1 /* SignaturePadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignaturePadView.swift; sourceTree = "<group>"; };
+		672A24EB882B0B404FF5B238 /* DemoCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoCatalog.swift; sourceTree = "<group>"; };
 		745644BBFD99EF4A84E9844C /* KeyframeAnimationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyframeAnimationsView.swift; sourceTree = "<group>"; };
 		7ADF93F8A1EBC616DBAE3952 /* ElasticMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElasticMenuView.swift; sourceTree = "<group>"; };
 		7C06F46CCD930E32DAB76BC0 /* StarfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarfieldView.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				8F48227653248D8C56637DE8 /* ContentView.swift */,
+				672A24EB882B0B404FF5B238 /* DemoCatalog.swift */,
 				A05772D1F6F3B6099A9434E0 /* DemoModule.swift */,
 				4AEA92A3BFE70F0AB2D35F04 /* RichGraphicsApp.swift */,
 			);
@@ -388,6 +391,7 @@
 				D9EB931732AB86920ADE3A6A /* CustomEffectsView.swift in Sources */,
 				4A6A5939E22FAEFEC2D61FCF /* CustomTransitionsView.swift in Sources */,
 				B0FCFFB7FE63323458ECCAF2 /* DemoCard.swift in Sources */,
+				62EDDA94443F9AEDB8F5467D /* DemoCatalog.swift in Sources */,
 				F6693B9ECBDE0168C296112C /* DemoDetailView.swift in Sources */,
 				0A5BFBE55725B4126841324C /* DemoModule.swift in Sources */,
 				82E7384175608A0643DF1B8C /* DestructionPhysicsView.swift in Sources */,
