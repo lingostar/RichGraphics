@@ -33,8 +33,8 @@ enum DemoCatalog {
         DemoEntry(id: "swiftui.phase",      module: .swiftUIAnimations, title: "Phase Animations",    description: "여러 상태를 자동 순환 — 로딩, 펄스, 상태 표시", icon: "circle.hexagongrid", color: .green),
 
         // Drawing Canvas
-        DemoEntry(id: "drawing.freehand",   module: .drawingCanvas, title: "Freehand Drawing",  description: "CoreGraphics 기반 자유 드로잉, 색상/굵기 조절, undo/redo", icon: "hand.draw", color: .orange),
         DemoEntry(id: "drawing.pencilkit",  module: .drawingCanvas, title: "PencilKit Canvas",  description: "PKCanvasView + PKToolPicker 통합, 이미지 내보내기", icon: "pencil.tip.crop.circle", color: .blue),
+        DemoEntry(id: "drawing.freehand",   module: .drawingCanvas, title: "Freehand Drawing",  description: "CoreGraphics 기반 자유 드로잉, 색상/굵기 조절, undo/redo", icon: "hand.draw", color: .orange),
         DemoEntry(id: "drawing.shape",      module: .drawingCanvas, title: "Shape Builder",     description: "선·사각형·원·삼각형 그리기와 색상 조합", icon: "rectangle.on.rectangle", color: .green),
 
         // 3D World & Physics

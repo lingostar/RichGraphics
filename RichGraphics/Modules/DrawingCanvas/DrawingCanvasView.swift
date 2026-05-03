@@ -23,20 +23,20 @@ struct DrawingCanvasView: View {
     private var demos: [DrawingCanvasDemo] {
         [
             DrawingCanvasDemo(
-                title: "Freehand Drawing",
-                description: "CoreGraphics-based drawing with color palette and undo/redo",
-                icon: "hand.draw",
-                color: .orange
-            ) {
-                FreehandDrawingView()
-            },
-            DrawingCanvasDemo(
                 title: "PencilKit Canvas",
                 description: "Full PencilKit integration with tool picker and image export",
                 icon: "pencil.tip.crop.circle",
                 color: .blue
             ) {
                 PencilKitCanvasView()
+            },
+            DrawingCanvasDemo(
+                title: "Freehand Drawing",
+                description: "CoreGraphics-based drawing with color palette and undo/redo",
+                icon: "hand.draw",
+                color: .orange
+            ) {
+                FreehandDrawingView()
             },
             DrawingCanvasDemo(
                 title: "Shape Builder",

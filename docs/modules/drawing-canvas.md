@@ -32,11 +32,48 @@ Canvas { context, size in
 }
 ```
 
-이 모듈의 3개 데모는 **저수준에서 고수준으로 단계적으로 올라가며** 드로잉을 다룹니다.
+이 모듈의 3개 데모는 **고수준 PencilKit으로 시작해 점차 저수준 CoreGraphics로 내려가며** 드로잉을 다룹니다.
 
 ---
 
-## 1. Freehand Drawing
+## 1. PencilKit Canvas
+
+> **무엇을 배우나** — `PKCanvasView`를 SwiftUI에 통합해 **수십 줄로 본격 드로잉 앱**을 만드는 패턴.
+
+```swift
+struct PencilCanvas: UIViewRepresentable {
+    @Binding var canvas: PKCanvasView
+    let toolPicker = PKToolPicker()
+
+    func makeUIView(context: Context) -> PKCanvasView {
+        canvas.drawingPolicy = .anyInput   // 시뮬레이터에서도 마우스 입력 허용
+        canvas.tool = PKInkingTool(.pen, color: .black, width: 5)
+        toolPicker.setVisible(true, forFirstResponder: canvas)
+        toolPicker.addObserver(canvas)
+        canvas.becomeFirstResponder()
+        return canvas
+    }
+
+    func updateUIView(_ uiView: PKCanvasView, context: Context) {}
+}
+```
+
+PencilKit이 **자동으로 처리**해주는 것:
+- Apple Pencil 필압·기울기·방위각
+- 펜·연필·마커·하이라이터·지우개·자(Ruler) 도구
+- 무한 캔버스, 핀치-줌
+- 손글씨 인식 연동
+
+내보내기는 한 줄:
+```swift
+let image = canvas.drawing.image(from: canvas.bounds, scale: UIScreen.main.scale)
+```
+
+> 💡 **PencilKit의 한계**: 결과물에 대한 **세밀한 커스터마이징은 제약**이 큽니다. 도구·색상·결과물의 모양을 자유롭게 제어하고 싶으면 다음 데모(CoreGraphics)로 내려가세요.
+
+---
+
+## 2. Freehand Drawing
 
 > **무엇을 배우나** — SwiftUI `Canvas`와 `DragGesture`로 **CoreGraphics 기반 자유 드로잉**을 처음부터 만드는 패턴.
 
@@ -75,43 +112,7 @@ Canvas { context, size in
 핵심 포인트:
 - `Canvas`는 매 프레임 다시 그리는 immediate-mode API. 모든 stroke를 다시 그리는 비용이 부담되면 캐싱이 필요합니다.
 - 색상 팔레트, 굵기 슬라이더, 지우개, undo/redo는 모두 `[Stroke]` 배열을 조작하는 일.
-
----
-
-## 2. PencilKit Canvas
-
-> **무엇을 배우나** — `PKCanvasView`를 SwiftUI에 통합해 **수십 줄로 본격 드로잉 앱**을 만드는 패턴.
-
-```swift
-struct PencilCanvas: UIViewRepresentable {
-    @Binding var canvas: PKCanvasView
-    let toolPicker = PKToolPicker()
-
-    func makeUIView(context: Context) -> PKCanvasView {
-        canvas.drawingPolicy = .anyInput   // 시뮬레이터에서도 마우스 입력 허용
-        canvas.tool = PKInkingTool(.pen, color: .black, width: 5)
-        toolPicker.setVisible(true, forFirstResponder: canvas)
-        toolPicker.addObserver(canvas)
-        canvas.becomeFirstResponder()
-        return canvas
-    }
-
-    func updateUIView(_ uiView: PKCanvasView, context: Context) {}
-}
-```
-
-PencilKit이 **자동으로 처리**해주는 것:
-- Apple Pencil 필압·기울기·방위각
-- 펜·연필·마커·하이라이터·지우개·자(Ruler) 도구
-- 무한 캔버스, 핀치-줌
-- 손글씨 인식 연동
-
-내보내기는 한 줄:
-```swift
-let image = canvas.drawing.image(from: canvas.bounds, scale: UIScreen.main.scale)
-```
-
-> 💡 **CoreGraphics와 비교**: 데모 1과 같은 인터랙션을 PencilKit이 5줄로 끝내줍니다. 단, 결과물에 대한 **세밀한 커스터마이징은 제약**이 큽니다.
+- PencilKit이 5줄로 해주던 인터랙션을, 여기서는 직접 빌드하는 만큼 **모든 것을 제어**할 수 있습니다.
 
 ---
 
