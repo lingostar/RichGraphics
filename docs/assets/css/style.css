@@ -88,6 +88,21 @@ main {
   font-size: 2rem;
   margin-bottom: 12px;
 }
+.module-card .card-icon-tile {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+.module-card .card-icon-tile svg {
+  width: 36px;
+  height: 36px;
+  color: white;
+}
 .module-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
 .module-card p { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; }
 .module-card .tech-tags { display: flex; flex-wrap: wrap; gap: 6px; }
