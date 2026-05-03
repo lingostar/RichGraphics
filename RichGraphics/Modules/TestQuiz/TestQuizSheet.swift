@@ -49,8 +49,14 @@ struct TestQuizSheet: View {
 
 struct QuizPageView: View {
     let question: QuizQuestion
+    @State private var selectedOption: String?
     @State private var revealed = false
     @State private var showExplanation = false
+
+    private let optionColumns = [
+        GridItem(.flexible(), spacing: 12),
+        GridItem(.flexible(), spacing: 12)
+    ]
 
     var body: some View {
         ScrollView {
@@ -68,8 +74,17 @@ struct QuizPageView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
+                    .padding(.bottom, 28)
 
-                Spacer(minLength: 40)
+                // 4 multiple-choice options (2 × 2 grid)
+                LazyVGrid(columns: optionColumns, spacing: 12) {
+                    ForEach(question.options, id: \.self) { option in
+                        optionButton(for: option)
+                    }
+                }
+                .padding(.horizontal, 24)
+
+                Spacer(minLength: 28)
 
                 // Reveal area: button and answer+explanation share the same
                 // layout slot (ZStack) so toggling `revealed` doesn't resize
@@ -107,11 +122,15 @@ struct QuizPageView: View {
                     } label: {
                         Text("정답확인")
                             .font(.headline)
-                            .foregroundStyle(.black)
+                            .foregroundStyle(selectedOption == nil ? .gray : .black)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(.white, in: Capsule())
+                            .background(
+                                selectedOption == nil ? Color.white.opacity(0.4) : Color.white,
+                                in: Capsule()
+                            )
                     }
+                    .disabled(selectedOption == nil)
                     .padding(.horizontal, 24)
                     .opacity(revealed ? 0 : 1)
                     .allowsHitTesting(!revealed)
@@ -120,6 +139,59 @@ struct QuizPageView: View {
             }
         }
         .scrollBounceBehavior(.basedOnSize)
+    }
+
+    // MARK: Option button
+
+    private func optionButton(for option: String) -> some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                selectedOption = option
+            }
+        } label: {
+            Text(option)
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, minHeight: 56)
+                .padding(.horizontal, 12)
+                .multilineTextAlignment(.center)
+                .background(optionBackground(for: option))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .strokeBorder(optionBorder(for: option), lineWidth: 2)
+                )
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+        }
+        .disabled(revealed)
+    }
+
+    private func optionBackground(for option: String) -> Color {
+        if revealed {
+            // After reveal: correct = green tint, your wrong pick = red tint,
+            // others = neutral.
+            if option == question.answer {
+                return Color.green.opacity(0.25)
+            } else if option == selectedOption {
+                return Color.red.opacity(0.25)
+            } else {
+                return Color(white: 0.13)
+            }
+        } else {
+            // Before reveal: chosen option highlighted yellow.
+            return option == selectedOption
+                ? Color.yellow.opacity(0.18)
+                : Color(white: 0.13)
+        }
+    }
+
+    private func optionBorder(for option: String) -> Color {
+        if revealed {
+            if option == question.answer { return .green }
+            if option == selectedOption { return .red }
+            return Color(white: 0.28)
+        } else {
+            return option == selectedOption ? .yellow : Color(white: 0.28)
+        }
     }
 
     // MARK: Explanation content

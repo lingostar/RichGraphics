@@ -29,6 +29,8 @@ enum QuizPage: Identifiable {
 struct QuizQuestion: Identifiable {
     let id = UUID()
     let question: String
+    /// 4 multiple-choice options. One of them must equal `answer`.
+    let options: [String]
     let answer: String
     let explanation: QuizExplanation
 }
@@ -77,6 +79,7 @@ extension QuizQuestion {
         // Page 1 — Phase vs Keyframe
         QuizQuestion(
             question: "축구장에서 공이 움직이는 경로를 표현하는데 적합한 SwiftUI 애니메이션 방식은?",
+            options: ["키프레임 애니메이션", "페이즈 애니메이션", "스프링 애니메이션", "모핑 애니메이션"],
             answer: "키프레임 애니메이션",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "PhaseAnimator",
@@ -94,6 +97,7 @@ extension QuizQuestion {
         // Page 2 — CoreGraphics vs PencilKit
         QuizQuestion(
             question: "Apple Pencil의 필압과 기울기를 자동으로 반영하는 필기 앱을 빠르게 만들고 싶다면?",
+            options: ["PencilKit", "CoreGraphics", "UIKit Drawing", "SwiftUI Canvas"],
             answer: "PencilKit",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "CoreGraphics",
@@ -111,6 +115,7 @@ extension QuizQuestion {
         // Page 3 — SpriteKit vs UIKit Dynamics
         QuizQuestion(
             question: "화면의 UIView 카드들에 중력과 스냅 효과만 넣고 싶은데, 게임 엔진까지 도입하기는 부담스럽다면?",
+            options: ["UIKit Dynamics", "SpriteKit", "SceneKit", "CoreAnimation"],
             answer: "UIKit Dynamics",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "SpriteKit",
@@ -128,6 +133,7 @@ extension QuizQuestion {
         // Page 4 — SceneKit vs Metal
         QuizQuestion(
             question: "3D 모델을 보여주고 싶은데, 퍼포먼스가 치명적으로 중요하지 않다면?",
+            options: ["SceneKit", "Metal", "RealityKit", "SpriteKit"],
             answer: "SceneKit",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "SceneKit",
@@ -145,6 +151,7 @@ extension QuizQuestion {
         // Page 5 — Core Image vs Custom Metal Shader
         QuizQuestion(
             question: "사진에 세피아와 비네팅을 적용한 필터 UI를 빠르게 만들고 싶다면?",
+            options: ["Core Image", "Metal Shader", "CoreGraphics", "AVFoundation"],
             answer: "Core Image",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "Core Image",
