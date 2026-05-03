@@ -9,11 +9,35 @@ import SwiftUI
 // The explanation is modelled as an enum so we can add new formats as we
 // build out more quiz pages without forcing every question into the same shape.
 
+// A quiz "page" is one of two kinds:
+// - .question: an interactive Q&A page (the original concept)
+// - .info: a non-interactive page (image + heading + body text), used for
+//   things like "where to go next" wrap-up screens.
+
+enum QuizPage: Identifiable {
+    case question(QuizQuestion)
+    case info(InfoPage)
+
+    var id: UUID {
+        switch self {
+        case .question(let q): q.id
+        case .info(let i): i.id
+        }
+    }
+}
+
 struct QuizQuestion: Identifiable {
     let id = UUID()
     let question: String
     let answer: String
     let explanation: QuizExplanation
+}
+
+struct InfoPage: Identifiable {
+    let id = UUID()
+    let imageName: String?
+    let heading: String
+    let body: String?
 }
 
 enum QuizExplanation {
@@ -36,6 +60,17 @@ struct ComparisonRow: Identifiable {
 }
 
 // MARK: - Catalogue
+
+extension QuizPage {
+    @MainActor static let all: [QuizPage] = QuizQuestion.all.map { .question($0) } + [
+        // Final page — wrap-up direction
+        .info(InfoPage(
+            imageName: "FloorPlan5F",
+            heading: "다음은 ML-Vision으로 가세요",
+            body: nil
+        )),
+    ]
+}
 
 extension QuizQuestion {
     @MainActor static let all: [QuizQuestion] = [

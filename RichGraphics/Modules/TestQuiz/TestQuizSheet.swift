@@ -6,7 +6,7 @@ struct TestQuizSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var currentPage = 0
 
-    private let questions = QuizQuestion.all
+    private let pages = QuizPage.all
 
     var body: some View {
         NavigationStack {
@@ -14,12 +14,19 @@ struct TestQuizSheet: View {
                 Color.black.ignoresSafeArea()
 
                 TabView(selection: $currentPage) {
-                    ForEach(Array(questions.enumerated()), id: \.element.id) { index, q in
-                        QuizPageView(question: q)
-                            .tag(index)
+                    ForEach(Array(pages.enumerated()), id: \.element.id) { index, page in
+                        Group {
+                            switch page {
+                            case .question(let q):
+                                QuizPageView(question: q)
+                            case .info(let info):
+                                InfoPageView(info: info)
+                            }
+                        }
+                        .tag(index)
                     }
                 }
-                .tabViewStyle(.page(indexDisplayMode: questions.count > 1 ? .always : .never))
+                .tabViewStyle(.page(indexDisplayMode: pages.count > 1 ? .always : .never))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
             }
             .navigationTitle("확인해 볼까요?")
@@ -130,6 +137,45 @@ struct QuizPageView: View {
         case .none:
             EmptyView()
         }
+    }
+}
+
+// MARK: - Info Page (image + heading, non-interactive)
+
+struct InfoPageView: View {
+    let info: InfoPage
+
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 28) {
+                Spacer(minLength: 24)
+
+                if let imageName = info.imageName {
+                    Image(imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal, 16)
+                }
+
+                Text(info.heading)
+                    .font(.system(size: 32, weight: .heavy))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+
+                if let body = info.body {
+                    Text(body)
+                        .font(.body)
+                        .foregroundStyle(.white.opacity(0.85))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                }
+
+                Spacer(minLength: 60)
+            }
+        }
+        .scrollBounceBehavior(.basedOnSize)
     }
 }
 

@@ -315,6 +315,13 @@
 			path = RichGraphics;
 			sourceTree = "<group>";
 		};
+		"TEMP_85ECE85B-30E6-4CCF-B062-7AA6B11A7C4D" /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
