@@ -21,6 +21,15 @@ title: Home
     </div>
   </a>
 
+  <a href="{{ '/modules/uikit-dynamics' | relative_url }}" class="module-card">
+    <div class="card-icon">🎯</div>
+    <h3>UIKit</h3>
+    <p>UIKit이 열어주는 새로운 차원의 풍부한 그래픽스와 물리 엔진.</p>
+    <div class="tech-tags">
+      <span class="tech-tag">UIKit Dynamics</span>
+    </div>
+  </a>
+
   <a href="{{ '/modules/drawing-canvas' | relative_url }}" class="module-card">
     <div class="card-icon">🖌️</div>
     <h3>Drawing Canvas</h3>
@@ -49,15 +58,6 @@ title: Home
     <div class="tech-tags">
       <span class="tech-tag">Core Image</span>
       <span class="tech-tag">AVFoundation</span>
-    </div>
-  </a>
-
-  <a href="{{ '/modules/uikit-dynamics' | relative_url }}" class="module-card">
-    <div class="card-icon">🎯</div>
-    <h3>UIKit</h3>
-    <p>UIKit이 열어주는 새로운 차원의 풍부한 그래픽스와 물리 엔진.</p>
-    <div class="tech-tags">
-      <span class="tech-tag">UIKit Dynamics</span>
     </div>
   </a>
 

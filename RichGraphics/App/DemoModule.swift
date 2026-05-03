@@ -2,10 +2,10 @@ import SwiftUI
 
 enum DemoModule: String, CaseIterable, Identifiable {
     case swiftUIAnimations
+    case uiKitDynamics
     case drawingCanvas
     case threeDWorldAndPhysics
     case imageFilters
-    case uiKitDynamics
 
     var id: String { rawValue }
 
@@ -15,7 +15,7 @@ enum DemoModule: String, CaseIterable, Identifiable {
         case .drawingCanvas: "Drawing Canvas"
         case .threeDWorldAndPhysics: "3D World & Physics"
         case .imageFilters: "Image Filters"
-        case .uiKitDynamics: "UIKit Dynamics"
+        case .uiKitDynamics: "UIKit"
         }
     }
 
