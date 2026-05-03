@@ -18,8 +18,47 @@ title: Home
     <p>가장 친근한 기술에서 얻을 수 있는 강력한 애니메이션. 시작은 SwiftUI 에서.</p>
     <div class="tech-tags">
       <span class="tech-tag">SwiftUI</span>
-      <span class="tech-tag">Animation</span>
-      <span class="tech-tag">iOS 17</span>
+    </div>
+  </a>
+
+  <a href="{{ '/modules/drawing-canvas' | relative_url }}" class="module-card">
+    <div class="card-icon">🖌️</div>
+    <h3>Drawing Canvas</h3>
+    <p>무언가를 그려야 할 때는 일단은 PencilKit. 부족하다 싶으면 CoreGraphics.</p>
+    <div class="tech-tags">
+      <span class="tech-tag">PencilKit</span>
+      <span class="tech-tag">CoreGraphics</span>
+    </div>
+  </a>
+
+  <a href="{{ '/modules/3d-world-and-physics' | relative_url }}" class="module-card">
+    <div class="card-icon">🧊</div>
+    <h3>3D World & Physics</h3>
+    <p>Swift 언어로 구현하는 3D 그래픽스. 앱 안에서 공간을 열어보세요.</p>
+    <div class="tech-tags">
+      <span class="tech-tag">SpriteKit</span>
+      <span class="tech-tag">SceneKit</span>
+      <span class="tech-tag">CAEmitterLayer</span>
+    </div>
+  </a>
+
+  <a href="{{ '/modules/image-filters' | relative_url }}" class="module-card">
+    <div class="card-icon">📸</div>
+    <h3>Image Filters</h3>
+    <p>아이폰 카메라에서 DSLR처럼 렌즈를 겹쳐 쓸 수 있다구요?</p>
+    <div class="tech-tags">
+      <span class="tech-tag">Core Image</span>
+      <span class="tech-tag">AVFoundation</span>
+    </div>
+  </a>
+
+  <a href="{{ '/modules/uikit-dynamics' | relative_url }}" class="module-card">
+    <div class="card-icon">🎯</div>
+    <h3>UIKit Dynamics</h3>
+    <p>UIKit이 열어주는 새로운 차원의 풍부한 그래픽스와 물리 엔진.</p>
+    <div class="tech-tags">
+      <span class="tech-tag">UIKit Dynamics</span>
+      <span class="tech-tag">UIDynamicAnimator</span>
     </div>
   </a>
 
