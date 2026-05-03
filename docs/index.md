@@ -38,7 +38,7 @@ title: Home
     <div class="tech-tags">
       <span class="tech-tag">SpriteKit</span>
       <span class="tech-tag">SceneKit</span>
-      <span class="tech-tag">CAEmitterLayer</span>
+      <span class="tech-tag">CoreAnimation</span>
     </div>
   </a>
 
