@@ -5,15 +5,19 @@ import UIKit
 struct RichGraphicsApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
 
-    init() {
-        // Kick off background preload of the 정리노트 web page so that
-        // when the sheet is opened later, the content is already cached.
-        DocsLoader.shared.preload()
-    }
-
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .task {
+                    // Defer the WKWebView preload until AFTER the first frame
+                    // is on screen. WKWebView spins up three helper processes
+                    // (GPU / WebContent / Networking), and doing it during
+                    // App.init() blocks the launch path by 10+ seconds.
+                    // This way the UI is interactive immediately and the
+                    // docs page loads quietly in the background.
+                    try? await Task.sleep(nanoseconds: 800_000_000) // 0.8s
+                    DocsLoader.shared.preload()
+                }
         }
     }
 }
