@@ -63,14 +63,23 @@ private enum CameraFilter: String, CaseIterable, Identifiable, Sendable {
             f.inputImage = input
             return f.outputImage ?? input
         case .pencil:
-            let f = CIFilter(name: "CILineOverlay")!
-            f.setValue(input, forKey: kCIInputImageKey)
-            f.setValue(0.07, forKey: "inputNRNoiseLevel")
-            f.setValue(0.71, forKey: "inputNRSharpness")
-            f.setValue(1.0, forKey: "inputEdgeIntensity")
-            f.setValue(0.1, forKey: "inputThreshold")
-            f.setValue(50.0, forKey: "inputContrast")
-            return f.outputImage ?? input
+            // CILineOverlay 는 검은 선 + 투명 배경을 출력합니다. 이대로 표시하면
+            // 부모 뷰의 검은 배경 때문에 화면이 거의 까맣게 보이므로, 결과를
+            // 흰 배경 위에 합성하여 종이 위에 그려진 연필 스케치처럼 만듭니다.
+            let line = CIFilter(name: "CILineOverlay")!
+            line.setValue(input, forKey: kCIInputImageKey)
+            line.setValue(0.07, forKey: "inputNRNoiseLevel")
+            line.setValue(0.71, forKey: "inputNRSharpness")
+            line.setValue(1.0, forKey: "inputEdgeIntensity")
+            line.setValue(0.1, forKey: "inputThreshold")
+            line.setValue(50.0, forKey: "inputContrast")
+            guard let lines = line.outputImage else { return input }
+
+            let whiteBg = CIImage(color: .white).cropped(to: input.extent)
+            let composite = CIFilter.sourceOverCompositing()
+            composite.inputImage = lines
+            composite.backgroundImage = whiteBg
+            return composite.outputImage?.cropped(to: input.extent) ?? input
         }
     }
 }
