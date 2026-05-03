@@ -14,10 +14,10 @@ title: Home
 
   <a href="{{ '/modules/swiftui-animations' | relative_url }}" class="module-card">
     <div class="card-icon">✨</div>
-    <h3>SwiftUI Animations</h3>
+    <h3>SwiftUI</h3>
     <p>가장 친근한 기술에서 얻을 수 있는 강력한 애니메이션. 시작은 SwiftUI 에서.</p>
     <div class="tech-tags">
-      <span class="tech-tag">SwiftUI</span>
+      <span class="tech-tag">SwiftUI Animation</span>
     </div>
   </a>
 

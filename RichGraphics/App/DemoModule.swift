@@ -11,7 +11,7 @@ enum DemoModule: String, CaseIterable, Identifiable {
 
     var name: String {
         switch self {
-        case .swiftUIAnimations: "SwiftUI Animations"
+        case .swiftUIAnimations: "SwiftUI"
         case .drawingCanvas: "Drawing Canvas"
         case .threeDWorldAndPhysics: "3D World & Physics"
         case .imageFilters: "Image Filters"
