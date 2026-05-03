@@ -135,15 +135,30 @@ main {
 .breadcrumb a { color: var(--accent); }
 
 article h2 {
-  font-size: 1.4rem; font-weight: 700;
-  margin: 40px 0 12px;
-  padding-bottom: 6px;
+  font-size: 1.55rem; font-weight: 800;
+  margin: 80px 0 18px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--border);
+  letter-spacing: -0.01em;
 }
-article h3 { font-size: 1.15rem; font-weight: 600; margin: 28px 0 8px; }
+/* First h2 sits right under the page header — no need for a huge gap */
+article > h2:first-of-type {
+  margin-top: 28px;
+}
+article h3 { font-size: 1.15rem; font-weight: 600; margin: 32px 0 10px; }
 article p { margin-bottom: 16px; }
 article ul, article ol { margin: 0 0 16px 24px; }
 article li { margin-bottom: 6px; }
+
+/* Section separators between demo descriptions: hide the line itself
+   and use the surrounding margin purely as breathing room. */
+article hr {
+  border: none;
+  margin: 24px 0 0;
+}
+article hr + h2 {
+  margin-top: 32px;
+}
 
 /* ===== Code ===== */
 code {
