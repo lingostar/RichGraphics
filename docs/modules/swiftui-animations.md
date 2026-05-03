@@ -1,115 +1,162 @@
 ---
 layout: default
-title: SwiftUI Animations
+title: SwiftUI
 ---
 
-[Home]({{ '/' | relative_url }}) > SwiftUI Animations
-
-# SwiftUI Animations
-
-SwiftUI의 선언형 애니메이션 시스템을 탐험합니다. Spring, Keyframe, Phase 기반 애니메이션부터 geometry 전환까지, 모던 iOS 앱의 모션 디자인 핵심을 다룹니다.
+<div class="page-header">
+  <div class="breadcrumb"><a href="{{ '/' | relative_url }}">Home</a> / SwiftUI</div>
+  <h1>SwiftUI</h1>
+  <p class="subtitle">가장 친근한 기술에서 얻을 수 있는 강력한 애니메이션. 시작은 SwiftUI 에서.</p>
+  <div class="tech-tags" style="margin-top: 12px;">
+    <span class="tech-tag">SwiftUI Animation</span>
+  </div>
+</div>
 
 ## 개요
 
-SwiftUI는 **선언형(Declarative) 애니메이션 시스템**을 제공합니다. 상태(State) 변경을 선언하면 프레임워크가 자동으로 중간 프레임을 보간하여 부드러운 전환을 만들어 줍니다. UIKit의 명령형 애니메이션과 달리, "어떻게 움직일지"가 아니라 "최종 상태가 무엇인지"만 기술하면 됩니다.
+SwiftUI는 **선언형(Declarative) 애니메이션 시스템**을 제공합니다. UIKit이 "어떻게 움직일지"(begin/commit, durations, curves)를 명령형으로 기술해야 했다면, SwiftUI는 **"최종 상태가 무엇인지"만 선언**하면 됩니다. 상태(State) 변경을 감지한 프레임워크가 자동으로 중간 프레임을 보간(interpolate)해 부드러운 전환을 만들어 줍니다.
 
-### 언제 사용하나요?
+핵심 두 패턴:
 
-- UI 요소의 위치, 크기, 투명도, 색상 전환
-- 화면 전환 및 네비게이션 애니메이션
-- 인터랙티브 제스처 피드백
-- 복잡한 다단계(multi-step) 모션 시퀀스
-
-## 핵심 API
-
-### Implicit vs Explicit Animation
-
-**Implicit Animation**은 `.animation()` modifier로 특정 값 변경에 애니메이션을 바인딩합니다. **Explicit Animation**은 `withAnimation` 블록 안에서 상태를 변경하여 해당 변경에 영향받는 모든 뷰를 애니메이션합니다.
+- **Implicit Animation** — `.animation(_:value:)` modifier로 특정 값 변경에 애니메이션을 바인딩
+- **Explicit Animation** — `withAnimation { ... }` 블록 안에서 상태를 변경, 영향받는 모든 뷰가 함께 애니메이션
 
 ```swift
-// Implicit: 특정 프로퍼티에 애니메이션 바인딩
+// Implicit
 Circle()
     .scaleEffect(isExpanded ? 1.5 : 1.0)
-    .animation(.spring(duration: 0.5), value: isExpanded)
+    .animation(.spring, value: isExpanded)
 
-// Explicit: 상태 변경 시점에 애니메이션 적용
-withAnimation(.spring(duration: 0.5, bounce: 0.3)) {
+// Explicit
+withAnimation(.spring(response: 0.5, dampingFraction: 0.3)) {
     isExpanded.toggle()
 }
 ```
 
-### Spring Animation
+이 모듈의 4개 데모는 각각 SwiftUI 애니메이션의 **다른 측면**을 다룹니다.
 
-iOS 17부터 `spring(duration:bounce:)` 파라미터로 물리 기반 스프링을 간편하게 설정할 수 있습니다. `bounce` 값이 0이면 임계감쇠(critically damped), 양수이면 바운스 효과가 나타납니다.
+---
 
-### KeyframeAnimator
+## 1. Spring Playground
 
-iOS 17에서 도입된 `KeyframeAnimator`는 여러 프로퍼티를 독립적인 타임라인으로 제어하는 키프레임 애니메이션을 지원합니다.
+> **무엇을 배우나** — 애니메이션의 **타이밍 곡선(curve)**: 같은 두 상태 사이라도 어떻게 움직이는가에 따라 느낌이 완전히 달라집니다.
+
+`.spring`은 SwiftUI의 가장 자연스러운 기본 곡선입니다. 물리의 스프링-댐퍼 시스템에서 영감을 받아 세 가지 파라미터로 동작을 제어합니다.
+
+| 파라미터 | 의미 | 직관 |
+|----------|------|------|
+| `response` | 목표에 도달하는 데 걸리는 대략의 시간(초) | 작을수록 빠르고, 클수록 느긋 |
+| `dampingFraction` | 진동(튕김)의 감쇠 비율 (0~1) | 0에 가까울수록 많이 튕김, 1이면 안 튕김 |
+| `blendDuration` | 진행 중이던 애니메이션이 새 애니메이션으로 섞이는 시간 | 보통 0이면 충분 |
 
 ```swift
-KeyframeAnimator(initialValue: AnimValues()) { values in
-    Circle()
-        .scaleEffect(values.scale)
-        .rotationEffect(values.rotation)
-} keyframes: { _ in
-    KeyframeTrack(\.scale) {
-        SpringKeyframe(1.5, duration: 0.3)
-        SpringKeyframe(1.0, duration: 0.2)
+withAnimation(.spring(response: 0.5, dampingFraction: 0.3)) {
+    animated.toggle()
+}
+```
+
+데모에서는 **Bouncy / Smooth / Snappy** 프리셋을 비교하고, **Custom 슬라이더**로 직접 파라미터를 조정해 곡선의 차이를 직관적으로 느낄 수 있습니다.
+
+---
+
+## 2. Morphing Shapes
+
+> **무엇을 배우나** — 커스텀 `Shape`에 `animatableData`를 정의하여 도형 자체를 변형시키는 방법.
+
+SwiftUI의 `Shape` 프로토콜은 `path(in:)` 메서드만 구현하면 어떤 도형이든 그릴 수 있습니다. 여기에 **`animatableData: Double`** 한 줄을 추가하면, SwiftUI가 0→1 사이를 보간하면서 매 프레임마다 `path(in:)`을 다시 호출합니다.
+
+```swift
+struct MorphShape: Shape {
+    let shapeA: [CGPoint]
+    let shapeB: [CGPoint]
+    var progress: Double
+
+    var animatableData: Double {
+        get { progress }
+        set { progress = newValue }
     }
-    KeyframeTrack(\.rotation) {
-        LinearKeyframe(.degrees(360), duration: 0.5)
+
+    func path(in rect: CGRect) -> Path {
+        // shapeA[i]와 shapeB[i]를 progress(0~1)로 lerp해서 그림
     }
 }
 ```
 
-### PhaseAnimator
+데모에서는 circle ↔ star, square ↔ triangle, heart ↔ diamond를 모핑하며, 슬라이더로 progress를 직접 조작해 **보간이 어떻게 일어나는지** 단계별로 볼 수 있습니다.
 
-`PhaseAnimator`는 정의된 Phase 배열을 순차적으로 순회하며 자동 애니메이션을 실행합니다. 로딩 인디케이터나 반복 모션에 적합합니다.
+> 💡 **포인트**: `animatableData`는 단일 `Double` 또는 `AnimatablePair` 같은 스칼라 타입이어야 안정적으로 동작합니다. 임의의 `Array<CGPoint>`를 직접 보간하려고 하면 미묘한 버그가 발생합니다.
 
-### matchedGeometryEffect
+---
 
-서로 다른 뷰 계층에 있는 두 요소 사이의 위치/크기 전환을 자연스럽게 연결합니다. 리스트에서 디테일 화면으로의 Hero Transition 구현에 핵심적인 API입니다.
+## 3. Keyframe Animations
 
-### .visualEffect
+> **무엇을 배우나** — **여러 프로퍼티가 동시에**, 각각 **독립된 시간 곡선**으로 움직이는 복합 시퀀스.
 
-iOS 17의 `.visualEffect` modifier는 geometry proxy 정보(위치, 크기)에 기반한 시각 효과를 적용할 수 있게 해 줍니다. 스크롤 위치에 따른 패럴랙스, 회전, 스케일 효과 등을 구현할 때 유용합니다.
+iOS 17의 `KeyframeAnimator`는 "키프레임 + 트랙" 구조를 도입했습니다. 트랙마다 자신만의 시간/곡선을 가지고, 모두 동시에 진행되어 **공이 튕기면서 회전하는** 같은 합성 모션을 깔끔하게 표현할 수 있습니다.
 
-## 데모 목록
+```swift
+struct AnimValues {
+    var offset: CGFloat = 0
+    var scale: CGFloat = 1
+    var rotation: Angle = .zero
+}
 
-앱에서는 두 개의 섹션으로 구분됩니다.
+KeyframeAnimator(initialValue: AnimValues(), trigger: trigger) { values in
+    Image(systemName: "soccerball")
+        .offset(y: values.offset)
+        .scaleEffect(values.scale)
+        .rotationEffect(values.rotation)
+} keyframes: { _ in
+    KeyframeTrack(\.offset) {
+        SpringKeyframe(-200, duration: 0.4)
+        SpringKeyframe(0, duration: 0.6, spring: .bouncy)
+    }
+    KeyframeTrack(\.rotation) {
+        LinearKeyframe(.degrees(720), duration: 1.0)
+    }
+}
+```
 
-### Foundations
+데모는 **bounce / orbit / shake / wave** 4가지 프리셋을 제공해 트랙을 어떻게 조합하면 어떤 모션이 나오는지 비교합니다.
 
-값 변화를 보간하는 기본 애니메이션 패턴.
+---
 
-| # | 데모 | 설명 |
-|---|------|------|
-| 1 | **Spring Playground** | Spring 파라미터(response, dampingFraction, blendDuration)를 실시간으로 조절하며 스프링 곡선의 변화를 시각적으로 확인합니다. Bouncy/Smooth/Snappy 프리셋도 비교할 수 있습니다. |
-| 2 | **Morphing Shapes** | 커스텀 Shape의 `animatableData: Double`을 활용하여 circle↔star, square↔triangle, heart↔diamond 모핑 전환을 구현합니다. 슬라이더로 progress를 직접 조작해 보간 원리를 관찰할 수 있습니다. |
+## 4. Phase Animations
 
-### iOS 17 Multi-State APIs
+> **무엇을 배우나** — **여러 단계를 자동으로 순환**하는 상태 머신 패턴. 사용자 입력 없이 계속 흐르는 애니메이션에 적합.
 
-여러 단계를 순차적으로 다루는 iOS 17의 새 애니메이션 API.
+`PhaseAnimator`는 phase 배열을 정의하고, SwiftUI가 자동으로 다음 phase로 넘어가게 합니다. 로딩 인디케이터나 펄싱 뱃지처럼 **"가만히 있어도 계속 움직이는"** 표현에 안성맞춤.
 
-| # | 데모 | 설명 |
-|---|------|------|
-| 3 | **Keyframe Animations** | `KeyframeAnimator`로 여러 프로퍼티(scale, rotation, offset)를 독립적 타임라인으로 조합하는 복합 애니메이션. bounce, orbit, shake, wave 프리셋을 제공합니다. |
-| 4 | **Phase Animations** | `PhaseAnimator`를 활용한 자동 반복 애니메이션. 로딩 인디케이터, 펄싱 알림 뱃지, 상태 전환 표시(connecting → connected → synced) 세 가지 사용 예시입니다. |
+```swift
+enum LoadPhase: CaseIterable { case dot1, dot2, dot3 }
+
+HStack {
+    ForEach(0..<3) { i in
+        Circle()
+            .phaseAnimator(LoadPhase.allCases) { view, phase in
+                let scale = (phase.rawValue == i) ? 1.3 : 0.7
+                view.scaleEffect(scale)
+            } animation: { _ in
+                .easeInOut(duration: 0.4)
+            }
+    }
+}
+```
+
+데모에는 **로딩 인디케이터, 펄싱 알림 뱃지, 상태 전환(connecting → connected → synced)** 세 가지 사용 예시가 있어, 같은 API로도 얼마나 다양한 UX를 만들 수 있는지 보여줍니다.
+
+> 💡 **Spring과의 차이**: Spring은 "곡선"을, Phase는 "상태 시퀀스"를 다룹니다. 즉, Phase Animator의 **각 phase 전환의 곡선으로 Spring을 사용할 수도** 있습니다 — 두 개념은 직교합니다.
+
+---
 
 ## 실전 팁
 
-### Best Practices
+**Best Practices**
+- 단일 프로퍼티 변경에는 Implicit(`.animation`), 여러 상태 동시 변경에는 Explicit(`withAnimation`).
+- Spring 곡선이 가장 자연스러운 기본값. 의심스럽다면 `.spring`만 쓰면 대부분 괜찮습니다.
+- 단발성 복합 모션 → `KeyframeAnimator`. 반복/순환 모션 → `PhaseAnimator`.
 
-- 단일 프로퍼티 변경에는 Implicit(`.animation`)이 간결하고 안전합니다.
-- 여러 상태를 동시에 변경할 때는 `withAnimation`(Explicit)을 사용하세요.
-- Spring Animation의 `bounce: 0`은 자연스러운 감속 효과를 줍니다.
-- `Animation.interactiveSpring`은 제스처 추적에 최적화되어 있습니다.
-- KeyframeAnimator는 단발성 복합 모션에, PhaseAnimator는 반복 모션에 적합합니다.
-
-### 주의 사항
-
-- `.animation()`에 `value` 파라미터를 생략하면 의도하지 않은 프로퍼티까지 애니메이션될 수 있습니다.
-- matchedGeometryEffect는 두 뷰가 동시에 존재하면 안 됩니다 (if/else 분기 필요).
-- 복잡한 뷰 트리에서 과도한 애니메이션은 프레임 드롭을 유발할 수 있습니다.
-- Instruments의 Animation Hitches 도구로 성능을 프로파일링하세요.
-- Simulator보다 실기기에서 성능을 반드시 확인하세요.
+**주의 사항**
+- `.animation()`에 `value:` 파라미터를 **생략하지 마세요**. 안 그러면 의도하지 않은 프로퍼티까지 애니메이션됩니다.
+- 복잡한 뷰 트리에서 과도한 애니메이션은 프레임 드롭의 원인. Instruments의 **Animation Hitches** 도구로 프로파일링하세요.
+- Simulator는 실기기보다 후하게 그려주는 경우가 있으니, 성능은 반드시 **실기기**에서 검증.
