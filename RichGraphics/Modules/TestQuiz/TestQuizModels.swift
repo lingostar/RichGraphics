@@ -68,7 +68,7 @@ extension QuizPage {
         // Final page — wrap-up direction
         .info(InfoPage(
             imageName: "FloorPlan5F",
-            heading: "다음은 ML-Vision으로 가세요",
+            heading: "다음은 호미곶의 ML-Sound 로 가세요",
             body: nil
         )),
     ]
