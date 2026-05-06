@@ -79,7 +79,7 @@ extension QuizQuestion {
         // Page 1 — Phase vs Keyframe
         QuizQuestion(
             question: "축구장에서 공이 움직이는 경로를 표현하는데 적합한 SwiftUI 애니메이션 방식은?",
-            options: ["키프레임 애니메이션", "페이즈 애니메이션", "스프링 애니메이션", "모핑 애니메이션"],
+            options: ["페이즈 애니메이션", "키프레임 애니메이션", "스프링 애니메이션", "모핑 애니메이션"],
             answer: "키프레임 애니메이션",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "PhaseAnimator",
@@ -97,7 +97,7 @@ extension QuizQuestion {
         // Page 2 — CoreGraphics vs PencilKit
         QuizQuestion(
             question: "Apple Pencil의 필압과 기울기를 자동으로 반영하는 필기 앱을 빠르게 만들고 싶다면?",
-            options: ["PencilKit", "CoreGraphics", "UIKit Drawing", "SwiftUI Canvas"],
+            options: ["CoreGraphics", "UIKit Drawing", "SwiftUI Canvas", "PencilKit"],
             answer: "PencilKit",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "CoreGraphics",
@@ -115,7 +115,7 @@ extension QuizQuestion {
         // Page 3 — SpriteKit vs UIKit Dynamics
         QuizQuestion(
             question: "화면의 UIView 카드들에 중력과 스냅 효과만 넣고 싶은데, 게임 엔진까지 도입하기는 부담스럽다면?",
-            options: ["UIKit Dynamics", "SpriteKit", "SceneKit", "CoreAnimation"],
+            options: ["SpriteKit", "SceneKit", "UIKit Dynamics", "CoreAnimation"],
             answer: "UIKit Dynamics",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "SpriteKit",
@@ -151,7 +151,7 @@ extension QuizQuestion {
         // Page 5 — Core Image vs Custom Metal Shader
         QuizQuestion(
             question: "사진에 세피아와 비네팅을 적용한 필터 UI를 빠르게 만들고 싶다면?",
-            options: ["Core Image", "Metal Shader", "CoreGraphics", "AVFoundation"],
+            options: ["Metal Shader", "Core Image", "CoreGraphics", "AVFoundation"],
             answer: "Core Image",
             explanation: .comparisonTable(ComparisonTable(
                 headerA: "Core Image",
