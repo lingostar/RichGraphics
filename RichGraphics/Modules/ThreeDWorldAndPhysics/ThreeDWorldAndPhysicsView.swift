@@ -38,12 +38,12 @@ struct ThreeDWorldAndPhysicsView: View {
     private var sections: [ThreeDWorldAndPhysicsSection] {
         [
             ThreeDWorldAndPhysicsSection(
-                title: "SpriteKit Physics",
-                footer: "2D 물리엔진 — 중력, 충돌, 경계",
+                title: String(localized: "SpriteKit Physics"),
+                footer: String(localized: "2D physics engine — gravity, collision, bounds"),
                 demos: [
                     ThreeDWorldAndPhysicsDemo(
                         title: "Gravity Balls",
-                        description: "탭으로 공 생성, 디바이스 기울기로 중력 방향 제어",
+                        description: String(localized: "Tap to spawn balls; tilt the device to steer gravity"),
                         icon: "circle.fill",
                         color: .blue
                     ) {
@@ -52,12 +52,12 @@ struct ThreeDWorldAndPhysicsView: View {
                 ]
             ),
             ThreeDWorldAndPhysicsSection(
-                title: "3D World",
-                footer: "SceneKit으로 만드는 3D 장면",
+                title: String(localized: "3D World"),
+                footer: String(localized: "3D scenes built with SceneKit"),
                 demos: [
                     ThreeDWorldAndPhysicsDemo(
                         title: "Solar System",
-                        description: "태양 + 5행성 공전, 달, 속도 조절",
+                        description: String(localized: "Sun + 5 planets orbit, with Moon and speed control"),
                         icon: "globe.europe.africa.fill",
                         color: .indigo
                     ) {
@@ -66,12 +66,12 @@ struct ThreeDWorldAndPhysicsView: View {
                 ]
             ),
             ThreeDWorldAndPhysicsSection(
-                title: "Particle Effects",
-                footer: "CAEmitterLayer 기반 파티클 시스템",
+                title: String(localized: "Particle Effects"),
+                footer: String(localized: "Particle systems based on CAEmitterLayer"),
                 demos: [
                     ThreeDWorldAndPhysicsDemo(
                         title: "Weather",
-                        description: "눈, 비, 벚꽃 파티클",
+                        description: String(localized: "Snow, rain, and cherry blossom particles"),
                         icon: "cloud.snow.fill",
                         color: .cyan
                     ) {
@@ -79,7 +79,7 @@ struct ThreeDWorldAndPhysicsView: View {
                     },
                     ThreeDWorldAndPhysicsDemo(
                         title: "Confetti",
-                        description: "버튼 트리거 + 연속 모드 축하 이펙트",
+                        description: String(localized: "Button-triggered or continuous celebration effect"),
                         icon: "party.popper.fill",
                         color: .pink
                     ) {

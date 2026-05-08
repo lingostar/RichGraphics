@@ -30,25 +30,25 @@ struct SwiftUIAnimationsView: View {
     private var sections: [AnimationSection] {
         [
             AnimationSection(
-                title: "Foundations",
-                footer: "값 변화를 보간하는 기본 애니메이션 패턴",
+                title: String(localized: "Foundations"),
+                footer: String(localized: "Foundational patterns for interpolating value changes"),
                 demos: [
-                    AnimationDemo(title: "Spring Playground", description: "Tune spring parameters and compare curves in real time", icon: "waveform.path.ecg", color: .purple) {
+                    AnimationDemo(title: "Spring Playground", description: String(localized: "Tune spring parameters and compare curves in real time"), icon: "waveform.path.ecg", color: .purple) {
                         SpringPlaygroundView()
                     },
-                    AnimationDemo(title: "Morphing Shapes", description: "Custom shapes with animatableData morph between forms", icon: "pentagon", color: .orange) {
+                    AnimationDemo(title: "Morphing Shapes", description: String(localized: "Custom shapes with animatableData morph between forms"), icon: "pentagon", color: .orange) {
                         MorphingShapesView()
                     },
                 ]
             ),
             AnimationSection(
-                title: "iOS 17 Multi-State APIs",
-                footer: "여러 단계를 순차적으로 다루는 iOS 17의 새 애니메이션 API",
+                title: String(localized: "iOS 17 Multi-State APIs"),
+                footer: String(localized: "New iOS 17 APIs for sequencing multiple phases"),
                 demos: [
-                    AnimationDemo(title: "Keyframe Animations", description: "시간 축에 여러 프로퍼티를 동시에 보간 — 복잡한 동작 시퀀스", icon: "film.stack", color: .blue) {
+                    AnimationDemo(title: "Keyframe Animations", description: String(localized: "Interpolate multiple properties along a timeline — complex motion sequences"), icon: "film.stack", color: .blue) {
                         KeyframeAnimationsView()
                     },
-                    AnimationDemo(title: "Phase Animations", description: "여러 상태를 자동 순환 — 로딩, 펄스, 상태 표시", icon: "circle.hexagongrid", color: .green) {
+                    AnimationDemo(title: "Phase Animations", description: String(localized: "Auto-cycle through multiple states — loading, pulse, status indicators"), icon: "circle.hexagongrid", color: .green) {
                         PhaseAnimationsView()
                     },
                 ]

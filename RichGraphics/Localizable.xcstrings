@@ -1,6 +1,1084 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "15 Core Image filters with intensity sliders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15개 Core Image 필터 + 강도 슬라이더"
+          }
+        }
+      }
+    },
+    "200+ ready to use" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "200+ 즉시 사용"
+          }
+        }
+      }
+    },
+    "2D games, simulations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2D 게임, 시뮬레이션"
+          }
+        }
+      }
+    },
+    "2D physics engine — gravity, collision, bounds" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2D 물리엔진 — 중력, 충돌, 경계"
+          }
+        }
+      }
+    },
+    "3D scenes built with SceneKit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SceneKit으로 만드는 3D 장면"
+          }
+        }
+      }
+    },
+    "3D World" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D 월드"
+          }
+        }
+      }
+    },
+    "8 real-time camera filters via AVCaptureSession" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AVCaptureSession 실시간 카메라 필터 8종"
+          }
+        }
+      }
+    },
+    "and observe how they run in parallel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동시에 진행되는 것을 관찰하세요"
+          }
+        }
+      }
+    },
+    "Animation specified per phase transition" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 phase 전환 시 Animation 지정"
+          }
+        }
+      }
+    },
+    "Auto-cycle through multiple states — loading, pulse, status indicators" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여러 상태를 자동 순환 — 로딩, 펄스, 상태 표시"
+          }
+        }
+      }
+    },
+    "Automatic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자동"
+          }
+        }
+      }
+    },
+    "Basic (gravity, collision, snap)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본 (중력·충돌·스냅)"
+          }
+        }
+      }
+    },
+    "Best for" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "적합한 곳"
+          }
+        }
+      }
+    },
+    "Bubble collisions with tap-to-push behavior" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버블 충돌과 탭으로 미는 push behavior"
+          }
+        }
+      }
+    },
+    "Build it yourself" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 구현"
+          }
+        }
+      }
+    },
+    "Built-in automatic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "자동 내장"
+          }
+        }
+      }
+    },
+    "Built-in filters" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "빌트인 필터"
+          }
+        }
+      }
+    },
+    "Button-triggered or continuous celebration effect" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "버튼 트리거 + 연속 모드 축하 이펙트"
+          }
+        }
+      }
+    },
+    "Card UI, elastic menus" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카드 UI, 탄성 메뉴"
+          }
+        }
+      }
+    },
+    "Cards with gravity and collision via device tilt (Portrait Lock)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카드에 중력+충돌, 디바이스 기울기 (Portrait Lock)"
+          }
+        }
+      }
+    },
+    "Chaining" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "체이닝"
+          }
+        }
+      }
+    },
+    "Charts, custom drawing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "차트, 커스텀 드로잉"
+          }
+        }
+      }
+    },
+    "Choose a Module" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모듈을 선택하세요"
+          }
+        }
+      }
+    },
+    "Close" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닫기"
+          }
+        }
+      }
+    },
+    "Complex motion sequences (bounce, trajectory)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복잡한 동작 시퀀스 (바운스, 궤적)"
+          }
+        }
+      }
+    },
+    "Control unit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제어 단위"
+          }
+        }
+      }
+    },
+    "Coordinate system" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "좌표계"
+          }
+        }
+      }
+    },
+    "CoreGraphics freehand drawing with color, thickness, undo/redo" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CoreGraphics 기반 자유 드로잉, 색상/굵기 조절, undo/redo"
+          }
+        }
+      }
+    },
+    "Custom shapes with animatableData morph between forms" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "animatableData를 가진 커스텀 도형이 다른 형태로 변환"
+          }
+        }
+      }
+    },
+    "Customization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "커스터마이징"
+          }
+        }
+      }
+    },
+    "Debugging" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "디버깅"
+          }
+        }
+      }
+    },
+    "Demo not found" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "데모를 찾을 수 없습니다"
+          }
+        }
+      }
+    },
+    "Drag and snap to the nearest grid position" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "드래그 후 가장 가까운 그리드 위치로 snap"
+          }
+        }
+      }
+    },
+    "Draw lines, rectangles, circles, and triangles with color combinations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선·사각형·원·삼각형 그리기와 색상 조합"
+          }
+        }
+      }
+    },
+    "Each step" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 단계"
+          }
+        }
+      }
+    },
+    "Each track plays at its own timing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "각 트랙이 독립적인 타이밍으로"
+          }
+        }
+      }
+    },
+    "Entry barrier" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "진입 장벽"
+          }
+        }
+      }
+    },
+    "Explicit time and curve control" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간·곡선 명시적 제어"
+          }
+        }
+      }
+    },
+    "Exploring Apple Graphics Frameworks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple 그래픽 프레임워크 탐험"
+          }
+        }
+      }
+    },
+    "Foundational patterns for interpolating value changes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "값 변화를 보간하는 기본 애니메이션 패턴"
+          }
+        }
+      }
+    },
+    "Foundations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본"
+          }
+        }
+      }
+    },
+    "Framework Guide" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "프레임워크 가이드"
+          }
+        }
+      }
+    },
+    "Full freedom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완전 자유"
+          }
+        }
+      }
+    },
+    "Game engines, scientific visualization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "게임 엔진, 과학 시각화"
+          }
+        }
+      }
+    },
+    "Glitch, vintage, pop art, and neon — with before/after compare" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "글리치·빈티지·팝아트·네온 + before/after 비교"
+          }
+        }
+      }
+    },
+    "GPU acceleration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPU 가속"
+          }
+        }
+      }
+    },
+    "High (MSL + pipeline)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "높음 (MSL + 파이프라인)"
+          }
+        }
+      }
+    },
+    "High-performance custom effects" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고성능 커스텀 이펙트"
+          }
+        }
+      }
+    },
+    "Interpolate multiple properties along a timeline — complex motion sequences" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시간 축에 여러 프로퍼티를 동시에 보간 — 복잡한 동작 시퀀스"
+          }
+        }
+      }
+    },
+    "iOS 17 Multi-State APIs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS 17 다중 상태 API"
+          }
+        }
+      }
+    },
+    "Keyframe Animation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "키프레임 애니메이션"
+          }
+        }
+      }
+    },
+    "Keyframes at absolute times" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "절대 시간을 가진 keyframe"
+          }
+        }
+      }
+    },
+    "Learning cost" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "학습 비용"
+          }
+        }
+      }
+    },
+    "Limited" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제한적"
+          }
+        }
+      }
+    },
+    "Loading, pulse, status indicators" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로딩, 펄스, 상태 표시"
+          }
+        }
+      }
+    },
+    "Low" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "낮음"
+          }
+        }
+      }
+    },
+    "Low (tens of lines)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "낮음 (수십 줄)"
+          }
+        }
+      }
+    },
+    "Manual control" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 제어"
+          }
+        }
+      }
+    },
+    "Manual event handling" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 이벤트 처리"
+          }
+        }
+      }
+    },
+    "Manual implementation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수동 구현"
+          }
+        }
+      }
+    },
+    "Manual serialization" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수동 직렬화"
+          }
+        }
+      }
+    },
+    "Model loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모델 로딩"
+          }
+        }
+      }
+    },
+    "Morphing Animation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모핑 애니메이션"
+          }
+        }
+      }
+    },
+    "Named phases" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "개별 이름을 가진 phase"
+          }
+        }
+      }
+    },
+    "New iOS 17 APIs for sequencing multiple phases" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "여러 단계를 순차적으로 다루는 iOS 17의 새 애니메이션 API"
+          }
+        }
+      }
+    },
+    "Newton's cradle built with UIAttachmentBehavior" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UIAttachmentBehavior로 만든 뉴턴의 요람"
+          }
+        }
+      }
+    },
+    "Next: head to ML-Sound at Homigot" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음은 호미곶의 ML-Sound 로 가세요"
+          }
+        }
+      }
+    },
+    "Notes, sketches, signatures" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "노트, 스케치, 서명"
+          }
+        }
+      }
+    },
+    "One phase = one static style" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "하나의 phase = 하나의 정적 스타일"
+          }
+        }
+      }
+    },
+    "One property = time-based interpolation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "하나의 프로퍼티 = 시간별 보간"
+          }
+        }
+      }
+    },
+    "Origin at bottom-left" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "좌하단 원점"
+          }
+        }
+      }
+    },
+    "Origin at top-left" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "좌상단 원점"
+          }
+        }
+      }
+    },
+    "output → input simple" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "output → input 간편"
+          }
+        }
+      }
+    },
+    "Parse manually" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 파싱"
+          }
+        }
+      }
+    },
+    "Particle Effects" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "파티클 이펙트"
+          }
+        }
+      }
+    },
+    "Particle systems based on CAEmitterLayer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CAEmitterLayer 기반 파티클 시스템"
+          }
+        }
+      }
+    },
+    "PKCanvasView + PKToolPicker integration with image export" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKCanvasView + PKToolPicker 통합, 이미지 내보내기"
+          }
+        }
+      }
+    },
+    "PKDrawing automatic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKDrawing 자동"
+          }
+        }
+      }
+    },
+    "PKToolPicker provided" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKToolPicker 제공"
+          }
+        }
+      }
+    },
+    "Phase Animation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "페이즈 애니메이션"
+          }
+        }
+      }
+    },
+    "Photo editing, camera filters" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사진 편집, 카메라 필터"
+          }
+        }
+      }
+    },
+    "Physics scope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "물리 범위"
+          }
+        }
+      }
+    },
+    "Pressure & tilt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "필압·기울기"
+          }
+        }
+      }
+    },
+    "Product viewer, AR" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "제품 뷰어, AR"
+          }
+        }
+      }
+    },
+    "Ready to check?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인해 볼까요?"
+          }
+        }
+      }
+    },
+    "Reveal answer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정답확인"
+          }
+        }
+      }
+    },
+    "Rich (joints, fields)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "풍부 (조인트·필드)"
+          }
+        }
+      }
+    },
+    "Role" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "역할"
+          }
+        }
+      }
+    },
+    "Save & restore" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장·복원"
+          }
+        }
+      }
+    },
+    "Select a module from the sidebar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "왼쪽 사이드바에서 모듈을 선택하세요"
+          }
+        }
+      }
+    },
+    "Shader modifiers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "셰이더 모디파이어"
+          }
+        }
+      }
+    },
+    "SKNode (game objects)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SKNode (게임 객체)"
+          }
+        }
+      }
+    },
+    "Snow, rain, and cherry blossom particles" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "눈, 비, 벚꽃 파티클"
+          }
+        }
+      }
+    },
+    "Spring Animation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프링 애니메이션"
+          }
+        }
+      }
+    },
+    "Spring-connected menu with chained item follow" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프링 연결된 메뉴, 항목 간 체인 따라가기"
+          }
+        }
+      }
+    },
+    "SpriteKit Physics" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SpriteKit 물리"
+          }
+        }
+      }
+    },
+    "Stack up to 5 filters into a custom pipeline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "최대 5개 필터를 스택으로 연결하는 파이프라인"
+          }
+        }
+      }
+    },
+    "State machine" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "상태 머신 (statemachine)"
+          }
+        }
+      }
+    },
     "Study Notes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -8,6 +1086,226 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "정리노트"
+          }
+        }
+      }
+    },
+    "Sun + 5 planets orbit, with Moon and speed control" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "태양 + 5행성 공전, 달, 속도 조절"
+          }
+        }
+      }
+    },
+    "SwiftUI integration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SwiftUI 통합"
+          }
+        }
+      }
+    },
+    "Tap to spawn balls; tilt the device to steer gravity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "탭으로 공 생성, 디바이스 기울기로 중력 방향 제어"
+          }
+        }
+      }
+    },
+    "Target" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대상"
+          }
+        }
+      }
+    },
+    "Test Yourself" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "테스트하기"
+          }
+        }
+      }
+    },
+    "Timeline animation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타임라인 애니메이션"
+          }
+        }
+      }
+    },
+    "Timing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "타이밍"
+          }
+        }
+      }
+    },
+    "Tool UI" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도구 UI"
+          }
+        }
+      }
+    },
+    "Tune spring parameters and compare curves in real time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "스프링 파라미터를 조절하고 곡선을 실시간으로 비교"
+          }
+        }
+      }
+    },
+    "UIView (existing UI)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UIView (기존 UI)"
+          }
+        }
+      }
+    },
+    "Unlimited" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무한대"
+          }
+        }
+      }
+    },
+    "USDZ/DAE built-in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USDZ·DAE 내장"
+          }
+        }
+      }
+    },
+    "Very high (hundreds of lines)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "매우 높음 (수백 줄)"
+          }
+        }
+      }
+    },
+    "Want to add only gravity and snap effects to UIView cards, without bringing in a full game engine?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "화면의 UIView 카드들에 중력과 스냅 효과만 넣고 싶은데, 게임 엔진까지 도입하기는 부담스럽다면?"
+          }
+        }
+      }
+    },
+    "Want to display a 3D model when extreme performance isn't critical?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3D 모델을 보여주고 싶은데, 퍼포먼스가 치명적으로 중요하지 않다면?"
+          }
+        }
+      }
+    },
+    "Want to quickly build a filter UI applying sepia and vignette to a photo?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사진에 세피아와 비네팅을 적용한 필터 UI를 빠르게 만들고 싶다면?"
+          }
+        }
+      }
+    },
+    "Want to quickly build a writing app that responds to Apple Pencil pressure and tilt automatically?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Pencil의 필압과 기울기를 자동으로 반영하는 필기 앱을 빠르게 만들고 싶다면?"
+          }
+        }
+      }
+    },
+    "Welcome" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영합니다"
+          }
+        }
+      }
+    },
+    "Which SwiftUI animation type best fits a ball's motion path on a soccer field?" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "축구장에서 공이 움직이는 경로를 표현하는데 적합한 SwiftUI 애니메이션 방식은?"
+          }
+        }
+      }
+    },
+    "Write your own" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "직접 작성"
           }
         }
       }

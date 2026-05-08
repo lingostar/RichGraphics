@@ -89,8 +89,8 @@ private struct HomeContent: View {
 
                 HStack(spacing: 12) {
                     ActionCard(
-                        title: "정리노트",
-                        subtitle: "프레임워크 가이드",
+                        title: String(localized: "Study Notes"),
+                        subtitle: String(localized: "Framework Guide"),
                         icon: "book.pages.fill",
                         gradient: LinearGradient(
                             colors: [.indigo, .purple],
@@ -102,8 +102,8 @@ private struct HomeContent: View {
                     }
 
                     ActionCard(
-                        title: "테스트하기",
-                        subtitle: "확인해 볼까요?",
+                        title: String(localized: "Test Yourself"),
+                        subtitle: String(localized: "Ready to check?"),
                         icon: "play.rectangle.fill",
                         gradient: LinearGradient(
                             colors: [.orange, .pink],
@@ -141,8 +141,8 @@ private struct DemoSidebar: View {
                 } label: {
                     resourceRow(
                         icon: "book.pages.fill",
-                        title: "정리노트",
-                        subtitle: "프레임워크 가이드",
+                        title: String(localized: "Study Notes"),
+                        subtitle: String(localized: "Framework Guide"),
                         gradient: LinearGradient(
                             colors: [.indigo, .purple],
                             startPoint: .topLeading,
@@ -184,8 +184,8 @@ private struct DemoSidebar: View {
                 } label: {
                     resourceRow(
                         icon: "play.rectangle.fill",
-                        title: "테스트하기",
-                        subtitle: "확인해 볼까요?",
+                        title: String(localized: "Test Yourself"),
+                        subtitle: String(localized: "Ready to check?"),
                         gradient: LinearGradient(
                             colors: [.orange, .pink],
                             startPoint: .topLeading,
@@ -269,11 +269,11 @@ private struct WelcomeDetail: View {
                     Text("RichGraphics")
                         .font(.system(size: 44, weight: .heavy, design: .rounded))
 
-                    Text("Apple 그래픽 프레임워크 탐험")
+                    Text("Exploring Apple Graphics Frameworks")
                         .font(.title3)
                         .foregroundStyle(.secondary)
 
-                    Label("왼쪽 사이드바에서 모듈을 선택하세요", systemImage: "sidebar.left")
+                    Label("Select a module from the sidebar", systemImage: "sidebar.left")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                         .padding(.top, 8)

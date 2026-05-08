@@ -205,10 +205,10 @@ struct KeyframeAnimationsView: View {
             .disabled(isPlaying)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text("각 트랙이 독립적인 타이밍으로")
+                Text("Each track plays at its own timing")
                     .font(.system(size: 10))
                     .foregroundStyle(.secondary)
-                Text("동시에 진행되는 것을 관찰하세요")
+                Text("and observe how they run in parallel")
                     .font(.system(size: 10))
                     .foregroundStyle(.secondary)
             }

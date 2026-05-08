@@ -29,14 +29,14 @@ struct TestQuizSheet: View {
                 .tabViewStyle(.page(indexDisplayMode: pages.count > 1 ? .always : .never))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
             }
-            .navigationTitle("확인해 볼까요?")
+            .navigationTitle("Ready to check?")
             .navigationBarTitleDisplayMode(.inline)
             .toolbarColorScheme(.dark, for: .navigationBar)
             .toolbarBackground(Color.black, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("닫기") { dismiss() }
+                    Button("Close") { dismiss() }
                         .foregroundStyle(.white)
                 }
             }
@@ -120,7 +120,7 @@ struct QuizPageView: View {
                             showExplanation = true
                         }
                     } label: {
-                        Text("정답확인")
+                        Text("Reveal answer")
                             .font(.headline)
                             .foregroundStyle(selectedOption == nil ? .gray : .black)
                             .frame(maxWidth: .infinity)

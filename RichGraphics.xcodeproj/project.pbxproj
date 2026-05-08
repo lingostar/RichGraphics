@@ -318,7 +318,7 @@
 			path = RichGraphics;
 			sourceTree = "<group>";
 		};
-		"TEMP_602CC188-50AB-4FE2-920B-0DFCA10F44FA" /* Resources */ = {
+		"TEMP_05C4CB54-8A7D-466A-A8D8-D09E81F1A4F8" /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 			);
