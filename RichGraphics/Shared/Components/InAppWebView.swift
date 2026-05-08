@@ -78,7 +78,7 @@ struct DocsWebSheet: View {
         NavigationStack {
             PreloadedDocsView()
                 .ignoresSafeArea(edges: .bottom)
-                .navigationTitle("정리노트")
+                .navigationTitle("Study Notes")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
