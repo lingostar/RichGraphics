@@ -1,24 +1,53 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "15 Core Image filters with intensity sliders" : {
-      "extractionState" : "manual",
+    "%@" : {
+
+    },
+    "%@ balls" : {
+
+    },
+    "%@ cards" : {
+
+    },
+    "%@ FPS" : {
+
+    },
+    "%@ Locked" : {
+
+    },
+    "%@ shape%@" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "15개 Core Image 필터 + 강도 슬라이더"
+            "state" : "new",
+            "value" : "%1$@ shape%2$@"
           }
         }
       }
     },
-    "200+ ready to use" : {
-      "extractionState" : "manual",
+    "%@: %.2f" : {
       "localizations" : {
-        "ko" : {
+        "en" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "200+ 즉시 사용"
+            "state" : "new",
+            "value" : "%1$@: %2$.2f"
+          }
+        }
+      }
+    },
+    "%@%%" : {
+
+    },
+    "%@pt" : {
+
+    },
+    "%@x%@ points" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@x%2$@ points"
           }
         }
       }
@@ -78,6 +107,37 @@
         }
       }
     },
+    "15 Core Image filters with intensity sliders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15개 Core Image 필터 + 강도 슬라이더"
+          }
+        }
+      }
+    },
+    "200+ ready to use" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "200+ 즉시 사용"
+          }
+        }
+      }
+    },
+    "A." : {
+
+    },
+    "Add up to 5 filters. Output flows top to bottom." : {
+
+    },
+    "Ambient" : {
+
+    },
     "and observe how they run in parallel" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -121,6 +181,9 @@
           }
         }
       }
+    },
+    "Back" : {
+
     },
     "Basic (gravity, collision, snap)" : {
       "extractionState" : "manual",
@@ -221,6 +284,9 @@
         }
       }
     },
+    "Celebrate!" : {
+
+    },
     "Chaining" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -276,6 +342,9 @@
         }
       }
     },
+    "Continuous Mode" : {
+
+    },
     "Control unit" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -309,6 +378,9 @@
         }
       }
     },
+    "Current: %@" : {
+
+    },
     "Custom shapes with animatableData morph between forms" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -330,6 +402,9 @@
           }
         }
       }
+    },
+    "Damping" : {
+
     },
     "Debugging" : {
       "extractionState" : "manual",
@@ -364,6 +439,9 @@
         }
       }
     },
+    "Drag your finger across the screen" : {
+
+    },
     "Draw lines, rectangles, circles, and triangles with color combinations" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -396,6 +474,9 @@
           }
         }
       }
+    },
+    "EFFECT" : {
+
     },
     "Entry barrier" : {
       "extractionState" : "manual",
@@ -430,6 +511,18 @@
         }
       }
     },
+    "Exported Drawing" : {
+
+    },
+    "Fill" : {
+
+    },
+    "Filter Chain" : {
+
+    },
+    "Fire Intensity" : {
+
+    },
     "Foundational patterns for interpolating value changes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -462,6 +555,9 @@
           }
         }
       }
+    },
+    "Freq: %.2f" : {
+
     },
     "Full freedom" : {
       "extractionState" : "manual",
@@ -507,6 +603,12 @@
         }
       }
     },
+    "Grid: %@" : {
+
+    },
+    "Height: %.1f" : {
+
+    },
     "High (MSL + pipeline)" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -528,6 +630,15 @@
           }
         }
       }
+    },
+    "Hologram flickers automatically" : {
+
+    },
+    "Intensity" : {
+
+    },
+    "Intensity: %@%%" : {
+
     },
     "Interpolate multiple properties along a timeline — complex motion sequences" : {
       "extractionState" : "manual",
@@ -561,6 +672,9 @@
           }
         }
       }
+    },
+    "KEYFRAME TRACKS" : {
+
     },
     "Keyframes at absolute times" : {
       "extractionState" : "manual",
@@ -671,6 +785,12 @@
           }
         }
       }
+    },
+    "Material" : {
+
+    },
+    "Maximum 5 filters reached." : {
+
     },
     "Model loading" : {
       "extractionState" : "manual",
@@ -793,6 +913,9 @@
         }
       }
     },
+    "ORIGINAL" : {
+
+    },
     "output → input simple" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -837,39 +960,6 @@
         }
       }
     },
-    "PKCanvasView + PKToolPicker integration with image export" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PKCanvasView + PKToolPicker 통합, 이미지 내보내기"
-          }
-        }
-      }
-    },
-    "PKDrawing automatic" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PKDrawing 자동"
-          }
-        }
-      }
-    },
-    "PKToolPicker provided" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "PKToolPicker 제공"
-          }
-        }
-      }
-    },
     "Phase Animation" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -903,6 +993,39 @@
         }
       }
     },
+    "PKCanvasView + PKToolPicker integration with image export" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKCanvasView + PKToolPicker 통합, 이미지 내보내기"
+          }
+        }
+      }
+    },
+    "PKDrawing automatic" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKDrawing 자동"
+          }
+        }
+      }
+    },
+    "PKToolPicker provided" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PKToolPicker 제공"
+          }
+        }
+      }
+    },
     "Pressure & tilt" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -924,6 +1047,12 @@
           }
         }
       }
+    },
+    "Progress: %.0f%%" : {
+
+    },
+    "Q." : {
+
     },
     "Ready to check?" : {
       "extractionState" : "manual",
@@ -957,6 +1086,9 @@
           }
         }
       }
+    },
+    "RichGraphics" : {
+
     },
     "Role" : {
       "extractionState" : "manual",
@@ -1002,6 +1134,18 @@
         }
       }
     },
+    "Shader Preset" : {
+
+    },
+    "Shape" : {
+
+    },
+    "Signature captured successfully" : {
+
+    },
+    "Simulator mode -- using animated procedural input" : {
+
+    },
     "SKNode (game objects)" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1023,6 +1167,9 @@
           }
         }
       }
+    },
+    "Speed: %.1fx" : {
+
     },
     "Spring Animation" : {
       "extractionState" : "manual",
@@ -1079,6 +1226,9 @@
         }
       }
     },
+    "Stroke" : {
+
+    },
     "Study Notes" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1111,6 +1261,15 @@
           }
         }
       }
+    },
+    "Tap anywhere to launch fireworks" : {
+
+    },
+    "Tap anywhere to throw a log 🪵" : {
+
+    },
+    "Tap shapes to destroy them" : {
+
     },
     "Tap to spawn balls; tilt the device to steer gravity" : {
       "extractionState" : "manual",
@@ -1277,6 +1436,9 @@
         }
       }
     },
+    "Warp Speed: %@%%" : {
+
+    },
     "Welcome" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1299,6 +1461,9 @@
         }
       }
     },
+    "Wind" : {
+
+    },
     "Write your own" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1309,6 +1474,12 @@
           }
         }
       }
+    },
+    "X" : {
+
+    },
+    "Your Signature" : {
+
     }
   },
   "version" : "1.0"

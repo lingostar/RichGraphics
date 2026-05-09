@@ -10,11 +10,44 @@ import SwiftUI
 // WKWebsiteDataStore: each sheet gets a fresh WKWebView, but the disk
 // cache populated by the background preload is shared, so the page renders
 // almost instantly on subsequent opens.
+//
+// Two language variants of the docs site live at separate URLs:
+//   ko → https://lingostar.github.io/RichGraphics/
+//   en → https://lingostar.github.io/RichGraphics/en/
+// The app picks one based on the user's @AppStorage("docsLanguage")
+// preference: "auto" follows the device locale, "ko"/"en" override.
+
+enum DocsLanguage: String, CaseIterable, Identifiable {
+    case auto, ko, en
+
+    var id: String { rawValue }
+}
 
 @MainActor
 final class DocsLoader {
     static let shared = DocsLoader()
-    static let docsURL = URL(string: "https://lingostar.github.io/RichGraphics/")!
+
+    static let docsURL_ko = URL(string: "https://lingostar.github.io/RichGraphics/")!
+    static let docsURL_en = URL(string: "https://lingostar.github.io/RichGraphics/en/")!
+
+    /// Resolve the stored preference into a concrete two-letter code.
+    /// "auto" follows `Locale.current` ("ko" only when device language is
+    /// Korean; everything else falls back to English).
+    static func resolved(_ preference: DocsLanguage) -> String {
+        switch preference {
+        case .auto:
+            let lang = Locale.current.language.languageCode?.identifier ?? "en"
+            return lang == "ko" ? "ko" : "en"
+        case .ko:
+            return "ko"
+        case .en:
+            return "en"
+        }
+    }
+
+    static func url(forResolvedLanguage code: String) -> URL {
+        code == "ko" ? docsURL_ko : docsURL_en
+    }
 
     // Shared across every WKWebView constructed via configuration().
     private let processPool = WKProcessPool()
@@ -36,15 +69,18 @@ final class DocsLoader {
         return config
     }
 
-    /// Fire one fetch of the docs URL through a hidden WKWebView so the
-    /// resources are in disk cache by the time the user taps 정리노트.
-    /// Idempotent — first call kicks off the load, later calls are no-ops.
+    /// Fire one fetch through a hidden WKWebView so the resources are in
+    /// disk cache by the time the user taps Study Notes. We preload the
+    /// language that matches the device locale (the most likely first
+    /// open). Idempotent — first call kicks off the load, later calls
+    /// are no-ops.
     func preload() {
         guard !hasPreloaded else { return }
         hasPreloaded = true
 
+        let code = Self.resolved(.auto)
         let view = WKWebView(frame: .zero, configuration: configuration())
-        view.load(URLRequest(url: Self.docsURL))
+        view.load(URLRequest(url: Self.url(forResolvedLanguage: code)))
         preloadView = view
     }
 }
@@ -52,6 +88,8 @@ final class DocsLoader {
 // MARK: - Per-presentation WKWebView wrapper
 
 struct PreloadedDocsView: UIViewRepresentable {
+    let resolvedLanguage: String
+
     func makeUIView(context: Context) -> WKWebView {
         // Fresh instance every time the sheet is shown. Disk cache populated
         // by DocsLoader.preload() makes this nearly instant on subsequent
@@ -59,7 +97,7 @@ struct PreloadedDocsView: UIViewRepresentable {
         let webView = WKWebView(frame: .zero, configuration: DocsLoader.shared.configuration())
         webView.allowsBackForwardNavigationGestures = true
         webView.isOpaque = false
-        webView.load(URLRequest(url: DocsLoader.docsURL))
+        webView.load(URLRequest(url: DocsLoader.url(forResolvedLanguage: resolvedLanguage)))
         // Make sure preload has fired in case the user opened the sheet
         // before the .task scheduled it.
         DocsLoader.shared.preload()
@@ -73,18 +111,53 @@ struct PreloadedDocsView: UIViewRepresentable {
 
 struct DocsWebSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("docsLanguage") private var docsLanguageRaw: String = DocsLanguage.auto.rawValue
+
+    private var preference: DocsLanguage {
+        DocsLanguage(rawValue: docsLanguageRaw) ?? .auto
+    }
+
+    private var resolvedLanguage: String {
+        DocsLoader.resolved(preference)
+    }
 
     var body: some View {
         NavigationStack {
-            PreloadedDocsView()
+            // .id forces SwiftUI to recreate (and reload) the WKWebView
+            // when the user toggles language mid-session.
+            PreloadedDocsView(resolvedLanguage: resolvedLanguage)
+                .id(resolvedLanguage)
                 .ignoresSafeArea(edges: .bottom)
                 .navigationTitle("Study Notes")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        languageMenu
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("Close") { dismiss() }
                     }
                 }
         }
+    }
+
+    private var languageMenu: some View {
+        Menu {
+            Picker(selection: $docsLanguageRaw) {
+                Text("Auto (\(autoLabel))").tag(DocsLanguage.auto.rawValue)
+                Text("한국어").tag(DocsLanguage.ko.rawValue)
+                Text("English").tag(DocsLanguage.en.rawValue)
+            } label: {
+                Text("Language")
+            }
+        } label: {
+            Image(systemName: "globe")
+        }
+    }
+
+    /// Show what "Auto" currently resolves to so the user understands
+    /// the fallback without having to actually pick.
+    private var autoLabel: String {
+        DocsLoader.resolved(.auto) == "ko" ? "한국어" : "English"
     }
 }
